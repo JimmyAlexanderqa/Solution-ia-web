@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Solution IA</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Solution IA: chatbots de WhatsApp, páginas web y sistemas con inteligencia artificial para MYPES de Huancayo y el Valle del Mantaro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: valle del Mantaro en 3D fijo detrás; contenido en columna asimétrica a la izquierda con etiquetas tipo levantamiento topográfico */
+:root{
+  --noche:#0A0E1F;
+  --noche-2:#11172F;
+  --hielo:#A8ECFF;
+  --ocre:#E9A84C;
+  --texto:#E7ECF7;
+  --texto-2:#9CA6C3;
+  --linea:rgba(168,236,255,.16);
+  --capa:rgba(10,14,31,.86);
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--noche);scroll-behavior:smooth}
+body{margin:0;background:var(--noche);color:var(--texto);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--hielo);outline-offset:3px;border-radius:6px}
+
+/* Fondo y escena */
+.fondo{position:fixed;inset:0;z-index:0;background:
+  radial-gradient(1100px 600px at 78% 12%,rgba(168,236,255,.10),transparent 60%),
+  radial-gradient(900px 500px at 8% 92%,rgba(233,168,76,.10),transparent 60%),var(--noche)}
+#valle{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0}
+.etiquetas{position:fixed;inset:0;z-index:1;pointer-events:none;transition:opacity .2s linear}
+.eti{position:absolute;left:0;top:0;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hielo);white-space:nowrap;padding-bottom:14px;text-shadow:0 0 12px rgba(10,14,31,.9)}
+.eti::after{content:"";position:absolute;left:50%;bottom:0;width:1px;height:10px;background:currentColor;opacity:.6}
+.eti small{display:block;color:var(--ocre);font-size:10px;letter-spacing:.08em}
+
+/* Estructura */
+header,main,footer{position:relative;z-index:2}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:1180px;margin-inline:auto;padding-inline:clamp(0px,2.5vw,24px)}
+
+/* Navegación */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(10,14,31,.62);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--linea)}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:600;font-size:17px;letter-spacing:-.01em}
+.marca svg{width:30px;height:30px;flex:none}
+.marca b{color:var(--hielo);font-weight:600}
+.menu{display:flex;align-items:center;gap:26px;font-size:14px}
+.menu a{text-decoration:none;color:var(--texto-2);transition:color .2s}
+.menu a:hover{color:var(--texto)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-body);font-weight:700;font-size:15px;text-decoration:none;border-radius:999px;padding:13px 22px;border:1px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-ocre{background:var(--ocre);color:#1a1205;box-shadow:0 0 0 0 rgba(233,168,76,.4)}
+.btn-ocre:hover{transform:translateY(-2px);box-shadow:0 10px 30px -8px rgba(233,168,76,.6)}
+.btn-linea{background:rgba(168,236,255,.06);border-color:var(--linea);color:var(--texto)}
+.btn-linea:hover{border-color:var(--hielo);background:rgba(168,236,255,.1)}
+.nav .btn{padding:9px 16px;font-size:14px}
+@media (max-width:820px){.menu a{display:none}}
+
+/* Hero */
+.hero .in{padding-block:clamp(56px,11vh,130px) clamp(56px,9vh,100px);display:grid;gap:28px}
+.coord{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--hielo);display:flex;flex-wrap:wrap;gap:6px 18px}
+.coord span:nth-child(2){color:var(--ocre)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2.05rem,6.4vw,4.5rem);line-height:1.04;letter-spacing:-.025em;margin:0;max-width:15ch;text-wrap:balance}
+h1 em{font-style:normal;color:var(--hielo);text-shadow:0 0 40px rgba(168,236,255,.35)}
+.bajada{font-size:clamp(1.02rem,1.6vw,1.2rem);color:var(--texto-2);max-width:54ch;margin:0}
+.bajada strong{color:var(--texto);font-weight:700}
+.acciones{display:flex;flex-wrap:wrap;gap:12px}
+.datos{display:flex;flex-wrap:wrap;gap:0;margin-top:18px;border-top:1px solid var(--linea);max-width:640px}
+.dato{flex:1 1 150px;padding:14px 18px 0 0;display:grid;gap:2px}
+.dato b{font-family:var(--f-display);font-weight:600;font-size:20px;color:var(--texto);font-variant-numeric:tabular-nums}
+.dato span{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-2)}
+
+/* Capa de contenido */
+.capa{background:linear-gradient(180deg,rgba(10,14,31,0) 0,var(--capa) 160px)}
+section{scroll-margin-top:80px}
+.bloque .in{padding-block:clamp(64px,10vw,120px)}
+.ceja{font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--hielo);margin:0 0 14px;display:flex;align-items:center;gap:10px}
+.ceja::before{content:"";width:22px;height:1px;background:currentColor}
+h2{font-family:var(--f-display);font-weight:600;font-size:clamp(1.55rem,3.6vw,2.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 16px;max-width:22ch;text-wrap:balance}
+.lead{color:var(--texto-2);max-width:60ch;margin:0}
+
+/* Servicios */
+.grid-serv{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:44px;perspective:1100px}
+.card{--rx:0deg;--ry:0deg;--gx:50%;--gy:0%;position:relative;min-width:0;padding:24px 22px 24px;border-radius:16px;border:1px solid var(--linea);
+  background:radial-gradient(420px 220px at var(--gx) var(--gy),rgba(168,236,255,.10),transparent 70%),linear-gradient(165deg,rgba(168,236,255,.05),rgba(17,23,47,.75));
+  transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .25s ease,border-color .25s;display:grid;gap:12px;align-content:start}
+.card:hover{border-color:rgba(168,236,255,.4)}
+.card .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--hielo);background:rgba(168,236,255,.08);border:1px solid var(--linea);transform:translateZ(36px);box-shadow:0 12px 24px -12px rgba(0,0,0,.8)}
+.card .ico svg{width:24px;height:24px}
+.card .tag{position:absolute;top:22px;right:20px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ocre);transform:translateZ(20px)}
+.card h3{font-family:var(--f-display);font-weight:600;font-size:17px;line-height:1.25;margin:4px 0 0;transform:translateZ(24px)}
+.card p{margin:0;color:var(--texto-2);font-size:15px;transform:translateZ(14px)}
+.card.destacada{background:radial-gradient(420px 220px at var(--gx) var(--gy),rgba(233,168,76,.16),transparent 70%),linear-gradient(165deg,rgba(233,168,76,.10),rgba(17,23,47,.8));border-color:rgba(233,168,76,.35)}
+.card.destacada .ico{color:var(--ocre);background:rgba(233,168,76,.1);border-color:rgba(233,168,76,.35)}
+
+/* Raíz wanka */
+.raiz{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,80px);align-items:center}
+.mate-box{position:relative;width:100%;max-width:540px;aspect-ratio:1/1;justify-self:center;
+  background:radial-gradient(closest-side,rgba(233,168,76,.14),transparent 70%),
+  repeating-linear-gradient(0deg,rgba(168,236,255,.05) 0 1px,transparent 1px 40px),
+  repeating-linear-gradient(90deg,rgba(168,236,255,.05) 0 1px,transparent 1px 40px);border-radius:20px}
+.mate-box::before,.mate-box::after{content:"";position:absolute;width:26px;height:26px;border:1px solid var(--hielo);opacity:.7}
+.mate-box::before{top:10px;left:10px;border-right:0;border-bottom:0}
+.mate-box::after{bottom:10px;right:10px;border-left:0;border-top:0}
+#mate{width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
+#mate:active{cursor:grabbing}
+.pie{position:absolute;left:16px;bottom:14px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-2)}
+.lista-raiz{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px}
+.lista-raiz li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;padding-top:14px;border-top:1px solid var(--linea)}
+.lista-raiz b{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);min-width:9ch}
+.lista-raiz span{color:var(--texto-2)}
+@media (max-width:860px){.raiz{grid-template-columns:minmax(0,1fr)}}
+
+/* Caso real */
+.caso{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,6vw,72px);align-items:center}
+.puntos{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px}
+.puntos li{display:flex;gap:12px;align-items:flex-start;color:var(--texto-2)}
+.puntos li::before{content:"";flex:none;width:8px;height:8px;margin-top:9px;border-radius:2px;background:var(--hielo);box-shadow:0 0 12px var(--hielo);transform:rotate(45deg)}
+.puntos strong{color:var(--texto)}
+.fono{justify-self:center;width:100%;max-width:360px;border-radius:30px;border:1px solid var(--linea);background:linear-gradient(180deg,#121a35,#0c1228);padding:10px;box-shadow:0 40px 80px -30px rgba(0,0,0,.9),0 0 0 6px rgba(168,236,255,.03);transform:perspective(1200px) rotateY(-10deg) rotateX(4deg)}
+.fono-top{display:flex;align-items:center;gap:10px;padding:10px 12px 12px;border-bottom:1px solid var(--linea)}
+.avatar{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--hielo),#2b4a8f);flex:none}
+.fono-top b{display:block;font-size:14px}
+.fono-top small{font-size:12px;color:var(--hielo)}
+.chat{display:grid;gap:10px;padding:16px 8px 12px}
+.msg{max-width:84%;padding:9px 12px 6px;border-radius:14px;font-size:14px;line-height:1.45}
+.msg time{display:block;text-align:right;font-family:var(--f-mono);font-size:10px;color:var(--texto-2);margin-top:3px}
+.msg.cli{justify-self:end;background:rgba(233,168,76,.16);border:1px solid rgba(233,168,76,.3);border-bottom-right-radius:4px}
+.msg.bot{justify-self:start;background:rgba(168,236,255,.07);border:1px solid var(--linea);border-bottom-left-radius:4px}
+.escribiendo{justify-self:start;display:flex;gap:4px;padding:10px 14px;border-radius:14px;background:rgba(168,236,255,.07);border:1px solid var(--linea)}
+.escribiendo i{width:6px;height:6px;border-radius:50%;background:var(--hielo);opacity:.4;animation:pulso 1.2s infinite}
+.escribiendo i:nth-child(2){animation-delay:.2s}.escribiendo i:nth-child(3){animation-delay:.4s}
+@keyframes pulso{50%{opacity:1;transform:translateY(-2px)}}
+.nota-chat{text-align:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2);margin:14px 0 0}
+@media (max-width:860px){.caso{grid-template-columns:minmax(0,1fr)}.fono{transform:none}}
+
+/* Proceso */
+.pasos{list-style:none;padding:0;margin:48px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;position:relative;counter-reset:paso}
+.pasos::before{content:"";position:absolute;left:0;right:0;top:21px;height:1px;background:linear-gradient(90deg,var(--hielo),var(--ocre));opacity:.5}
+.pasos li{position:relative;counter-increment:paso;display:grid;gap:10px;align-content:start;min-width:0}
+.pasos li::before{content:counter(paso,decimal-leading-zero);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--noche);background:var(--hielo);box-shadow:0 0 0 6px var(--noche),0 0 24px rgba(168,236,255,.5)}
+.pasos li:last-child::before{background:var(--ocre);box-shadow:0 0 0 6px var(--noche),0 0 24px rgba(233,168,76,.5)}
+.pasos h3{font-family:var(--f-display);font-weight:600;font-size:17px;margin:8px 0 0}
+.pasos p{margin:0;color:var(--texto-2);font-size:15px}
+@media (max-width:860px){
+  .pasos{grid-template-columns:minmax(0,1fr);gap:28px}
+  .pasos::before{left:21px;right:auto;top:0;bottom:0;width:1px;height:auto;background:linear-gradient(180deg,var(--hielo),var(--ocre))}
+  .pasos li{grid-template-columns:44px 1fr;column-gap:18px}
+  .pasos li::before{grid-row:span 2}
+  .pasos h3{margin:0;align-self:center}
+  .pasos p{grid-column:2}
+}
+
+/* Contacto */
+.cta{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(233,168,76,.35);padding:clamp(28px,5vw,56px);
+  background:radial-gradient(600px 300px at 90% 0%,rgba(168,236,255,.14),transparent 60%),radial-gradient(500px 300px at 0% 100%,rgba(233,168,76,.18),transparent 60%),var(--noche-2);
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:32px;align-items:center}
+.cta h2{max-width:18ch}
+.numero{display:grid;gap:14px;justify-items:start}
+.numero .etq{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--texto-2)}
+.numero output{font-family:var(--f-display);font-weight:600;font-size:clamp(1.4rem,3.2vw,2rem);letter-spacing:-.01em;color:var(--texto);font-variant-numeric:tabular-nums;user-select:all}
+.numero .acciones{gap:10px}
+.btn-copiar{font-size:14px;padding:11px 18px}
+@media (max-width:860px){.cta{grid-template-columns:minmax(0,1fr)}}
+
+/* Pie */
+footer .in{padding-block:36px 44px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center;border-top:1px solid var(--linea);color:var(--texto-2);font-size:14px}
+footer .capa-pie{background:var(--capa)}
+footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="fondo" aria-hidden="true"></div>
+<canvas id="valle" aria-hidden="true"></canvas>
+<div class="etiquetas" id="etiquetas" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap"><div class="in">
+    <a class="marca" href="#inicio" aria-label="Solution IA, inicio">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M2.5 27 L12.5 9.5 L18 18 L21.5 13 L29.5 27 Z" fill="none" stroke="#A8ECFF" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M9.6 14.6 L12.5 9.5 L15.3 13.8 L13.6 13 L12 14.4 Z" fill="#A8ECFF" opacity=".85"/>
+        <circle cx="12.5" cy="9.5" r="2.6" fill="#E9A84C"/>
+        <path d="M12.5 6.9 V3 M21.5 13 V8" stroke="#E9A84C" stroke-width="1.2"/>
+        <circle cx="21.5" cy="6.8" r="1.3" fill="#A8ECFF"/>
+      </svg>
+      <span>Solution <b>IA</b></span>
+    </a>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#servicios">Servicios</a>
+      <a href="#raiz">Nosotros</a>
+      <a href="#caso">Caso real</a>
+      <a href="#proceso">Cómo trabajamos</a>
+      <a class="btn btn-ocre" href="https://wa.me/51953190695?text=Hola%20Solution%20IA%2C%20quiero%20una%20asesor%C3%ADa" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2c0 1.2.9 2.4 1 2.5.1.2 1.7 2.7 4.2 3.8 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>
+        Escríbenos
+      </a>
+    </nav>
+  </div></div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap"><div class="in">
+      <p class="coord"><span>12°04′S · 75°12′O</span><span>Huancayo · 3 259 m s. n. m.</span><span>Valle del Mantaro</span></p>
+      <h1>Inteligencia artificial con <em>raíz wanka</em></h1>
+      <p class="bajada">Creamos <strong>chatbots de WhatsApp, páginas web y sistemas</strong> para que las MYPES de Huancayo atiendan a toda hora, vendan más y tengan sus números en orden.</p>
+      <div class="acciones">
+        <a class="btn btn-ocre" href="https://wa.me/51953190695?text=Hola%20Solution%20IA%2C%20quiero%20una%20asesor%C3%ADa" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2c0 1.2.9 2.4 1 2.5.1.2 1.7 2.7 4.2 3.8 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>
+          Agenda tu asesoría
+        </a>
+        <a class="btn btn-linea" href="#servicios">Ver servicios</a>
+      </div>
+      <div class="datos">
+        <div class="dato"><b>24/7</b><span>Atención por WhatsApp</span></div>
+        <div class="dato"><b>8:00–18:00</b><span>Citas todos los días</span></div>
+        <div class="dato"><b>Virtual o presencial</b><span>Junín y otras ciudades</span></div>
+      </div>
+    </div></div>
+  </section>
+
+  <div class="capa">
+    <section class="bloque" id="servicios">
+      <div class="wrap"><div class="in">
+        <p class="ceja">Servicios</p>
+        <h2>Todo lo que tu negocio necesita para dar el salto digital</h2>
+        <p class="lead">Empezamos por lo que más tiempo te quita. Puedes contratar un solo servicio o combinarlos.</p>
+        <div class="grid-serv">
+          <article class="card destacada">
+            <span class="tag">Atención</span>
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01" stroke-width="2.4"/></svg></div>
+            <h3>Chatbots y agentes IA en WhatsApp</h3>
+            <p>Un asistente que responde consultas, toma reservas y agenda citas a cualquier hora, con el tono de tu negocio.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Presencia</span>
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M6.5 6.5h.01M9 6.5h.01" stroke-width="2.2"/></svg></div>
+            <h3>Páginas web</h3>
+            <p>Webs rápidas, pensadas para celular, con botón directo a tu WhatsApp y visibles en Google.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Contenido</span>
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 15l4-4 3 3 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/></svg></div>
+            <h3>Redes sociales y contenido</h3>
+            <p>Creamos tus cuentas de Gmail, Facebook, Instagram y TikTok, y producimos contenido con IA.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Operación</span>
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></div>
+            <h3>Inventarios y cajas</h3>
+            <p>Control de stock y caja diaria en Google Sheets, conectado con Zapier para que se llene solo.</p>
+          </article>
+          <article class="card destacada">
+            <span class="tag">Finanzas</span>
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 20h18"/><rect x="5" y="12" width="3" height="6"/><rect x="10.5" y="8" width="3" height="10"/><rect x="16" y="4" width="3" height="14"/></svg></div>
+            <h3>Asesoría financiera</h3>
+            <p>Te preparamos para acceder a créditos, con experiencia real en el sistema financiero y alianzas con bancos y cajas.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Plataformas</span>
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+            <h3>Booking, Agoda y Google</h3>
+            <p>Damos de alta tu hospedaje o local donde te buscan los viajeros que llegan al valle.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Delivery</span>
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
+            <h3>Rappi y Llamafood</h3>
+            <p>Dejamos tu restaurante listo para vender por apps de comida, con carta, fotos y horarios.</p>
+          </article>
+          <article class="card">
+            <span class="tag">A medida</span>
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div>
+            <h3>Aplicaciones a medida</h3>
+            <p>Si tu proceso no encaja en ninguna herramienta existente, construimos la tuya.</p>
+          </article>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="bloque" id="raiz">
+      <div class="wrap"><div class="in raiz">
+        <div class="mate-box" id="mateBox">
+          <canvas id="mate" role="img" aria-label="Mate burilado en 3D con montañas del Huaytapallana y circuitos grabados"></canvas>
+          <span class="pie">Mate burilado 3D · arrastra para girarlo</span>
+        </div>
+        <div>
+          <p class="ceja">Cochas · Huancayo</p>
+          <h2>Del mate burilado al circuito</h2>
+          <p class="lead">En Cochas, los artesanos graban historias completas sobre un mate. Nosotros grabamos los procesos de tu negocio en sistemas que trabajan solos. Misma paciencia, mismo detalle, herramientas nuevas.</p>
+          <ul class="lista-raiz">
+            <li><b>Local</b><span>Somos de Huancayo. Conocemos a la MYPE del valle porque trabajamos con ella todos los días.</span></li>
+            <li><b>Cercano</b><span>Te visitamos en tu negocio o nos conectamos por videollamada. Hablamos claro, sin tecnicismos.</span></li>
+            <li><b>Medible</b><span>Cada solución se conecta a tus números: reservas, ventas, caja y clientes.</span></li>
+          </ul>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="bloque" id="caso">
+      <div class="wrap"><div class="in caso">
+        <div>
+          <p class="ceja">Caso real · La Merced</p>
+          <h2>Hospedaje Confort ya atiende con inteligencia artificial</h2>
+          <p class="lead">Implementamos un asistente IA en el WhatsApp oficial del hotel. Los huéspedes escriben al mismo número de siempre y reciben respuesta al instante.</p>
+          <ul class="puntos">
+            <li><span><strong>Responde de día y de noche</strong>, incluso cuando el encargado está ocupado o descansando.</span></li>
+            <li><span><strong>Habla como el hotel</strong>: conoce sus habitaciones, servicios y ubicación.</span></li>
+            <li><span><strong>Deriva a una persona</strong> cuando el huésped necesita algo especial.</span></li>
+            <li><span><strong>Construido a medida</strong> con la API oficial de WhatsApp Business y el modelo Claude.</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="fono" role="figure" aria-label="Conversación de ejemplo con el asistente de un hospedaje">
+            <div class="fono-top">
+              <span class="avatar" aria-hidden="true"></span>
+              <div><b>Asistente del hospedaje</b><small>en línea</small></div>
+            </div>
+            <div class="chat">
+              <div class="msg cli">Hola, ¿tienen habitación doble para este sábado?<time>23:14</time></div>
+              <div class="msg bot">¡Hola! Sí, tenemos habitaciones dobles disponibles para el sábado. ¿Para cuántas noches sería tu estadía?<time>23:14</time></div>
+              <div class="msg cli">Dos noches, llegamos en la tarde.<time>23:15</time></div>
+              <div class="msg bot">Perfecto. Te envío las opciones con sus tarifas y te dejo la reserva lista para que el encargado la confirme.<time>23:15</time></div>
+              <div class="escribiendo" aria-hidden="true"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <p class="nota-chat">Conversación de ejemplo · 11:14 p. m.</p>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="bloque" id="proceso">
+      <div class="wrap"><div class="in">
+        <p class="ceja">Cómo trabajamos</p>
+        <h2>De la primera conversación a tu sistema funcionando</h2>
+        <ol class="pasos">
+          <li><h3>Diagnóstico</h3><p>Visitamos tu negocio o hacemos videollamada y vemos dónde pierdes tiempo o clientes.</p></li>
+          <li><h3>Demo con tu información</h3><p>Te mostramos el asistente funcionando con los datos de tu negocio antes de conectarlo a tu número real.</p></li>
+          <li><h3>Implementación</h3><p>Conectamos el bot, la web o el sistema a tus canales reales y capacitamos a tu equipo.</p></li>
+          <li><h3>Acompañamiento</h3><p>Ajustamos respuestas, revisamos resultados y sumamos mejoras mes a mes.</p></li>
+        </ol>
+      </div></div>
+    </section>
+
+    <section class="bloque" id="contacto">
+      <div class="wrap"><div class="in">
+        <div class="cta">
+          <div>
+            <p class="ceja">Contacto</p>
+            <h2>Conversemos sobre tu negocio</h2>
+            <p class="lead">Citas todos los días de 8:00 a 18:00, virtual o presencial. También viajamos a otras ciudades. Al escribirnos te responde nuestro asistente IA: pruébalo tú mismo.</p>
+          </div>
+          <div class="numero">
+            <span class="etq">WhatsApp de Solution IA</span>
+            <output id="num">+51 953 190 695</output>
+            <div class="acciones">
+              <a class="btn btn-ocre" href="https://wa.me/51953190695?text=Hola%20Solution%20IA%2C%20quiero%20una%20asesor%C3%ADa" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2c0 1.2.9 2.4 1 2.5.1.2 1.7 2.7 4.2 3.8 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>
+                Escribir por WhatsApp
+              </a>
+              <button class="btn btn-linea btn-copiar" type="button" id="copiar" data-copiar="+51953190695" aria-controls="num"><span class="btn-label">Copiar número</span></button>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="capa-pie"><div class="wrap"><div class="in">
+    <span class="marca" style="font-size:15px">Solution <b>IA</b></span>
+    <span>Huancayo, Junín, Perú</span>
+    <span class="mono">© 2026 Solution IA</span>
+  </div></div></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Copiar número */
+  var btnCopiar = document.getElementById('copiar');
+  btnCopiar.addEventListener('click', function(){
+    var label = btnCopiar.querySelector('.btn-label');
+    var ok = function(){ label.textContent = 'Copiado'; setTimeout(function(){ label.textContent = 'Copiar número'; }, 1800); };
+    var fallback = function(){
+      var el = document.getElementById('num'); var r = document.createRange(); r.selectNodeContents(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); label.textContent = 'Número seleccionado';
+      setTimeout(function(){ label.textContent = 'Copiar número'; }, 2200);
+    };
+    try { navigator.clipboard.writeText(btnCopiar.getAttribute('data-copiar')).then(ok, fallback); } catch(e){ fallback(); }
+  });
+
+  /* Tarjetas con inclinación 3D */
+  if(!reduce && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('.card').forEach(function(c){
+      c.addEventListener('pointermove', function(e){
+        var r = c.getBoundingClientRect(); var px = (e.clientX - r.left)/r.width - .5, py = (e.clientY - r.top)/r.height - .5;
+        c.style.setProperty('--ry', (px*14).toFixed(2)+'deg'); c.style.setProperty('--rx', (-py*14).toFixed(2)+'deg');
+        c.style.setProperty('--gx', ((px+.5)*100).toFixed(1)+'%'); c.style.setProperty('--gy', ((py+.5)*100).toFixed(1)+'%');
+      });
+      c.addEventListener('pointerleave', function(){ c.style.setProperty('--rx','0deg'); c.style.setProperty('--ry','0deg'); });
+    });
+  }
+
+  if(typeof THREE === 'undefined') return;
+  var gl = false;
+  try { var tc = document.createElement('canvas'); gl = !!(tc.getContext('webgl') || tc.getContext('experimental-webgl')); } catch(e){ gl = false; }
+  if(!gl){ document.getElementById('valle').hidden = true; document.getElementById('mateBox').hidden = true; return; }
+
+  /* Ruido para el relieve */
+  function hash(x,y){ var h = Math.sin(x*127.1 + y*311.7)*43758.5453; return h - Math.floor(h); }
+  function noise(x,y){
+    var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+    var u = xf*xf*(3-2*xf), v = yf*yf*(3-2*yf);
+    var a = hash(xi,yi), b = hash(xi+1,yi), c = hash(xi,yi+1), d = hash(xi+1,yi+1);
+    return a + (b-a)*u + (c-a)*v + (a-b-c+d)*u*v;
+  }
+  function fbm(x,y){ var s=0, a=.5, f=1; for(var i=0;i<5;i++){ s += a*noise(x*f,y*f); f*=2; a*=.5; } return s; }
+  function smooth(a,b,x){ var t = Math.min(1, Math.max(0, (x-a)/(b-a))); return t*t*(3-2*t); }
+  function riverX(z){ return Math.sin(z*0.035)*8; }
+  function heightAt(x,z){
+    var dx = x - riverX(z);
+    var h = fbm(x*0.035+10, z*0.035+3)*10;
+    h += Math.pow(Math.abs(dx)/38, 2)*14;
+    var back = Math.max(0, (-z - 30)/60);
+    h += Math.pow(back,1.6)*(18 + fbm(x*0.06, z*0.06)*48);
+    return h - 6;
+  }
+  function glowTexture(){
+    var c = document.createElement('canvas'); c.width = c.height = 128; var g = c.getContext('2d');
+    var gr = g.createRadialGradient(64,64,0,64,64,64);
+    gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(.25,'rgba(255,255,255,.45)'); gr.addColorStop(1,'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.fillRect(0,0,128,128); return new THREE.CanvasTexture(c);
+  }
+
+  /* ---------- Escena 1: Valle del Mantaro ---------- */
+  (function valle(){
+    var canvas = document.getElementById('valle');
+    var small = window.innerWidth < 760;
+    var renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: !small, powerPreference: 'high-performance'});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 1.75));
+    renderer.setClearColor(0x0A0E1F, 1);
+    var scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0A0E1F, 0.0058);
+    var camera = new THREE.PerspectiveCamera(55, 1, 0.1, 800);
+    var base = {x:0, y:16, z:46};
+    var look = new THREE.Vector3(0,10,-60);
+
+    var seg = small ? 96 : 160;
+    var geo = new THREE.PlaneGeometry(260, 240, seg, seg);
+    geo.rotateX(-Math.PI/2);
+    var pos = geo.attributes.position, colors = new Float32Array(pos.count*3);
+    var cLow = new THREE.Color(0xE9A84C), cMid = new THREE.Color(0x3549A0), cHigh = new THREE.Color(0xF2FBFF), tmp = new THREE.Color();
+    var peak = {x:0, y:-1e9, z:0};
+    for(var i=0;i<pos.count;i++){
+      var x = pos.getX(i), z = pos.getZ(i), h = heightAt(x,z);
+      pos.setY(i,h);
+      tmp.copy(cLow).lerp(cMid, smooth(-7,6,h)).lerp(cHigh, smooth(24,42,h));
+      colors[i*3] = tmp.r; colors[i*3+1] = tmp.g; colors[i*3+2] = tmp.b;
+      if(z < -50 && Math.abs(x) < 45 && h > peak.y) peak = {x:x, y:h, z:z};
+    }
+    geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+    scene.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({vertexColors:true, wireframe:true, transparent:true, opacity:.3})));
+    scene.add(new THREE.Points(geo, new THREE.PointsMaterial({vertexColors:true, size: small ? .6 : .45, transparent:true, opacity:.95})));
+
+    /* Río Mantaro */
+    var rp = [];
+    for(var zz=110; zz>=-70; zz-=1.5){ var rx = riverX(zz); rp.push(new THREE.Vector3(rx, heightAt(rx,zz)+0.9, zz)); }
+    var rio = new THREE.CatmullRomCurve3(rp);
+    scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(rio.getPoints(400)), new THREE.LineBasicMaterial({color:0xA8ECFF, transparent:true, opacity:.75})));
+    var NF = small ? 50 : 90, flowPos = new Float32Array(NF*3), flowGeo = new THREE.BufferGeometry();
+    flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos,3));
+    scene.add(new THREE.Points(flowGeo, new THREE.PointsMaterial({color:0xCFF6FF, size:1.2, transparent:true, opacity:.95, depthWrite:false, blending:THREE.AdditiveBlending})));
+
+    /* Núcleo IA */
+    var orbPos = new THREE.Vector3(small ? 6 : 30, small ? 38 : 30, small ? -58 : -38);
+    var orb = new THREE.Group(); orb.position.copy(orbPos);
+    var shell = new THREE.Mesh(new THREE.IcosahedronGeometry(6.5,1), new THREE.MeshBasicMaterial({color:0xA8ECFF, wireframe:true, transparent:true, opacity:.55, fog:false}));
+    var core = new THREE.Mesh(new THREE.IcosahedronGeometry(3.4,0), new THREE.MeshBasicMaterial({color:0xE9A84C, wireframe:true, fog:false}));
+    var glow = new THREE.Mesh(new THREE.SphereGeometry(2.1,24,24), new THREE.MeshBasicMaterial({color:0xFFE2B0, fog:false}));
+    var ring1 = new THREE.Mesh(new THREE.TorusGeometry(9.5,.06,8,160), new THREE.MeshBasicMaterial({color:0xA8ECFF, transparent:true, opacity:.6, fog:false}));
+    var ring2 = new THREE.Mesh(new THREE.TorusGeometry(11.8,.045,8,160), new THREE.MeshBasicMaterial({color:0xE9A84C, transparent:true, opacity:.5, fog:false}));
+    ring1.rotation.x = Math.PI*0.42; ring2.rotation.x = Math.PI*0.6; ring2.rotation.y = .4;
+    var halo = new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture(), color:0xA8ECFF, transparent:true, opacity:.5, depthWrite:false, blending:THREE.AdditiveBlending, fog:false}));
+    halo.scale.set(36,36,1);
+    orb.add(halo, shell, core, glow, ring1, ring2);
+    scene.add(orb);
+
+    /* Estrellas */
+    var NS = small ? 600 : 1300, sp = new Float32Array(NS*3);
+    for(var s=0;s<NS;s++){ sp[s*3] = (Math.random()-.5)*600; sp[s*3+1] = 60 + Math.random()*220; sp[s*3+2] = -260 + Math.random()*260; }
+    var sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(sp,3));
+    scene.add(new THREE.Points(sg, new THREE.PointsMaterial({color:0xDCEBFF, size:.9, transparent:true, opacity:.7, fog:false})));
+
+    /* Ciudades del valle conectadas al núcleo */
+    var towns = [
+      {n:'Huancayo', d:'3 259 m', z:-4, side:11},
+      {n:'Chupaca', z:2, side:-15},
+      {n:'Concepción', z:-26, side:9},
+      {n:'Jauja', z:-52, side:5}
+    ];
+    var arcs = [], labels = [];
+    var labelsEl = document.getElementById('etiquetas');
+    function addLabel(text, sub, p, onlyBig){
+      if(onlyBig && small) return;
+      var el = document.createElement('div'); el.className = 'eti';
+      el.textContent = text; if(sub){ var sm = document.createElement('small'); sm.textContent = sub; el.appendChild(sm); }
+      labelsEl.appendChild(el); labels.push({el:el, p:p});
+    }
+    towns.forEach(function(t, k){
+      var x = riverX(t.z) + t.side, y = heightAt(x, t.z), p = new THREE.Vector3(x, y, t.z);
+      var mk = new THREE.Mesh(new THREE.OctahedronGeometry(.9,0), new THREE.MeshBasicMaterial({color:0xE9A84C, fog:false}));
+      mk.position.copy(p); mk.position.y += .9; scene.add(mk);
+      var top = p.clone(); top.y += 7;
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p, top]), new THREE.LineBasicMaterial({color:0xE9A84C, transparent:true, opacity:.7})));
+      var mid = top.clone().add(orbPos).multiplyScalar(.5); mid.y += 16;
+      var curve = new THREE.QuadraticBezierCurve3(top, mid, orbPos);
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)), new THREE.LineBasicMaterial({color:0xA8ECFF, transparent:true, opacity:.22})));
+      arcs.push({c:curve, o:k*.23});
+      addLabel(t.n, t.d || null, top.clone().add(new THREE.Vector3(0,1.5,0)), k > 0);
+    });
+    addLabel('Huaytapallana', '5 557 m', new THREE.Vector3(peak.x, peak.y + 3, peak.z), false);
+    addLabel('Núcleo IA', null, orbPos.clone().add(new THREE.Vector3(0,14,0)), true);
+
+    var NP = arcs.length*2, pkPos = new Float32Array(NP*3), pkGeo = new THREE.BufferGeometry();
+    pkGeo.setAttribute('position', new THREE.BufferAttribute(pkPos,3));
+    scene.add(new THREE.Points(pkGeo, new THREE.PointsMaterial({color:0xFFFFFF, size:1.8, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, fog:false})));
+
+    var W = 1, H = 1, mx = 0, my = 0, cx = 0, cy = 0, v = new THREE.Vector3(), tv = new THREE.Vector3();
+    window.addEventListener('pointermove', function(e){ mx = e.clientX/window.innerWidth - .5; my = e.clientY/window.innerHeight - .5; }, {passive:true});
+
+    function placeLabels(){
+      var alpha = 1 - Math.min(1, window.scrollY/(window.innerHeight*0.55));
+      labelsEl.style.opacity = alpha.toFixed(3);
+      if(alpha <= .01) return;
+      for(var i=0;i<labels.length;i++){
+        var L = labels[i]; v.copy(L.p).project(camera);
+        var vis = v.z < 1 && Math.abs(v.x) < 1.02 && Math.abs(v.y) < 1.02;
+        L.el.style.visibility = vis ? 'visible' : 'hidden';
+        if(vis) L.el.style.transform = 'translate(' + ((v.x+1)/2*W).toFixed(1) + 'px,' + ((1-v.y)/2*H).toFixed(1) + 'px) translate(-50%,-100%)';
+      }
+    }
+
+    function frame(time){
+      var t = (time || 0)*0.001;
+      var sf = reduce ? 0 : Math.min(1, window.scrollY/(window.innerHeight*1.4));
+      cx += (mx - cx)*.04; cy += (my - cy)*.04;
+      if(reduce){ cx = 0; cy = 0; }
+      camera.position.set(base.x + cx*8, base.y - cy*3 + sf*14, base.z - sf*10);
+      look.set(cx*4, 10 - sf*6, -60);
+      camera.lookAt(look);
+
+      shell.rotation.y = t*.15; shell.rotation.x = t*.07;
+      core.rotation.y = -t*.4; core.rotation.z = t*.2;
+      ring1.rotation.z = t*.3; ring2.rotation.z = -t*.22;
+      glow.scale.setScalar(1 + Math.sin(t*2.2)*.08);
+      orb.position.y = orbPos.y + Math.sin(t*.8)*.8;
+
+      for(var i=0;i<NF;i++){ rio.getPointAt(((i/NF) + t*0.018) % 1, tv); flowPos[i*3] = tv.x; flowPos[i*3+1] = tv.y + .3; flowPos[i*3+2] = tv.z; }
+      flowGeo.attributes.position.needsUpdate = true;
+      for(var a=0;a<arcs.length;a++){
+        for(var j=0;j<2;j++){
+          var u = (t*0.22 + arcs[a].o + j*.5) % 1; arcs[a].c.getPoint(u, tv);
+          var q = (a*2 + j)*3; pkPos[q] = tv.x; pkPos[q+1] = tv.y; pkPos[q+2] = tv.z;
+        }
+      }
+      pkGeo.attributes.position.needsUpdate = true;
+
+      renderer.render(scene, camera);
+      placeLabels();
+      if(!reduce) requestAnimationFrame(frame);
+    }
+    function resize(){
+      W = window.innerWidth; H = window.innerHeight;
+      renderer.setSize(W, H, false); camera.aspect = W/H; camera.updateProjectionMatrix();
+      if(reduce) frame(0);
+    }
+    window.addEventListener('resize', resize);
+    if(reduce) window.addEventListener('scroll', placeLabels, {passive:true});
+    resize();
+    if(!reduce) requestAnimationFrame(frame);
+  })();
+
+  /* ---------- Escena 2: Mate burilado ---------- */
+  (function mate(){
+    var box = document.getElementById('mateBox'), canvas = document.getElementById('mate');
+    var renderer = new THREE.WebGLRenderer({canvas: canvas, antialias:true, alpha:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setClearColor(0x000000, 0);
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(32, 1, .1, 100);
+    camera.position.set(0, 1.6, 17); camera.lookAt(0, .2, 0);
+
+    var prof = [[0,-3],[1.3,-2.88],[2.2,-2.4],[2.72,-1.5],[2.85,-.4],[2.65,.6],[2.15,1.5],[1.5,2.2],[1.05,2.75],[.85,3.2],[.88,3.5],[.7,3.72],[.01,3.8]]
+      .map(function(p){ return new THREE.Vector2(p[0], p[1]); });
+    var geo = new THREE.LatheGeometry(new THREE.SplineCurve(prof).getPoints(90), 128);
+
+    var Wt = 2048, Ht = 1024;
+    var cMap = document.createElement('canvas'); cMap.width = Wt; cMap.height = Ht;
+    var cEmi = document.createElement('canvas'); cEmi.width = Wt; cEmi.height = Ht;
+    var map = new THREE.CanvasTexture(cMap), emi = new THREE.CanvasTexture(cEmi);
+    map.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+    function dibujar(){
+      var g = cMap.getContext('2d'), ge = cEmi.getContext('2d');
+      var seed = 11; function rnd(){ seed = (seed*16807) % 2147483647; return (seed-1)/2147483646; }
+      var grd = g.createLinearGradient(0,0,0,Ht);
+      grd.addColorStop(0,'#c58a4c'); grd.addColorStop(.45,'#dcb07a'); grd.addColorStop(1,'#a96c38');
+      g.fillStyle = grd; g.fillRect(0,0,Wt,Ht);
+      ge.fillStyle = '#000'; ge.fillRect(0,0,Wt,Ht);
+      for(var i=0;i<9000;i++){ g.fillStyle = 'rgba(90,50,20,' + (rnd()*.08).toFixed(3) + ')'; g.fillRect(rnd()*Wt, rnd()*Ht, 2+rnd()*6, 1+rnd()*2); }
+      var tinta = '#3a210e';
+      g.strokeStyle = tinta; g.fillStyle = tinta; g.lineCap = 'round'; g.lineJoin = 'round';
+      function linea(y, w){ g.lineWidth = w || 5; g.beginPath(); g.moveTo(0,y); g.lineTo(Wt,y); g.stroke(); }
+      function zigzag(y, h, st){ g.lineWidth = 4; g.beginPath(); for(var x=0, k=0; x<=Wt+st; x+=st, k++){ g.lineTo(x, y + (k%2 ? h : 0)); } g.stroke(); }
+
+      /* Cuello: tramado */
+      g.lineWidth = 2;
+      for(var x=0;x<Wt;x+=14){ g.beginPath(); g.moveTo(x,0); g.lineTo(x+40,80); g.stroke(); }
+      linea(88); linea(214);
+      /* Escalonado andino */
+      g.lineWidth = 4; var st = 32;
+      for(var x0=0; x0<Wt; x0+=st*8){
+        g.beginPath(); g.moveTo(x0,196);
+        for(var k=0;k<3;k++){ g.lineTo(x0+st*k, 196-k*26-26); g.lineTo(x0+st*(k+1), 196-k*26-26); }
+        for(var k2=3;k2>0;k2--){ g.lineTo(x0+st*(7-k2), 196-k2*26); g.lineTo(x0+st*(8-k2), 196-k2*26); }
+        g.lineTo(x0+st*8,196); g.stroke();
+        g.beginPath(); g.arc(x0+st*3.5, 160, 9, 0, Math.PI*2); g.fill();
+      }
+      /* Leyenda */
+      g.font = '600 46px Unbounded, "Arial Black", sans-serif'; g.textBaseline = 'middle';
+      var txt = 'SOLUTION IA  ·  HUANCAYO  ·  VALLE DEL MANTARO  ·  ', tw = g.measureText(txt).width;
+      for(var tx=0; tx<Wt; tx+=tw){ g.fillText(txt, tx, 262); }
+      linea(306, 4); zigzag(322, 20, 26); linea(358, 4);
+
+      /* Panorama: Huaytapallana, inti y chacras */
+      var base = 560, n = 9;
+      for(var m=0;m<n;m++){
+        var cxm = (m+.5)*Wt/n + (rnd()-.5)*60, hm = 120 + rnd()*90, wm = 150 + rnd()*70;
+        g.save(); g.beginPath(); g.moveTo(cxm-wm, base); g.lineTo(cxm, base-hm); g.lineTo(cxm+wm, base); g.closePath(); g.clip();
+        g.lineWidth = 2; for(var hx=cxm-wm-hm; hx<cxm+wm; hx+=12){ g.beginPath(); g.moveTo(hx, base); g.lineTo(hx+hm, base-hm); g.stroke(); }
+        g.restore();
+        g.lineWidth = 4; g.beginPath(); g.moveTo(cxm-wm, base); g.lineTo(cxm, base-hm); g.lineTo(cxm+wm, base); g.stroke();
+        var sh = hm*.32;
+        g.fillStyle = '#f4e6cc'; g.beginPath(); g.moveTo(cxm - wm*sh/hm, base-hm+sh); g.lineTo(cxm, base-hm); g.lineTo(cxm + wm*sh/hm, base-hm+sh);
+        g.lineTo(cxm + wm*sh/hm*.4, base-hm+sh*.7); g.lineTo(cxm, base-hm+sh); g.lineTo(cxm - wm*sh/hm*.5, base-hm+sh*.75); g.closePath(); g.fill();
+        g.fillStyle = tinta; g.stroke();
+      }
+      for(var sx=0; sx<3; sx++){
+        var ix = 300 + sx*700, iy = 410;
+        g.lineWidth = 4; g.beginPath(); g.arc(ix, iy, 26, 0, Math.PI*2); g.stroke();
+        g.beginPath(); g.arc(ix, iy, 10, 0, Math.PI*2); g.fill();
+        for(var r=0;r<12;r++){ var an = r*Math.PI/6; g.beginPath(); g.moveTo(ix+Math.cos(an)*34, iy+Math.sin(an)*34); g.lineTo(ix+Math.cos(an)*48, iy+Math.sin(an)*48); g.stroke(); }
+      }
+      g.lineWidth = 5; g.beginPath();
+      for(var rx=0; rx<=Wt; rx+=8){ g.lineTo(rx, 580 + Math.sin(rx*0.012)*10); } g.stroke();
+      g.lineWidth = 2;
+      for(var fx=0; fx<Wt; fx+=48){ g.beginPath(); g.moveTo(fx, 598); g.lineTo(fx+30, 636); g.stroke(); }
+      linea(640, 5);
+
+      /* Circuito */
+      var filas = [672, 708, 744, 780, 816];
+      ge.lineCap = 'round'; ge.lineJoin = 'round';
+      for(var tr=0; tr<26; tr++){
+        var fy = Math.floor(rnd()*filas.length), x1 = rnd()*Wt, y1 = filas[fy];
+        var pts = [[x1,y1]], cxp = x1, cyp = y1;
+        for(var sgm=0; sgm<3; sgm++){
+          cxp += 60 + rnd()*140; pts.push([cxp, cyp]);
+          var nf = Math.min(filas.length-1, Math.max(0, fy + (rnd()<.5?-1:1))); var dy = filas[nf]-cyp;
+          cxp += Math.abs(dy); cyp = filas[nf]; fy = nf; pts.push([cxp, cyp]);
+        }
+        g.lineWidth = 4; g.beginPath(); pts.forEach(function(p,ix2){ ix2 ? g.lineTo(p[0],p[1]) : g.moveTo(p[0],p[1]); }); g.stroke();
+        ge.strokeStyle = 'rgba(90,210,255,.35)'; ge.lineWidth = 4; ge.beginPath(); pts.forEach(function(p,ix2){ ix2 ? ge.lineTo(p[0],p[1]) : ge.moveTo(p[0],p[1]); }); ge.stroke();
+        [pts[0], pts[pts.length-1]].forEach(function(p, e2){
+          g.lineWidth = 3; g.beginPath(); g.arc(p[0], p[1], 9, 0, Math.PI*2); g.stroke();
+          if(e2 === 1 || rnd() < .4){
+            g.fillStyle = '#5fd6ff'; g.beginPath(); g.arc(p[0], p[1], 6, 0, Math.PI*2); g.fill(); g.fillStyle = tinta;
+            ge.fillStyle = '#7fe6ff'; ge.shadowColor = '#7fe6ff'; ge.shadowBlur = 18; ge.beginPath(); ge.arc(p[0], p[1], 7, 0, Math.PI*2); ge.fill(); ge.shadowBlur = 0;
+          }
+        });
+      }
+      linea(850, 5); zigzag(866, 22, 30); linea(904, 4);
+      /* Base: puntos */
+      for(var bx=0; bx<Wt; bx+=40){ g.beginPath(); g.arc(bx+20, 950, 6, 0, Math.PI*2); g.fill(); }
+      for(var bx2=0; bx2<Wt; bx2+=20){ g.beginPath(); g.moveTo(bx2, 985); g.lineTo(bx2+10, 1024); g.lineWidth = 2; g.stroke(); }
+      map.needsUpdate = true; emi.needsUpdate = true;
+    }
+    dibujar();
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(function(){ dibujar(); if(reduce) render(); }); }
+
+    var mat = new THREE.MeshStandardMaterial({map:map, emissiveMap:emi, emissive:0xffffff, emissiveIntensity:1.3, roughness:.62, metalness:.05});
+    var mate = new THREE.Mesh(geo, mat); mate.position.y = -.2; mate.rotation.z = .06;
+    scene.add(mate);
+    scene.add(new THREE.AmbientLight(0x4a5480, .9));
+    var sol = new THREE.DirectionalLight(0xfff0d8, 1.15); sol.position.set(5,6,8); scene.add(sol);
+    var rim = new THREE.PointLight(0xA8ECFF, 1.6, 40); rim.position.set(-7,2,3); scene.add(rim);
+    var calido = new THREE.PointLight(0xE9A84C, .9, 30); calido.position.set(6,-3,4); scene.add(calido);
+
+    var ped = new THREE.Group(); ped.position.y = -3.6;
+    var pr1 = new THREE.Mesh(new THREE.TorusGeometry(3.4,.03,8,120), new THREE.MeshBasicMaterial({color:0xE9A84C}));
+    var pr2 = new THREE.Mesh(new THREE.TorusGeometry(4.3,.02,8,120), new THREE.MeshBasicMaterial({color:0xA8ECFF, transparent:true, opacity:.7}));
+    pr1.rotation.x = pr2.rotation.x = Math.PI/2;
+    var NPd = 140, pdp = new Float32Array(NPd*3);
+    for(var i=0;i<NPd;i++){ var an = i/NPd*Math.PI*2, rr = 5 + (i%3)*.25; pdp[i*3] = Math.cos(an)*rr; pdp[i*3+1] = 0; pdp[i*3+2] = Math.sin(an)*rr; }
+    var pdg = new THREE.BufferGeometry(); pdg.setAttribute('position', new THREE.BufferAttribute(pdp,3));
+    var pdots = new THREE.Points(pdg, new THREE.PointsMaterial({color:0xA8ECFF, size:.06, transparent:true, opacity:.8}));
+    var beamH = 8, beam = new THREE.Mesh(new THREE.CylinderGeometry(3.3, 4.3, beamH, 64, 1, true),
+      new THREE.MeshBasicMaterial({color:0xA8ECFF, transparent:true, opacity:.05, side:THREE.DoubleSide, depthWrite:false, blending:THREE.AdditiveBlending}));
+    beam.position.y = beamH/2;
+    ped.add(pr1, pr2, pdots, beam); scene.add(ped);
+
+    var vel = .006, drag = false, lastX = 0, running = false;
+    canvas.addEventListener('pointerdown', function(e){ drag = true; lastX = e.clientX; try{ canvas.setPointerCapture(e.pointerId); }catch(err){} });
+    canvas.addEventListener('pointermove', function(e){ if(!drag) return; var dx = e.clientX - lastX; lastX = e.clientX; mate.rotation.y += dx*0.01; vel = dx*0.0015; if(reduce) render(); });
+    ['pointerup','pointercancel','pointerleave'].forEach(function(ev){ canvas.addEventListener(ev, function(){ drag = false; }); });
+
+    function render(){ renderer.render(scene, camera); }
+    function loop(time){
+      if(!running) return;
+      var t = time*0.001;
+      if(!drag){ vel += (.006 - vel)*.02; mate.rotation.y += vel; }
+      mate.position.y = -.2 + Math.sin(t*1.1)*.12;
+      ped.rotation.y = -t*.3; pdots.rotation.y = t*.5;
+      render(); requestAnimationFrame(loop);
+    }
+    function resize(){ var s = box.clientWidth || 300; renderer.setSize(s, s, false); camera.aspect = 1; camera.updateProjectionMatrix(); render(); }
+    window.addEventListener('resize', resize); resize();
+    if(reduce){ render(); return; }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(en){ var vis = en[0].isIntersecting; if(vis && !running){ running = true; requestAnimationFrame(loop); } else if(!vis){ running = false; } }).observe(box);
+    } else { running = true; requestAnimationFrame(loop); }
+  })();
+})();
+</script>
+
+</html>
