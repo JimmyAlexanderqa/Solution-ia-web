@@ -139,9 +139,9 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.7
 .dia-top b{display:block;font-size:14px}
 .dia-top small{color:var(--menta);font-size:11px;font-family:var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
 .dia ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;position:relative}
-.dia ol::before{content:"";position:absolute;left:53px;top:12px;bottom:12px;width:2px;background:linear-gradient(180deg,#3BE3B0,#3AB8FF);opacity:.4}
-.dia li{display:grid;grid-template-columns:44px 1fr;gap:20px;align-items:start;padding:7px 0;position:relative}
-.dia li::after{content:"";position:absolute;left:49px;top:13px;width:10px;height:10px;border-radius:50%;background:var(--menta);box-shadow:0 0 10px var(--menta)}
+.dia ol::before{content:"";position:absolute;left:71px;top:12px;bottom:12px;width:2px;background:linear-gradient(180deg,#3BE3B0,#3AB8FF);opacity:.4}
+.dia li{display:grid;grid-template-columns:62px 1fr;gap:20px;align-items:start;padding:7px 0;position:relative}
+.dia li::after{content:"";position:absolute;left:67px;top:13px;width:10px;height:10px;border-radius:50%;background:var(--menta);box-shadow:0 0 10px var(--menta)}
 .dia time{font-family:var(--f-mono);font-size:12px;color:var(--texto-2);padding-top:2px;text-align:right}
 .dia li span{color:var(--texto-2);line-height:1.4}
 .dia li b{display:block;color:var(--texto);font-size:14px}
@@ -221,6 +221,82 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.7
   .pasos p{grid-column:2}
 }
 
+/* Franja de clientes */
+.prueba{padding-block:6px 10px}
+.prueba-in{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:14px 18px;border-radius:18px;background:rgba(6,24,45,.7);border:1px solid var(--linea)}
+.prueba-t{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--texto-2)}
+.cliente{display:flex;align-items:center;gap:10px;text-decoration:none;padding:6px 14px 6px 6px;border-radius:999px;border:1px solid var(--linea);background:rgba(2,14,28,.5);transition:border-color .2s}
+.cliente:hover{border-color:var(--linea-2)}
+.cliente img,.cli-ico{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none}
+.cli-ico{display:grid;place-items:center;background:rgba(58,184,255,.12);color:var(--cian)}
+.cli-ico svg{width:22px;height:22px}
+.cliente b{display:block;font-size:14px;line-height:1.2}
+.cliente small{color:var(--texto-2);font-size:12px}
+.prueba-n{margin-left:auto;font-size:13px;color:var(--texto-2)}
+@media (max-width:760px){.prueba-n{margin-left:0}}
+
+/* Resultados */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.stats{grid-template-columns:minmax(0,1fr)}}
+.stat{display:grid;gap:6px;align-content:start;padding:22px;border-radius:20px;background:linear-gradient(160deg,rgba(14,42,72,.75),rgba(6,24,45,.9));border:1px solid var(--linea);min-width:0}
+.stat strong{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,3.6vw,42px);line-height:1.05;letter-spacing:-.02em}
+.stat b{font-size:16px}
+.stat span{color:var(--texto-2);font-size:14px;line-height:1.5}
+.stat em{font-style:normal;justify-self:start;margin-top:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--menta);border:1px solid var(--linea-2);border-radius:999px;padding:3px 9px}
+
+/* Soluciones */
+.soluciones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:980px){.soluciones{grid-template-columns:minmax(0,1fr)}}
+.sol{display:flex;flex-direction:column;gap:14px;padding:26px;border-radius:22px;background:linear-gradient(165deg,rgba(14,42,72,.7),rgba(6,24,45,.9));border:1px solid var(--linea);min-width:0}
+.sol:first-child,.sol:nth-child(2){border-color:rgba(59,227,176,.35)}
+.sol-etq{align-self:flex-start;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--menta);background:rgba(59,227,176,.08);border:1px solid var(--linea-2);border-radius:999px;padding:4px 10px}
+.sol h3{font-family:var(--f-display);font-weight:600;font-size:22px;margin:0}
+.sol ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;flex:1;align-content:start}
+.sol li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;color:var(--texto-2);font-size:15px;line-height:1.45}
+.sol li svg{width:18px;height:18px;color:var(--menta);margin-top:2px}
+.sol .btn{align-self:flex-start}
+
+/* Casos */
+.casos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:900px){.casos{grid-template-columns:minmax(0,1fr)}}
+.caso-c{display:flex;flex-direction:column;border-radius:24px;overflow:hidden;background:linear-gradient(165deg,rgba(14,42,72,.7),rgba(6,24,45,.92));border:1px solid var(--linea);min-width:0}
+.caso-img{display:block;aspect-ratio:16/7;overflow:hidden;background:#0A1A2C;max-width:100%}
+.caso-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.caso-img-flota{display:flex;align-items:center;justify-content:center;padding:18px;background:radial-gradient(circle at 50% 40%,rgba(58,184,255,.2),transparent 70%),#06182D}
+.caso-img-flota img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;border-radius:12px}
+.caso-c:hover .caso-img img{transform:scale(1.03)}
+.caso-txt{display:flex;flex-direction:column;gap:12px;padding:24px;flex:1}
+.caso-tags{display:flex;flex-wrap:wrap;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-2)}
+.caso-tags span{border:1px solid var(--linea);border-radius:999px;padding:4px 10px}
+.caso-tags .tag-v{color:var(--menta);border-color:var(--linea-2)}
+.caso-tags .tag-p{color:#E9B866;border-color:rgba(233,184,102,.45)}
+.caso-txt h3{font-family:var(--f-display);font-weight:700;font-size:26px;margin:0}
+.caso-txt p{margin:0;color:var(--texto-2)}
+.caso-txt ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;flex:1;align-content:start}
+.caso-txt li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;font-size:15px}
+.caso-txt li svg{width:18px;height:18px;color:var(--menta);margin-top:2px}
+.mas-casos{text-align:center;margin:24px 0 0}
+.mas-casos a{color:var(--menta);font-weight:700;text-decoration:none}
+
+/* Contenido */
+.contenido{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(28px,5vw,64px);align-items:center}
+@media (max-width:860px){.contenido{grid-template-columns:minmax(0,1fr)}}
+.vid-card{display:flex;justify-content:center}
+.vid{width:min(100%,300px);border-radius:30px;padding:7px;background:linear-gradient(160deg,#16314f,#071a2e);border:1px solid rgba(120,190,255,.22);box-shadow:0 30px 60px -25px rgba(0,0,0,.8)}
+.vid video{display:block;width:100%;height:auto;aspect-ratio:464/848;border-radius:24px;background:#000}
+.resena{margin-top:22px;width:min(100%,360px);border-radius:16px;border:1px solid var(--linea)}
+
+/* Preguntas */
+.faq{display:grid;gap:10px;max-width:860px}
+.faq details{border-radius:16px;background:rgba(6,24,45,.7);border:1px solid var(--linea);padding:4px 20px}
+.faq details[open]{border-color:var(--linea-2)}
+.faq summary{cursor:pointer;font-weight:700;font-size:16px;padding:14px 0;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--menta);font-size:20px;line-height:1}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin:0 0 16px;color:var(--texto-2)}
+
 /* Contacto */
 .cta{position:relative;overflow:hidden;border-radius:28px;border:1px solid rgba(58,184,255,.32);padding:clamp(28px,5vw,60px);
   background:radial-gradient(600px 320px at 85% 50%,rgba(58,130,255,.3),transparent 65%),radial-gradient(500px 300px at 0% 100%,rgba(59,227,176,.16),transparent 60%),var(--bg-2);
@@ -263,11 +339,11 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
   <div class="wrap"><div class="in">
     <a class="marca" href="#inicio"><img src="img/logo.png" alt="SolutionIA · Automatiza tu negocio" width="871" height="263"></a>
     <nav class="menu" aria-label="Secciones">
-      <a href="#beneficios">Beneficios</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#caso">Caso real</a>
-      <a href="#campanas">Campañas</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#soluciones">Soluciones</a>
+      <a href="#casos">Casos</a>
       <a href="#proceso">Cómo trabajamos</a>
+      <a href="#preguntas">Preguntas</a>
       <a href="portafolio/">Portafolio</a>
     </nav>
     <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20quiero%20agendar%20una%20cita" target="_blank" rel="noopener">Agenda tu cita</a>
@@ -290,7 +366,7 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2c0 1.2.9 2.4 1 2.5.1.2 1.7 2.7 4.2 3.8 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>
             Agenda tu cita
           </a>
-          <a class="btn btn-sec" href="#beneficios">Ver beneficios</a>
+          <a class="btn btn-sec" href="#casos">Ver casos reales</a>
         </div>
         <div class="confianza">
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Asesoría personalizada</span>
@@ -318,6 +394,33 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
     </div></div>
   </section>
 
+  <section class="prueba" aria-label="Clientes">
+    <div class="wrap"><div class="in prueba-in">
+      <span class="prueba-t">Ya trabajan con nosotros</span>
+      <a class="cliente" href="portafolio/dconfort/"><img src="portafolio/dconfort/img/logo-ahora.webp" alt="" width="640" height="662"><span><b>Hotel D' Confort</b><small>La Merced, Chanchamayo</small></span></a>
+      <a class="cliente" href="portafolio/flota/"><span class="cli-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 16h14l-1.5-5.5A2 2 0 0 0 15.6 9H8.4a2 2 0 0 0-1.9 1.5z"/><path d="M4 16v3M20 16v3M9 9V6h6v3"/><circle cx="8" cy="16" r="1.5"/><circle cx="16" cy="16" r="1.5"/></svg></span><span><b>Flota de taxis</b><small>Huancayo · en implementación</small></span></a>
+      <span class="prueba-n">Atención virtual en todo el Perú</span>
+    </div></div>
+  </section>
+
+  <section class="bloque" id="resultados">
+    <div class="wrap"><div class="in">
+      <div class="cab">
+        <p class="ceja">Resultados</p>
+        <h2>Resultados reales, no promesas</h2>
+        <p class="lead">Esto es lo que ya funciona en negocios que confiaron en nosotros.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong class="grad-txt">127</strong><b>me gusta en TikTok en una semana</b><span>El mejor video de la cuenta anterior tenía 15.</span><em>Hotel D' Confort</em></div>
+        <div class="stat"><strong class="grad-txt">6</strong><b>habitaciones con catálogo</b><span>Fotos y precios dentro del WhatsApp del hotel, más un QR para pedir desde la habitación.</span><em>Hotel D' Confort</em></div>
+        <div class="stat"><strong class="grad-txt">24/7</strong><b>atención en WhatsApp</b><span>De día, de noche y en feriados. Cada reserva se guarda sola en Google Sheets.</span><em>Hotel D' Confort</em></div>
+        <div class="stat"><strong class="grad-txt">30 · 15 · 7 · 1</strong><b>días de aviso antes de cada vencimiento</b><span>SOAT, revisión técnica y licencias, directo al WhatsApp del dueño.</span><em>Control de Flota</em></div>
+        <div class="stat"><strong class="grad-txt">Lunes</strong><b>cierre de cuentas automático</b><span>Quién pagó, quién debe y cuánto, sin hacer cuentas a mano.</span><em>Control de Flota</em></div>
+        <div class="stat"><strong class="grad-txt">1 hora</strong><b>para dejar lista la app</b><span>Cargamos la flota desde Excel e instalamos la app en el celular.</span><em>Control de Flota</em></div>
+      </div>
+    </div></div>
+  </section>
+
   <section class="bloque" id="beneficios">
     <div class="wrap"><div class="in">
       <div class="cab">
@@ -329,17 +432,17 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
         <article class="bc grande">
           <div class="txt">
             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.6L12 15l-1.8-4.4L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2 2.2.8-2.2.8L18 21l-.8-2.4-2.2-.8 2.2-.8z"/></svg></span>
-            <h3>La IA trabaja contigo todo el día</h3>
-            <p>No reemplaza a tu equipo: se encarga de lo repetitivo. Mientras tú atiendes, la inteligencia artificial prepara reportes, crea publicaciones, vigila tu stock y responde a tus clientes.</p>
+            <h3>Así trabaja la IA en nuestros clientes</h3>
+            <p>No reemplaza a tu equipo: se encarga de lo repetitivo. Estos son momentos reales de un día en el Hotel D' Confort y en Control de Flota.</p>
           </div>
           <div class="dia" role="figure" aria-label="Ejemplo de un día de trabajo con inteligencia artificial en un negocio">
-            <div class="dia-top"><img src="img/robot-cabeza.webp" alt="" width="240" height="196"><div><b>Un día con IA en tu negocio</b><small>ejemplo</small></div></div>
+            <div class="dia-top"><img src="img/robot-cabeza.webp" alt="" width="240" height="196"><div><b>Un día con IA</b><small>de nuestros proyectos</small></div></div>
             <ol>
-              <li><time>7:00</time><span><b>Reporte listo</b>Ventas y caja de ayer, resumidas en tu celular.</span></li>
-              <li><time>9:30</time><span><b>Publicación creada</b>Texto e imagen para tus redes, listos para aprobar.</span></li>
-              <li><time>13:00</time><span><b>Alerta de stock</b>Tres productos por agotarse, con pedido sugerido.</span></li>
-              <li><time>18:30</time><span><b>Caja cuadrada</b>Ingresos y gastos del día registrados solos.</span></li>
-              <li><time>23:40</time><span><b>Cliente atendido</b>Consulta respondida y cita agendada para mañana.</span></li>
+              <li><time>8:00</time><span><b>Alerta de vencimientos</b>El dueño de taxis recibe en WhatsApp qué SOAT o licencia vence pronto.</span></li>
+              <li><time>14:30</time><span><b>Pedido desde la habitación</b>El huésped escanea el QR, elige y el pedido llega a recepción.</span></li>
+              <li><time>23:14</time><span><b>Consulta respondida</b>El asistente del hotel informa habitaciones y precios al instante.</span></li>
+              <li><time>23:40</time><span><b>Reserva registrada</b>Recepción recibe el aviso y la reserva queda en Google Sheets.</span></li>
+              <li><time>Lun 20:00</time><span><b>Cierre de cuentas</b>Llega al WhatsApp del dueño: quién pagó y quién debe.</span></li>
             </ol>
           </div>
         </article>
@@ -372,58 +475,114 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
     </div></div>
   </section>
 
-  <section class="bloque tinte" id="servicios">
+  <section class="bloque tinte" id="soluciones">
     <div class="wrap"><div class="in">
       <div class="cab">
-        <p class="ceja">Servicios</p>
-        <h2>Todo lo que tu negocio necesita para dar el salto digital</h2>
-        <p class="lead">Contrata un solo servicio o combínalos. Empezamos por lo que más tiempo o dinero te cuesta hoy.</p>
+        <p class="ceja">Soluciones</p>
+        <h2>Elige tu tipo de negocio</h2>
+        <p class="lead">Partimos de lo que ya funcionó en negocios como el tuyo, y lo adaptamos a tu caso.</p>
       </div>
-      <div class="grid-serv">
-        <article class="card top"><span class="etq">IA</span><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><h3>Automatización de procesos</h3><p>Tareas repetitivas que se hacen solas: registros, avisos, recordatorios y reportes.</p></article>
-        <article class="card top"><span class="etq">IA</span><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 20h16"/><path d="M4 16l5-5 4 3 7-8"/></svg></div><h3>Análisis de datos y reportes</h3><p>Tus ventas, gastos y clientes convertidos en información clara para decidir.</p></article>
-        <article class="card top"><span class="etq">IA</span><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 15l4-4 3 3 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/></svg></div><h3>Contenido con IA</h3><p>Publicaciones, videos e imágenes para TikTok, Facebook e Instagram.</p></article>
-        <article class="card top"><span class="etq">IA</span><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01" stroke-width="2.6"/></svg></div><h3>Asistentes virtuales</h3><p>Atención automática en WhatsApp y web, conectada con tu información.</p></article>
-        <article class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></div><h3>Inventarios y cajas</h3><p>Control de stock y caja diaria en Google Sheets, conectado con Zapier.</p></article>
-        <article class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div><h3>Páginas web</h3><p>Rápidas, pensadas para celular y listas para que te encuentren en Google.</p></article>
-        <article class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div><h3>Presencia en plataformas</h3><p>Google, Booking, Agoda, Rappi y Llamafood configurados para tu negocio.</p></article>
-        <article class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 20h18"/><rect x="5" y="12" width="3" height="6"/><rect x="10.5" y="8" width="3" height="10"/><rect x="16" y="4" width="3" height="14"/></svg></div><h3>Asesoría financiera</h3><p>Orientación para acceder a créditos, con alianzas con bancos y cajas.</p></article>
+      <div class="soluciones">
+        <article class="sol">
+          <span class="sol-etq">Probado en Hotel D' Confort</span>
+          <h3>Hoteles y hospedajes</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Logo e imagen de marca</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Facebook y TikTok desde cero</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Video promocional y reseñas convertidas en publicaciones</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Flyers de habitaciones y catálogo con QR</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Asistente con IA en WhatsApp las 24 horas</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Reservas que se guardan solas en Google Sheets</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Alta en Google, Booking y Agoda</span></li>
+          </ul>
+          <a class="btn btn-sec" href="portafolio/dconfort/">Ver el caso del hotel</a>
+        </article>
+        <article class="sol">
+          <span class="sol-etq">Probado en una flota de Huancayo</span>
+          <h3>Flotas de taxis y transporte</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Vencimientos de SOAT, revisión técnica y licencias en un semáforo</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Avisos por WhatsApp 30, 15, 7 y 1 día antes</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Cuenta semanal de cada chofer: pagos completos o parciales</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Deuda acumulada que se suma sola</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Cierre de cuentas cada lunes en tu WhatsApp</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>App en el celular, sin descargar de tiendas</span></li>
+          </ul>
+          <a class="btn btn-sec" href="portafolio/flota/">Ver Control de Flota</a>
+        </article>
+        <article class="sol">
+          <span class="sol-etq">Para cualquier negocio</span>
+          <h3>Tiendas, restaurantes y servicios</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Automatización de tareas repetitivas</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Reportes de ventas, gastos y clientes</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Contenido con IA para tus redes</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Asistentes virtuales en WhatsApp y web</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Inventarios y caja diaria en Google Sheets</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Páginas web y alta en Rappi o Llamafood</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Asesoría para acceder a créditos</span></li>
+          </ul>
+          <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20quiero%20agendar%20una%20cita" target="_blank" rel="noopener">Agenda tu cita</a>
+        </article>
       </div>
     </div></div>
   </section>
 
-  <section class="bloque" id="caso">
-    <div class="wrap"><div class="in caso">
-      <div>
-        <p class="ceja">Caso real · La Merced, Chanchamayo</p>
-        <h2>Hotel D' Confort ya trabaja con inteligencia artificial</h2>
-        <p class="lead">Implementamos un asistente con IA en el WhatsApp oficial del hotel. Los huéspedes escriben al número de siempre y reciben respuesta al instante, a cualquier hora.</p>
-        <ul class="puntos">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg><span><strong>Responde de día y de noche</strong>, incluso cuando el encargado está ocupado o descansando.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg><span><strong>Habla como el hotel</strong>: conoce sus habitaciones, servicios y cómo llegar.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg><span><strong>Deriva a una persona</strong> cuando el huésped necesita algo especial.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg><span><strong>Hecho a medida</strong> sobre la API oficial de WhatsApp Business.</span></li>
-        </ul>
-        <div class="acciones caso-links">
-          <a class="btn btn-pri" href="portafolio/">Ver portafolio completo</a>
-          <a class="btn btn-sec" href="dconfort/">Ver el catálogo en vivo</a>
+  <section class="bloque" id="casos">
+    <div class="wrap"><div class="in">
+      <div class="cab">
+        <p class="ceja">Casos de éxito</p>
+        <h2>Lo que ya construimos para negocios reales</h2>
+      </div>
+      <div class="casos">
+        <article class="caso-c">
+          <a class="caso-img" href="portafolio/dconfort/"><img src="portafolio/dconfort/img/portada-ahora.webp" alt="Nueva portada del Hotel D' Confort con su logo y una habitación" width="1400" height="521" loading="lazy"></a>
+          <div class="caso-txt">
+            <div class="caso-tags"><span class="tag-v">En funcionamiento</span><span>Hospedaje · La Merced</span></div>
+            <h3>Hotel D' Confort</h3>
+            <p>De no tener una imagen propia a tener marca, redes activas, catálogos con QR, un asistente con IA las 24 horas y reservas que se ordenan solas.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>127 me gusta en TikTok en una semana, frente a 15 antes</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Asistente en el WhatsApp oficial del hotel</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Cada reserva avisa a recepción y se guarda en Google Sheets</span></li>
+            </ul>
+            <div class="acciones"><a class="btn btn-pri" href="portafolio/dconfort/">Ver el caso completo</a><a class="btn btn-sec" href="dconfort/" target="_blank" rel="noopener">Catálogo en vivo</a></div>
+          </div>
+        </article>
+        <article class="caso-c">
+          <a class="caso-img caso-img-flota" href="portafolio/flota/"><img src="portafolio/flota/img/wa-alerta.webp" alt="Mensaje de WhatsApp con el resumen de vencimientos de una flota" width="466" height="326" loading="lazy"></a>
+          <div class="caso-txt">
+            <div class="caso-tags"><span class="tag-p">En implementación</span><span>Taxis · Huancayo</span></div>
+            <h3>Control de Flota</h3>
+            <p>Una app a medida para dueños de taxis: documentos que no se vencen sin aviso, cuentas semanales claras y un resumen que llega solo al WhatsApp.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Semáforo de vencimientos por placa</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Avisos automáticos 30, 15, 7 y 1 día antes</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Cierre de cuentas cada lunes</span></li>
+            </ul>
+            <div class="acciones"><a class="btn btn-pri" href="portafolio/flota/">Ver el caso completo</a></div>
+          </div>
+        </article>
+      </div>
+      <p class="mas-casos"><a href="portafolio/">Ver todo el portafolio →</a></p>
+    </div></div>
+  </section>
+
+  <section class="bloque tinte" id="contenido">
+    <div class="wrap"><div class="in contenido">
+      <div class="vid-card">
+        <div class="vid">
+          <video controls playsinline preload="none" poster="portafolio/dconfort/img/video-promo-poster.webp" aria-label="Video promocional del Hotel D' Confort">
+            <source src="portafolio/dconfort/img/video-promo.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este video.
+          </video>
         </div>
       </div>
       <div>
-        <div class="fono-wrap">
-          <div class="fono" role="figure" aria-label="Conversación de ejemplo con el asistente de un hotel">
-            <div class="fono-top"><img src="img/robot-cabeza.webp" alt="" width="240" height="196"><div><b>Asistente del hotel</b><small>en línea</small></div></div>
-            <div class="chat">
-              <div class="burb cli">Hola, ¿tienen habitación doble para este sábado?<time>23:14</time></div>
-              <div class="burb bot">¡Hola! Sí, tenemos habitaciones dobles disponibles para el sábado. ¿Para cuántas noches sería tu estadía?<time>23:14</time></div>
-              <div class="burb cli">Dos noches, llegamos en la tarde.<time>23:15</time></div>
-              <div class="burb bot">Perfecto. Te envío las opciones con sus tarifas y dejo tu reserva lista para que el encargado la confirme.<time>23:15</time></div>
-              <div class="escribiendo" aria-hidden="true"><i></i><i></i><i></i></div>
-            </div>
-          </div>
-          <img class="robot-asoma" src="img/robot.webp" alt="" width="580" height="900" loading="lazy">
-        </div>
-        <p class="nota-chat">Conversación de ejemplo · 11:14 p. m.</p>
+        <p class="ceja">Contenido que producimos</p>
+        <h2>Videos y publicaciones que muestran tu negocio real</h2>
+        <p class="lead">Para el Hotel D' Confort grabamos un video vertical que recorre cómo llegar, la cochera, las habitaciones y la recepción, y convertimos sus reseñas de Google en publicaciones con su marca.</p>
+        <img class="resena" src="portafolio/dconfort/img/resena-google.webp" alt="Publicación del Hotel D' Confort con una reseña de cinco estrellas en Google" width="900" height="900" loading="lazy">
       </div>
     </div></div>
   </section>
@@ -432,7 +591,7 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
     <div class="wrap"><div class="in">
       <div class="cab centro">
         <p class="ceja">Campañas</p>
-        <h2>Cada servicio, en una imagen</h2>
+        <h2>Nuestras campañas</h2>
         <p class="lead">Desliza para verlos. Si uno te interesa, escríbenos directo desde aquí.</p>
       </div>
       <div class="flujo" id="flujo" role="region" aria-roledescription="carrusel" aria-label="Afiches de servicios de SolutionIA" tabindex="0">
@@ -463,10 +622,27 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
       </div>
       <ol class="pasos">
         <li><h3>Diagnóstico</h3><p>Conversamos contigo y vemos dónde pierdes tiempo o clientes.</p></li>
-        <li><h3>Propuesta a tu medida</h3><p>Te mostramos cómo la IA resuelve tu caso, con ejemplos de tu propio negocio.</p></li>
-        <li><h3>Implementación</h3><p>Ponemos todo en marcha en tus canales reales y capacitamos a tu equipo.</p></li>
+        <li><h3>Prueba con tu información</h3><p>Antes de conectar tu número real, ves el asistente o la app funcionando con tus datos.</p></li>
+        <li><h3>Implementación</h3><p>Lo ponemos en marcha y capacitamos a tu equipo. Control de Flota queda listo en una reunión de una hora.</p></li>
         <li><h3>Acompañamiento</h3><p>Ajustamos respuestas, revisamos resultados y sumamos mejoras mes a mes.</p></li>
       </ol>
+    </div></div>
+  </section>
+
+  <section class="bloque" id="preguntas">
+    <div class="wrap"><div class="in faq-in">
+      <div class="cab">
+        <p class="ceja">Preguntas frecuentes</p>
+        <h2>Lo que nos preguntan antes de empezar</h2>
+      </div>
+      <div class="faq">
+        <details><summary>¿Tengo que cambiar mi número de WhatsApp?</summary><p>No necesariamente. El asistente puede trabajar en el número que ya usa tu negocio, como en el Hotel D' Confort. Antes de conectarlo lo probamos con un número de prueba y te explicamos cómo quedará la atención de tu equipo.</p></details>
+        <details><summary>¿Qué pasa si el asistente no sabe algo?</summary><p>Pasa la conversación a una persona de tu equipo. Y en decisiones importantes, como confirmar una reserva, la última palabra siempre es tuya.</p></details>
+        <details><summary>¿Cuánto tarda en estar listo?</summary><p>Depende de lo que necesites. Control de Flota queda listo en una reunión de una hora. Un proyecto completo como el del Hotel D' Confort (imagen, redes, catálogos y asistente) tomó unas semanas.</p></details>
+        <details><summary>¿Necesito saber de tecnología?</summary><p>No. Te capacitamos y todo se usa desde el celular: WhatsApp, una hoja de Google o la app que te instalamos.</p></details>
+        <details><summary>¿Dónde queda la información de mi negocio?</summary><p>En una hoja o panel al que entras desde tu celular. En nuestro portafolio solo mostramos datos de prueba o capturas con los datos personales ocultos.</p></details>
+        <details><summary>¿Atienden fuera de Huancayo?</summary><p>Sí. Atendemos virtualmente en todo el Perú y viajamos con cita. El Hotel D' Confort, por ejemplo, está en La Merced.</p></details>
+      </div>
     </div></div>
   </section>
 
