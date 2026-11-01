@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/img/logo-icono.png">
+<title>Hotel D' Confort · Caso Solution IA</title>
+<meta name="description" content="Cómo Solution IA transformó al Hotel D' Confort de La Merced: nueva imagen, redes sociales, catálogos con QR, asistente con IA en WhatsApp y reservas ordenadas en Google Sheets.">
+<meta property="og:title" content="Hotel D' Confort · Antes y ahora con Solution IA">
+<meta property="og:description" content="Nueva imagen, asistente con IA 24/7 y reservas en orden para un hotel de La Merced.">
+<meta property="og:image" content="img/portada-ahora.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: caso de estudio largo; cada cambio se muestra como par ANTES → AHORA, luego el asistente, el flujo de reserva y el control del dueño */
+:root{
+  --bg:#020E1C; --bg-2:#06182D; --panel:rgba(10,32,56,.62); --panel-solid:#0A2038;
+  --texto:#EAF2F6; --texto-2:#93A8BA; --menta:#3BE3B0; --cian:#3AB8FF; --dorado:#D9B36A;
+  --linea:rgba(120,190,255,.14); --linea-2:rgba(59,227,176,.35);
+  --grad:linear-gradient(95deg,#3BE3B0 0%,#2CCFD0 50%,#3AB8FF 100%);
+  --f-display:"Lexend","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--texto);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:radial-gradient(70% 40% at 85% 0%,rgba(217,179,106,.12),transparent 70%),radial-gradient(60% 40% at 0% 20%,rgba(58,184,255,.10),transparent 70%)}
+img{max-width:100%;display:block;height:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--menta);outline-offset:3px;border-radius:8px}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:1180px;margin-inline:auto}
+.grad-txt{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.oro{color:var(--dorado)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--f-body);font-weight:700;font-size:15px;text-decoration:none;border-radius:999px;padding:12px 22px;border:1px solid transparent;min-height:46px;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-pri{background:var(--grad);color:#021526;box-shadow:0 10px 30px -12px rgba(59,227,176,.7)}
+.btn-pri:hover{transform:translateY(-2px)}
+.btn-sec{background:rgba(58,184,255,.06);border-color:rgba(58,184,255,.35);color:var(--texto)}
+.btn-sec:hover{border-color:var(--cian);background:rgba(58,184,255,.12)}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:rgba(2,14,28,.9)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(2,14,28,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--linea)}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.marca img{height:40px;width:auto}
+.nav-acts{display:flex;gap:8px;align-items:center}
+.nav .btn{padding:9px 16px;font-size:14px;min-height:42px}
+.volver{font-size:14px;font-weight:600;color:var(--texto-2);text-decoration:none;padding:8px 12px;border-radius:999px}
+.volver:hover{color:var(--texto);background:rgba(58,184,255,.08)}
+@media (max-width:560px){.volver{display:none}.marca img{height:34px}}
+
+/* Hero */
+.hero{padding-block:48px 36px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media (max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tag{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid var(--linea);color:var(--texto-2)}
+.tag.vivo{color:var(--menta);border-color:var(--linea-2);display:inline-flex;align-items:center;gap:6px}
+.tag.vivo::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--menta);box-shadow:0 0 0 4px rgba(59,227,176,.18)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(32px,5.4vw,56px);line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+.lead{color:var(--texto-2);font-size:clamp(16px,2vw,19px);max-width:54ch;margin:0 0 24px}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.hero-logo{justify-self:center;width:min(380px,80%);border-radius:24px;border:1px solid rgba(217,179,106,.35);box-shadow:0 40px 80px -30px rgba(0,0,0,.9),0 0 80px -30px rgba(217,179,106,.4)}
+
+/* Resumen */
+.resumen{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding-block:8px 24px}
+@media (max-width:900px){.resumen{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.resumen{grid-template-columns:minmax(0,1fr)}}
+.r{background:var(--panel);border:1px solid var(--linea);border-radius:18px;padding:18px;display:grid;gap:6px;align-content:start}
+.r .n{font-family:var(--f-mono);font-size:12px;color:var(--dorado);letter-spacing:.1em}
+.r b{font-family:var(--f-display);font-size:18px;font-weight:600;line-height:1.25}
+.r span{color:var(--texto-2);font-size:14px;line-height:1.5}
+
+/* Resultado destacado */
+.dato{margin-block:24px 8px;border-radius:24px;padding:clamp(20px,4vw,36px);background:linear-gradient(135deg,rgba(59,227,176,.12),rgba(58,184,255,.10));border:1px solid var(--linea-2);display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px 32px;align-items:center}
+@media (max-width:760px){.dato{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.dato .txt{grid-column:1/-1}}
+.dato .txt p{margin:6px 0 0;color:var(--texto-2);font-size:14px}
+.dato .txt b{font-family:var(--f-display);font-size:20px;font-weight:600}
+.cifra{display:grid;gap:2px}
+.cifra small{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-2)}
+.cifra strong{font-family:var(--f-display);font-size:clamp(28px,4vw,40px);line-height:1;font-variant-numeric:tabular-nums}
+.cifra .de{font-size:13px;color:var(--texto-2);font-family:var(--f-mono)}
+
+/* Secciones */
+section.bloque{padding-block:clamp(48px,7vw,84px)}
+.cab{max-width:62ch;margin-bottom:28px}
+.ceja{font-family:var(--f-mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--menta);margin:0 0 10px}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,3.8vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 12px;text-wrap:balance}
+.cab p{margin:0;color:var(--texto-2);font-size:17px}
+.sep{height:1px;background:var(--linea)}
+
+/* Antes y ahora */
+.aa{display:grid;gap:20px;padding:clamp(18px,3vw,28px);border-radius:24px;background:var(--panel);border:1px solid var(--linea);margin-bottom:20px}
+.aa-cab{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+.aa h3{font-family:var(--f-display);font-weight:600;font-size:22px;margin:0}
+.aa h3 .num{font-family:var(--f-mono);font-size:13px;color:var(--dorado);margin-right:10px;letter-spacing:.08em}
+.aa-cab p{margin:0;color:var(--texto-2);font-size:15px;max-width:56ch}
+.par{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:12px;align-items:center}
+.par.alto{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr)}
+.flecha{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(217,179,106,.12);border:1px solid rgba(217,179,106,.4);color:var(--dorado)}
+.flecha svg{width:20px;height:20px}
+figure{margin:0;display:grid;gap:10px;min-width:0}
+figure .etq{justify-self:start;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:rgba(147,168,186,.14);color:var(--texto-2)}
+figure.ahora .etq{background:rgba(217,179,106,.18);color:var(--dorado)}
+figure img{border-radius:14px;border:1px solid var(--linea);width:100%;background:var(--bg-2)}
+figure.ahora img{border-color:rgba(217,179,106,.4)}
+figcaption{font-size:14px;color:var(--texto-2);line-height:1.5}
+figcaption b{color:var(--texto);font-weight:700}
+.tel-cap{max-width:300px;justify-self:center;width:100%}
+@media (max-width:700px){
+  .par{grid-template-columns:minmax(0,1fr)}
+  .flecha{justify-self:center;transform:rotate(90deg)}
+}
+
+/* Contenido de marca */
+.marca-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:20px}
+@media (max-width:900px){.marca-grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--panel);border:1px solid var(--linea);border-radius:22px;padding:22px;min-width:0}
+.lema{font-family:var(--f-display);font-size:24px;font-weight:600;line-height:1.25;margin:0 0 6px;color:var(--dorado)}
+.card .sub{color:var(--texto-2);font-size:14px;margin:0 0 18px}
+.colores{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px}
+.color{display:grid;justify-items:center;gap:6px;font-size:12px;color:var(--texto-2)}
+.color i{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2)}
+.voz{font-size:14px;color:var(--texto-2);margin:0}
+.voz b{color:var(--texto)}
+.cal-t{font-family:var(--f-display);font-weight:600;font-size:16px;margin:0 0 12px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+@media (max-width:640px){.cal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dia{border-radius:12px;padding:10px;background:rgba(2,14,28,.6);border:1px solid var(--linea);display:grid;gap:3px;align-content:start;min-height:96px}
+.dia time{font-family:var(--f-mono);font-size:11px;color:var(--dorado)}
+.dia em{font-style:normal;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:var(--menta)}
+.dia span{font-size:13px;line-height:1.35}
+
+/* Asistente */
+.asis{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media (max-width:900px){.asis{grid-template-columns:minmax(0,1fr)}}
+.lista{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.lista li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px}
+.lista svg{width:22px;height:22px;color:var(--menta);margin-top:2px}
+.lista b{font-weight:700}
+.lista span{color:var(--texto-2)}
+.celus{display:flex;gap:16px;justify-content:center}
+.cel{width:min(48%,250px);border-radius:30px;padding:7px;background:linear-gradient(160deg,#16314f,#071a2e);border:1px solid rgba(120,190,255,.22);box-shadow:0 30px 60px -25px rgba(0,0,0,.8)}
+.cel img{border-radius:24px}
+.cel:first-child{transform:translateY(24px) rotate(-2deg)}
+.cel:last-child{transform:rotate(2deg)}
+.nota{font-size:13px;color:var(--texto-2);margin:14px 0 0}
+
+/* Flujo de reserva */
+.pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:p}
+@media (max-width:980px){.pasos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.pasos{grid-template-columns:minmax(0,1fr)}}
+.pasos li{counter-increment:p;background:var(--panel);border:1px solid var(--linea);border-radius:18px;padding:18px;display:grid;gap:6px;align-content:start}
+.pasos li::before{content:counter(p);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#021526;font-family:var(--f-mono);font-weight:600;margin-bottom:4px}
+.pasos b{font-family:var(--f-display);font-weight:600;font-size:17px}
+.pasos span{color:var(--texto-2);font-size:14px}
+.regla{margin-top:16px;border-radius:16px;padding:16px 20px;background:rgba(217,179,106,.1);border:1px solid rgba(217,179,106,.4);font-size:15px}
+.regla b{color:var(--dorado)}
+
+/* Control */
+.control{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media (max-width:900px){.control{grid-template-columns:minmax(0,1fr)}}
+
+/* CTA */
+.cta{padding-block:20px 72px}
+.cta-box{border-radius:28px;padding:clamp(24px,5vw,48px);background:linear-gradient(135deg,rgba(59,227,176,.14),rgba(58,184,255,.12));border:1px solid var(--linea-2);display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+.cta-box h2{font-size:clamp(24px,3.4vw,34px);margin:0 0 6px}
+.cta-box p{margin:0;color:var(--texto-2)}
+.cta-box .tel{margin-top:10px;color:var(--texto)}
+.cta-box .tel b{font-family:var(--f-mono);font-weight:600;user-select:all}
+
+footer{border-top:1px solid var(--linea)}
+footer .in{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;padding-block:24px;color:var(--texto-2);font-size:14px}
+footer img{height:32px;width:auto}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="nav wrap">
+  <div class="in">
+    <a class="marca" href="/"><img src="/img/logo.png" alt="SolutionIA · Automatiza tu negocio" width="871" height="263"></a>
+    <div class="nav-acts">
+      <a class="volver" href="/portafolio/">← Portafolio</a>
+      <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20vi%20el%20caso%20del%20Hotel%20D%27%20Confort%20y%20quiero%20agendar%20una%20cita" target="_blank" rel="noopener">Agenda tu cita</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="in hero-grid">
+      <div>
+        <div class="tags"><span class="tag vivo">En funcionamiento</span><span class="tag">Hospedaje</span><span class="tag">La Merced · Chanchamayo</span></div>
+        <h1>Hotel D' Confort: <span class="oro">antes y ahora</span></h1>
+        <p class="lead">En pocas semanas el hotel pasó de no tener una imagen propia a tener marca, redes activas, catálogos con QR, un asistente con IA que atiende las 24 horas y reservas que se ordenan solas.</p>
+        <div class="acts">
+          <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20vi%20el%20caso%20del%20Hotel%20D%27%20Confort%20y%20quiero%20algo%20as%C3%AD%20para%20mi%20negocio" target="_blank" rel="noopener">Quiero esto para mi negocio</a>
+          <a class="btn btn-sec" href="/dconfort/" target="_blank" rel="noopener">Ver el catálogo en vivo</a>
+        </div>
+      </div>
+      <img class="hero-logo" src="img/logo-ahora.webp" alt="Nuevo logo del Hotel D' Confort en azul, dorado y plata" width="640" height="662">
+    </div>
+  </section>
+
+  <section class="wrap" aria-label="Resumen del proyecto">
+    <div class="in">
+      <div class="resumen">
+        <div class="r"><span class="n">01</span><b>Nueva imagen</b><span>Logo nuevo, portada y páginas nuevas de Facebook y TikTok.</span></div>
+        <div class="r"><span class="n">02</span><b>Catálogos</b><span>Las 6 habitaciones con fotos, precios y los colores del hotel.</span></div>
+        <div class="r"><span class="n">03</span><b>Asistente 24/7</b><span>Responde en el WhatsApp del hotel, de día, de noche y en feriados.</span></div>
+        <div class="r"><span class="n">04</span><b>Reservas en orden</b><span>Cada reserva avisa a recepción y se guarda sola en Google Sheets.</span></div>
+      </div>
+      <div class="dato">
+        <div class="txt"><b>Resultado en TikTok</b><p>Comparación entre el video más visto de la cuenta anterior y un video de la cuenta nueva.</p></div>
+        <div class="cifra"><small>Me gusta</small><strong class="grad-txt">127</strong><span class="de">antes: 15</span></div>
+        <div class="cifra"><small>Vistas</small><strong class="grad-txt">3,824</strong><span class="de">antes: 2,479</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="imagen">
+    <div class="in">
+      <div class="cab">
+        <p class="ceja">01 · Nueva imagen</p>
+        <h2>Una marca que se reconoce en todas partes</h2>
+        <p>Logo, portada, Facebook, TikTok, catálogos y contenido con la misma identidad.</p>
+      </div>
+
+      <article class="aa">
+        <div class="aa-cab"><h3><span class="num">LOGO</span>Un logo nuevo y elegante</h3><p>Azul, dorado y plata para transmitir confianza y categoría. Edificio, luna y dos estrellas: fácil de reconocer y de recordar.</p></div>
+        <div class="par">
+          <figure><span class="etq">Antes</span><img src="img/logo-antes.webp" alt="Logo anterior del Hotel D' Confort" width="640" height="644" loading="lazy"></figure>
+          <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <figure class="ahora"><span class="etq">Ahora</span><img src="img/logo-ahora.webp" alt="Logo nuevo del Hotel D' Confort" width="640" height="662" loading="lazy"><figcaption>Ya se usa en redes, catálogos, flyers y WhatsApp.</figcaption></figure>
+        </div>
+      </article>
+
+      <article class="aa">
+        <div class="aa-cab"><h3><span class="num">PORTADA</span>Una portada que invita a reservar</h3></div>
+        <div class="par">
+          <figure><span class="etq">Antes</span><img src="img/portada-antes.webp" alt="Portada anterior: foto de la fachada del hotel" width="1400" height="788" loading="lazy"><figcaption>Sin identidad propia ni un llamado a escribir. Los colores no coincidían entre redes.</figcaption></figure>
+          <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <figure class="ahora"><span class="etq">Ahora</span><img src="img/portada-ahora.webp" alt="Portada nueva con el logo, una habitación y los datos de reserva" width="1400" height="521" loading="lazy"><figcaption>Con el logo y los colores del hotel, e invita a reservar por WhatsApp en un solo toque.</figcaption></figure>
+        </div>
+      </article>
+
+      <article class="aa">
+        <div class="aa-cab"><h3><span class="num">FACEBOOK</span>Página de Facebook nueva</h3><p>Creada desde cero con el logo, la portada y una descripción clara, con botón de WhatsApp conectado al asistente.</p></div>
+        <div class="par">
+          <figure><span class="etq">Antes</span><img src="img/facebook-antes.webp" alt="Página de Facebook anterior del hotel" width="900" height="898" loading="lazy"></figure>
+          <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <figure class="ahora"><span class="etq">Ahora</span><img src="img/facebook-ahora.webp" alt="Página de Facebook nueva del Hotel D' Confort" width="900" height="928" loading="lazy"></figure>
+        </div>
+      </article>
+
+      <article class="aa">
+        <div class="aa-cab"><h3><span class="num">TIKTOK</span>Cuenta de TikTok nueva</h3><p>Perfil con el nuevo logo y el WhatsApp de reservas. Videos cortos de las habitaciones, la cochera y lo que hay cerca, para llegar a viajeros que buscan dónde quedarse en La Merced.</p></div>
+        <div class="par">
+          <figure class="tel-cap"><span class="etq">Antes</span><img src="img/tiktok-antes.webp" alt="Perfil de TikTok anterior" width="589" height="1280" loading="lazy"><figcaption><b>2,479 vistas y 15 me gusta</b> en un video de hace más de 2 años.</figcaption></figure>
+          <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <figure class="ahora tel-cap"><span class="etq">Ahora</span><img src="img/tiktok-ahora.webp" alt="Perfil de TikTok nuevo del Hotel D' Confort" width="589" height="1280" loading="lazy"><figcaption><b>3,824 vistas y 127 me gusta</b> en un video de una semana.</figcaption></figure>
+        </div>
+      </article>
+
+      <article class="aa">
+        <div class="aa-cab"><h3><span class="num">HABITACIONES</span>De una foto suelta a un flyer que vende</h3><p>Las 6 habitaciones tienen su flyer con fotos, capacidad, servicios y precio por noche.</p></div>
+        <div class="par">
+          <figure><span class="etq">Antes</span><img src="img/habitacion-antes.webp" alt="Foto simple de una habitación del hotel" width="1000" height="750" loading="lazy"></figure>
+          <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <figure class="ahora"><span class="etq">Ahora</span><img src="img/habitacion-ahora.webp" alt="Flyer de la habitación Familiar con precio y servicios" width="1000" height="1000" loading="lazy"></figure>
+        </div>
+      </article>
+
+      <article class="aa">
+        <div class="aa-cab"><h3><span class="num">CATÁLOGOS</span>Catálogos y código QR</h3><p>Catálogo de habitaciones dentro del WhatsApp del hotel y catálogo de productos con QR: el huésped lo escanea desde su habitación y pide a recepción.</p></div>
+        <div class="par">
+          <figure class="ahora"><span class="etq">QR en la habitación</span><img src="img/catalogo-qr.webp" alt="Cartel con código QR para ver el catálogo de productos" width="720" height="1019" loading="lazy"></figure>
+          <span class="flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <figure class="ahora"><span class="etq">Catálogo</span><img src="img/catalogo-productos.webp" alt="Portada del catálogo de productos del hotel" width="720" height="1014" loading="lazy"><figcaption><a href="/dconfort/" target="_blank" rel="noopener">Ver el catálogo en vivo →</a></figcaption></figure>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="in sep"></div></div>
+
+  <section class="bloque wrap" id="contenido">
+    <div class="in">
+      <div class="cab">
+        <p class="ceja">Contenido de marca</p>
+        <h2>Publicaciones con la identidad del hotel</h2>
+        <p>Cada publicación sigue el mismo lema, colores y forma de hablar, con un calendario planificado.</p>
+      </div>
+      <div class="marca-grid">
+        <div class="card">
+          <p class="lema">“Tu descanso, nuestro compromiso”</p>
+          <p class="sub">Lema de las publicaciones</p>
+          <div class="colores">
+            <span class="color"><i style="background:#0B1626"></i>Azul noche</span>
+            <span class="color"><i style="background:#1F4FA8"></i>Azul</span>
+            <span class="color"><i style="background:#C9A24E"></i>Dorado</span>
+            <span class="color"><i style="background:#D7DCE2"></i>Plata</span>
+          </div>
+          <p class="voz"><b>Voz:</b> cercana y clara, como un vecino que recomienda.</p>
+        </div>
+        <div class="card">
+          <p class="cal-t">Ejemplo: calendario de 2 semanas</p>
+          <div class="cal">
+            <div class="dia"><time>Lun 2</time><em>REEL</em><span>Cochera amplia</span></div>
+            <div class="dia"><time>Mar 3</time><em>POST</em><span>Flyer Matrimonial Simple</span></div>
+            <div class="dia"><time>Mié 4</time><em>REEL</em><span>Qué hay cerca del hotel</span></div>
+            <div class="dia"><time>Jue 5</time><em>CARRUSEL</em><span>Elige tu habitación</span></div>
+            <div class="dia"><time>Vie 6</time><em>REEL</em><span>¿Viajas por trabajo?</span></div>
+            <div class="dia"><time>Sáb 7</time><em>FOTO</em><span>Fachada de noche</span></div>
+            <div class="dia"><time>Dom 8</time><em>ESTADO</em><span>Reserva esta semana</span></div>
+            <div class="dia"><time>Lun 9</time><em>REEL</em><span>Viaja en familia</span></div>
+            <div class="dia"><time>Mar 10</time><em>PREGUNTA</em><span>¿Cómo viajas a La Merced?</span></div>
+            <div class="dia"><time>Mié 11</time><em>REEL</em><span>Tour Matrimonial Superior</span></div>
+            <div class="dia"><time>Jue 12</time><em>FLYER</em><span>Cochera amplia</span></div>
+            <div class="dia"><time>Vie 13</time><em>REEL</em><span>Te respondemos rápido</span></div>
+            <div class="dia"><time>Sáb 14</time><em>REEL</em><span>3 razones para quedarte</span></div>
+            <div class="dia"><time>Dom 15</time><em>ESTADO</em><span>La habitación más pedida</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="in sep"></div></div>
+
+  <section class="bloque wrap" id="asistente">
+    <div class="in asis">
+      <div>
+        <p class="ceja">02 · Asistente virtual</p>
+        <h2>Atención inmediata, las 24 horas</h2>
+        <ul class="lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Responde al instante</b> <span>sobre habitaciones, precios (también de feriados) y servicios.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Tono cálido y breve.</b> <span>Siempre se presenta como asistente virtual.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Si algo no lo sabe,</b> <span>pasa la conversación a recepción.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Catálogo dentro de WhatsApp</b> <span>con las 6 habitaciones y sus precios.</span></div></li>
+        </ul>
+        <p class="nota">Capturas de una conversación de prueba. Ocultamos los datos personales.</p>
+      </div>
+      <div class="celus">
+        <div class="cel"><img src="img/asistente-chat.webp" alt="Conversación de prueba: el asistente toma los datos para una reserva" width="589" height="1280" loading="lazy"></div>
+        <div class="cel"><img src="img/asistente-catalogo.webp" alt="Perfil de WhatsApp Business del hotel con su catálogo de habitaciones" width="589" height="1280" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="reserva">
+    <div class="in">
+      <div class="cab">
+        <p class="ceja">Cómo funciona</p>
+        <h2>Una reserva de principio a fin</h2>
+      </div>
+      <ol class="pasos">
+        <li><b>El cliente escribe</b><span>Al WhatsApp del hotel o desde el botón de Facebook.</span></li>
+        <li><b>Deja 3 datos</b><span>Nombre, DNI y habitación. Sin fotos de documentos.</span></li>
+        <li><b>Paga por Yape</b><span>Escribe "pagado" o envía el comprobante.</span></li>
+        <li><b>Recepción confirma</b><span>Responde "confirmar" o "no llegó".</span></li>
+        <li><b>Reserva confirmada</b><span>El cliente recibe la confirmación y todo queda en la hoja.</span></li>
+      </ol>
+      <p class="regla"><b>La última palabra es de recepción:</b> el asistente nunca confirma una reserva por su cuenta.</p>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="control">
+    <div class="in control">
+      <div>
+        <p class="ceja">Control del dueño</p>
+        <h2>Cada reserva, visible desde el celular</h2>
+        <ul class="lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Aviso inmediato</b> <span>por WhatsApp a recepción con cada nueva reserva.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Se guarda sola</b> <span>en una hoja de Google Sheets de solo lectura.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Sin anotar nada a mano,</b> <span>desde el celular o la computadora.</span></div></li>
+        </ul>
+      </div>
+      <figure><span class="etq">Hoja de reservas</span><img src="img/hoja-reservas.webp" alt="Hoja de Google Sheets con reservas de prueba registradas automáticamente" width="1200" height="980" loading="lazy"><figcaption>Reservas de prueba. Nombres, teléfonos y DNI ocultos.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="cta wrap">
+    <div class="in cta-box">
+      <div>
+        <h2>¿Quieres esto para tu negocio?</h2>
+        <p>Imagen, redes, catálogos y un asistente con IA que trabaja las 24 horas. Agenda tu cita, virtual o presencial, todos los días de 8 a. m. a 6 p. m.</p>
+        <p class="tel">WhatsApp de citas: <b>+51 926 711 682</b></p>
+      </div>
+      <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20vi%20el%20caso%20del%20Hotel%20D%27%20Confort%20y%20quiero%20agendar%20una%20cita" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2c0 1.2.9 2.4 1 2.5.1.2 1.7 2.7 4.2 3.8 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>
+        Agenda tu cita
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="in">
+    <img src="/img/logo.png" alt="SolutionIA" width="871" height="263" loading="lazy">
+    <span><a href="/portafolio/">← Volver al portafolio</a></span>
+    <span>© 2026 SolutionIA</span>
+  </div>
+</footer>
+</body>
+</html>
