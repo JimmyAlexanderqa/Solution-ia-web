@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/img/logo-icono.png">
+<title>Control de Flota · Caso Solution IA</title>
+<meta name="description" content="Control de Flota de Solution IA: app a medida para dueños de taxis con vencimientos en semáforo, cuentas semanales por chofer y avisos automáticos por WhatsApp.">
+<meta property="og:title" content="Control de Flota · Solution IA">
+<meta property="og:description" content="Documentos, cuentas semanales y alertas de tus taxis, todo en tu celular.">
+<meta property="og:image" content="img/app-flota.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: presentación de producto; problema, solución y luego cada función en filas alternadas de captura + texto */
+:root{
+  --bg:#020E1C; --bg-2:#06182D; --panel:rgba(10,32,56,.62); --panel-solid:#0A2038;
+  --texto:#EAF2F6; --texto-2:#93A8BA; --menta:#3BE3B0; --cian:#3AB8FF; --dorado:#D9B36A;
+  --linea:rgba(120,190,255,.14); --linea-2:rgba(59,227,176,.35);
+  --grad:linear-gradient(95deg,#3BE3B0 0%,#2CCFD0 50%,#3AB8FF 100%);
+  --f-display:"Lexend","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--texto);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:radial-gradient(70% 40% at 85% 0%,rgba(217,179,106,.12),transparent 70%),radial-gradient(60% 40% at 0% 20%,rgba(58,184,255,.10),transparent 70%)}
+img{max-width:100%;display:block;height:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--menta);outline-offset:3px;border-radius:8px}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:1180px;margin-inline:auto}
+.grad-txt{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.oro{color:var(--dorado)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--f-body);font-weight:700;font-size:15px;text-decoration:none;border-radius:999px;padding:12px 22px;border:1px solid transparent;min-height:46px;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-pri{background:var(--grad);color:#021526;box-shadow:0 10px 30px -12px rgba(59,227,176,.7)}
+.btn-pri:hover{transform:translateY(-2px)}
+.btn-sec{background:rgba(58,184,255,.06);border-color:rgba(58,184,255,.35);color:var(--texto)}
+.btn-sec:hover{border-color:var(--cian);background:rgba(58,184,255,.12)}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:rgba(2,14,28,.9)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(2,14,28,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--linea)}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.marca img{height:40px;width:auto}
+.nav-acts{display:flex;gap:8px;align-items:center}
+.nav .btn{padding:9px 16px;font-size:14px;min-height:42px}
+.volver{font-size:14px;font-weight:600;color:var(--texto-2);text-decoration:none;padding:8px 12px;border-radius:999px}
+.volver:hover{color:var(--texto);background:rgba(58,184,255,.08)}
+@media (max-width:560px){.volver{display:none}.marca img{height:34px}}
+
+/* Hero */
+.hero{padding-block:48px 36px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media (max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tag{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid var(--linea);color:var(--texto-2)}
+.tag.vivo{color:var(--menta);border-color:var(--linea-2);display:inline-flex;align-items:center;gap:6px}
+.tag.vivo::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--menta);box-shadow:0 0 0 4px rgba(59,227,176,.18)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(32px,5.4vw,56px);line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+.lead{color:var(--texto-2);font-size:clamp(16px,2vw,19px);max-width:54ch;margin:0 0 24px}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.hero-logo{justify-self:center;width:min(380px,80%);border-radius:24px;border:1px solid rgba(217,179,106,.35);box-shadow:0 40px 80px -30px rgba(0,0,0,.9),0 0 80px -30px rgba(217,179,106,.4)}
+
+/* Resumen */
+.resumen{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding-block:8px 24px}
+@media (max-width:900px){.resumen{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.resumen{grid-template-columns:minmax(0,1fr)}}
+.r{background:var(--panel);border:1px solid var(--linea);border-radius:18px;padding:18px;display:grid;gap:6px;align-content:start}
+.r .n{font-family:var(--f-mono);font-size:12px;color:var(--dorado);letter-spacing:.1em}
+.r b{font-family:var(--f-display);font-size:18px;font-weight:600;line-height:1.25}
+.r span{color:var(--texto-2);font-size:14px;line-height:1.5}
+
+/* Resultado destacado */
+.dato{margin-block:24px 8px;border-radius:24px;padding:clamp(20px,4vw,36px);background:linear-gradient(135deg,rgba(59,227,176,.12),rgba(58,184,255,.10));border:1px solid var(--linea-2);display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px 32px;align-items:center}
+@media (max-width:760px){.dato{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.dato .txt{grid-column:1/-1}}
+.dato .txt p{margin:6px 0 0;color:var(--texto-2);font-size:14px}
+.dato .txt b{font-family:var(--f-display);font-size:20px;font-weight:600}
+.cifra{display:grid;gap:2px}
+.cifra small{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-2)}
+.cifra strong{font-family:var(--f-display);font-size:clamp(28px,4vw,40px);line-height:1;font-variant-numeric:tabular-nums}
+.cifra .de{font-size:13px;color:var(--texto-2);font-family:var(--f-mono)}
+
+/* Secciones */
+section.bloque{padding-block:clamp(48px,7vw,84px)}
+.cab{max-width:62ch;margin-bottom:28px}
+.ceja{font-family:var(--f-mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--menta);margin:0 0 10px}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,3.8vw,40px);line-height:1.1;letter-spacing:-.015em;margin:0 0 12px;text-wrap:balance}
+.cab p{margin:0;color:var(--texto-2);font-size:17px}
+.sep{height:1px;background:var(--linea)}
+
+/* Antes y ahora */
+.aa{display:grid;gap:20px;padding:clamp(18px,3vw,28px);border-radius:24px;background:var(--panel);border:1px solid var(--linea);margin-bottom:20px}
+.aa-cab{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+.aa h3{font-family:var(--f-display);font-weight:600;font-size:22px;margin:0}
+.aa h3 .num{font-family:var(--f-mono);font-size:13px;color:var(--dorado);margin-right:10px;letter-spacing:.08em}
+.aa-cab p{margin:0;color:var(--texto-2);font-size:15px;max-width:56ch}
+.par{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:12px;align-items:center}
+.par.alto{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr)}
+.flecha{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(217,179,106,.12);border:1px solid rgba(217,179,106,.4);color:var(--dorado)}
+.flecha svg{width:20px;height:20px}
+figure{margin:0;display:grid;gap:10px;min-width:0}
+figure .etq{justify-self:start;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:rgba(147,168,186,.14);color:var(--texto-2)}
+figure.ahora .etq{background:rgba(217,179,106,.18);color:var(--dorado)}
+figure img{border-radius:14px;border:1px solid var(--linea);width:100%;background:var(--bg-2)}
+figure.ahora img{border-color:rgba(217,179,106,.4)}
+figcaption{font-size:14px;color:var(--texto-2);line-height:1.5}
+figcaption b{color:var(--texto);font-weight:700}
+.tel-cap{max-width:300px;justify-self:center;width:100%}
+@media (max-width:700px){
+  .par{grid-template-columns:minmax(0,1fr)}
+  .flecha{justify-self:center;transform:rotate(90deg)}
+}
+
+/* Contenido de marca */
+.marca-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:20px}
+@media (max-width:900px){.marca-grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--panel);border:1px solid var(--linea);border-radius:22px;padding:22px;min-width:0}
+.lema{font-family:var(--f-display);font-size:24px;font-weight:600;line-height:1.25;margin:0 0 6px;color:var(--dorado)}
+.card .sub{color:var(--texto-2);font-size:14px;margin:0 0 18px}
+.colores{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px}
+.color{display:grid;justify-items:center;gap:6px;font-size:12px;color:var(--texto-2)}
+.color i{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2)}
+.voz{font-size:14px;color:var(--texto-2);margin:0}
+.voz b{color:var(--texto)}
+.cal-t{font-family:var(--f-display);font-weight:600;font-size:16px;margin:0 0 12px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+@media (max-width:640px){.cal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dia{border-radius:12px;padding:10px;background:rgba(2,14,28,.6);border:1px solid var(--linea);display:grid;gap:3px;align-content:start;min-height:96px}
+.dia time{font-family:var(--f-mono);font-size:11px;color:var(--dorado)}
+.dia em{font-style:normal;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:var(--menta)}
+.dia span{font-size:13px;line-height:1.35}
+
+/* Video y reseñas */
+.vr{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:20px;align-items:start}
+@media (max-width:900px){.vr{grid-template-columns:minmax(0,1fr)}}
+.vid-card{display:grid;gap:14px;justify-items:center}
+.vid{width:min(100%,300px);border-radius:30px;padding:7px;background:linear-gradient(160deg,#16314f,#071a2e);border:1px solid rgba(120,190,255,.22);box-shadow:0 30px 60px -25px rgba(0,0,0,.8)}
+.vid video{display:block;width:100%;height:auto;aspect-ratio:464/848;border-radius:24px;background:#000}
+.vid-card p{margin:0;font-size:14px;color:var(--texto-2);text-align:center;max-width:34ch}
+.res-card{display:grid;gap:16px}
+.res-card img{border-radius:18px;border:1px solid rgba(217,179,106,.4)}
+.res-card h3{font-family:var(--f-display);font-weight:600;font-size:22px;margin:0}
+.res-card p{margin:0;color:var(--texto-2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--linea);color:var(--texto-2);background:rgba(2,14,28,.5)}
+
+/* Asistente */
+.asis{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media (max-width:900px){.asis{grid-template-columns:minmax(0,1fr)}}
+.lista{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.lista li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px}
+.lista svg{width:22px;height:22px;color:var(--menta);margin-top:2px}
+.lista b{font-weight:700}
+.lista span{color:var(--texto-2)}
+.celus{display:flex;gap:16px;justify-content:center}
+.cel{width:min(48%,250px);border-radius:30px;padding:7px;background:linear-gradient(160deg,#16314f,#071a2e);border:1px solid rgba(120,190,255,.22);box-shadow:0 30px 60px -25px rgba(0,0,0,.8)}
+.cel img{border-radius:24px}
+.cel:first-child{transform:translateY(24px) rotate(-2deg)}
+.cel:last-child{transform:rotate(2deg)}
+.nota{font-size:13px;color:var(--texto-2);margin:14px 0 0}
+
+/* Flujo de reserva */
+.pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:p}
+@media (max-width:980px){.pasos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.pasos{grid-template-columns:minmax(0,1fr)}}
+.pasos li{counter-increment:p;background:var(--panel);border:1px solid var(--linea);border-radius:18px;padding:18px;display:grid;gap:6px;align-content:start}
+.pasos li::before{content:counter(p);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#021526;font-family:var(--f-mono);font-weight:600;margin-bottom:4px}
+.pasos b{font-family:var(--f-display);font-weight:600;font-size:17px}
+.pasos span{color:var(--texto-2);font-size:14px}
+.regla{margin-top:16px;border-radius:16px;padding:16px 20px;background:rgba(217,179,106,.1);border:1px solid rgba(217,179,106,.4);font-size:15px}
+.regla b{color:var(--dorado)}
+
+/* Control */
+.control{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media (max-width:900px){.control{grid-template-columns:minmax(0,1fr)}}
+
+/* CTA */
+.cta{padding-block:20px 72px}
+.cta-box{border-radius:28px;padding:clamp(24px,5vw,48px);background:linear-gradient(135deg,rgba(59,227,176,.14),rgba(58,184,255,.12));border:1px solid var(--linea-2);display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+.cta-box h2{font-size:clamp(24px,3.4vw,34px);margin:0 0 6px}
+.cta-box p{margin:0;color:var(--texto-2)}
+.cta-box .tel{margin-top:10px;color:var(--texto)}
+.cta-box .tel b{font-family:var(--f-mono);font-weight:600;user-select:all}
+
+footer{border-top:1px solid var(--linea)}
+footer .in{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;padding-block:24px;color:var(--texto-2);font-size:14px}
+footer img{height:32px;width:auto}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Control de Flota */
+.tag.prog{color:var(--dorado);border-color:rgba(217,179,106,.4)}
+.cel.solo{justify-self:center;width:min(300px,78%);transform:rotate(2deg)}
+.cel.solo img,.split .cel img{border-radius:24px}
+.dos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.cuatro{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.cuatro{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.dos,.cuatro{grid-template-columns:minmax(0,1fr)}}
+.card h3{font-family:var(--f-display);font-weight:600;font-size:19px;margin:10px 0 6px}
+.card p{margin:0;color:var(--texto-2);font-size:15px}
+.ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:rgba(59,227,176,.1);border:1px solid var(--linea-2);color:var(--menta)}
+.ico svg{width:24px;height:24px}
+.ico.rojo{background:rgba(255,92,92,.1);border-color:rgba(255,92,92,.4);color:#FF7A7A}
+.split{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(24px,5vw,64px);align-items:center}
+.split.inv{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.split .cel{width:min(290px,100%);justify-self:center;transform:none}
+@media (max-width:860px){.split,.split.inv{grid-template-columns:minmax(0,1fr)}.split .cel{order:2}}
+.semaforo{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:8px}
+.semaforo li{display:flex;align-items:center;gap:10px;color:var(--texto-2)}
+.semaforo b{color:var(--texto)}
+.semaforo i{width:14px;height:14px;border-radius:50%;flex:none}
+.semaforo .s-r{background:#FF5C5C;box-shadow:0 0 10px #FF5C5C}
+.semaforo .s-a{background:#F5B342;box-shadow:0 0 10px #F5B342}
+.semaforo .s-v{background:var(--menta);box-shadow:0 0 10px var(--menta)}
+.dias{display:flex;gap:10px;flex-wrap:wrap}
+.dias span{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:22px;background:var(--grad);color:#021526}
+.sub{color:var(--texto-2);margin:10px 0 18px}
+.wa{justify-self:center;max-width:480px;width:100%}
+.wa img{border-radius:16px;border:1px solid var(--linea);box-shadow:0 30px 60px -25px rgba(0,0,0,.8);width:100%}
+.hora-cierre{font-size:18px;color:var(--texto-2);margin:0 0 18px}
+.hora-cierre b{font-family:var(--f-display);color:var(--menta);font-size:24px;margin-right:6px}
+.pasos li{min-height:0}
+</style>
+</head>
+<body>
+<header class="nav wrap">
+  <div class="in">
+    <a class="marca" href="/"><img src="/img/logo.png" alt="SolutionIA · Automatiza tu negocio" width="871" height="263"></a>
+    <div class="nav-acts">
+      <a class="volver" href="/portafolio/">← Portafolio</a>
+      <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20vi%20Control%20de%20Flota%20y%20quiero%20agendar%20una%20cita" target="_blank" rel="noopener">Agenda tu cita</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="in hero-grid">
+      <div>
+        <div class="tags"><span class="tag prog">En implementación</span><span class="tag">Taxis</span><span class="tag">Huancayo</span></div>
+        <h1>Control de Flota: <span class="grad-txt">tus taxis en tu celular</span></h1>
+        <p class="lead">Una app a medida para dueños de taxis: documentos que no se vencen sin aviso, cuentas semanales claras por chofer y un resumen que llega solo a tu WhatsApp.</p>
+        <div class="acts">
+          <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20quiero%20una%20app%20como%20Control%20de%20Flota%20para%20mi%20negocio" target="_blank" rel="noopener">Quiero una app así</a>
+          <a class="btn btn-sec" href="#como-funciona">Ver cómo funciona</a>
+        </div>
+      </div>
+      <div class="cel solo"><img src="img/app-flota.webp" alt="Pantalla principal de Control de Flota con los vencimientos de cada vehículo" width="600" height="1298"></div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="problema">
+    <div class="in">
+      <div class="cab">
+        <p class="ceja">El problema</p>
+        <h2>Hoy el control de la flota depende de la memoria</h2>
+      </div>
+      <div class="dos">
+        <div class="card prob"><span class="ico rojo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg></span><h3>Documentos que se vencen</h3><p>SOAT, revisión técnica y licencias vencen en fechas distintas. Uno vencido es una multa o un carro parado.</p></div>
+        <div class="card prob"><span class="ico rojo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v.01M18 15v.01"/></svg></span><h3>Cuentas difíciles de seguir</h3><p>¿Quién pagó la cuenta de la semana? ¿Quién dejó a cuenta? ¿Cuánto arrastra cada chofer?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="solucion">
+    <div class="in">
+      <div class="cab">
+        <p class="ceja">La solución</p>
+        <h2>Una app con todo tu negocio de taxis</h2>
+      </div>
+      <div class="cuatro">
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4M9 15l2 2 4-4"/></svg></span><h3>Vencimientos al día</h3><p>SOAT, revisión técnica y licencias en un semáforo.</p></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span><h3>Cuentas semanales</h3><p>Quién pagó, quién dejó a cuenta y cuánto debe.</p></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></span><h3>Avisos por WhatsApp</h3><p>Antes de cada vencimiento y el cierre de cada lunes.</p></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><h3>En tu celular</h3><p>Android, iPhone y computadora, sin descargar de tiendas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="como-funciona">
+    <div class="in split">
+      <div class="cel"><img src="img/app-ficha.webp" alt="Ficha de un vehículo con el estado del SOAT, la revisión técnica y el conductor asignado" width="600" height="1298" loading="lazy"></div>
+      <div>
+        <p class="ceja">Vencimientos</p>
+        <h2>Ves en 5 segundos qué carro tiene algo vencido</h2>
+        <ul class="semaforo">
+          <li><i class="s-r"></i><b>Rojo</b> Documento vencido</li>
+          <li><i class="s-a"></i><b>Ámbar</b> Vence en los próximos 30 días</li>
+          <li><i class="s-v"></i><b>Verde</b> Al día</li>
+        </ul>
+        <ul class="lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>SOAT, revisión técnica y la licencia de cada chofer, por placa.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>La lista se ordena sola: lo más urgente aparece primero.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>Registras la renovación con un toque y queda el historial.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>Cargas toda tu flota de una vez desde Excel.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="alertas">
+    <div class="in split inv">
+      <div>
+        <p class="ceja">Alertas</p>
+        <h2>Te avisamos por WhatsApp antes de que venza</h2>
+        <div class="dias"><span>30</span><span>15</span><span>7</span><span>1</span></div>
+        <p class="sub">días antes de cada vencimiento</p>
+        <ul class="lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>Llega a la hora que tú elijas.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>No necesitas abrir la app para enterarte.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>Un solo mensaje con todo lo vencido y por vencer.</span></div></li>
+        </ul>
+      </div>
+      <figure class="wa"><img src="img/wa-alerta.webp" alt="Mensaje de WhatsApp con el resumen de documentos vencidos y por vencer de la flota" width="466" height="326" loading="lazy"><figcaption>Mensaje de alerta con datos de ejemplo.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="cuentas">
+    <div class="in split">
+      <div class="cel"><img src="img/app-cuentas.webp" alt="Pantalla de cuentas semanales con lo cobrado, quién pagó y la deuda de cada chofer" width="600" height="1298" loading="lazy"></div>
+      <div>
+        <p class="ceja">Cuentas</p>
+        <h2>Sabes al día quién pagó su cuenta y quién debe</h2>
+        <ul class="lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Cuenta semanal por chofer,</b> <span>con fecha límite cada lunes.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Pagos completos o parciales:</b> <span>efectivo, Yape, Plin o transferencia.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Semana exonerada</b> <span>si el carro estuvo en el taller o de descanso.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>Deuda acumulada:</b> <span>lo que arrastra cada chofer se suma solo.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="cierre">
+    <div class="in split inv">
+      <div>
+        <p class="ceja">Cierre semanal</p>
+        <h2>Cada lunes, el cierre de cuentas en tu WhatsApp</h2>
+        <p class="hora-cierre"><b>Lunes · 8:00 p. m.</b> o a la hora que elijas</p>
+        <ul class="lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>Cuántos pagaron y cuánto se cobró.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>Quién debe y cuánto, con la deuda acumulada.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><span>Cobras con datos, sin discusiones.</span></div></li>
+        </ul>
+      </div>
+      <figure class="wa"><img src="img/wa-cierre.webp" alt="Mensaje de WhatsApp con el cierre semanal: cuántos pagaron, lo cobrado y quién debe" width="438" height="307" loading="lazy"><figcaption>Cierre de cuentas con datos de ejemplo.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="implementacion">
+    <div class="in">
+      <div class="cab">
+        <p class="ceja">Implementación</p>
+        <h2>Todo listo en una reunión de una hora</h2>
+      </div>
+      <ol class="pasos">
+        <li><b>Firmamos el acuerdo</b></li>
+        <li><b>Cargamos tu flota y tus choferes</b></li>
+        <li><b>Activamos el cobro de la cuenta semanal</b></li>
+        <li><b>Instalamos la app en tu celular</b></li>
+        <li><b>Recibes tu primer cierre el lunes</b></li>
+      </ol>
+      <p class="regla">Puedes cargar la flota desde un Excel y sumar a tu administrador con su propio usuario.</p>
+      <p class="nota">Todas las capturas de esta página usan datos de ejemplo: placas, nombres y montos no son de un cliente real.</p>
+    </div>
+  </section>
+
+  <section class="cta wrap">
+    <div class="in cta-box">
+      <div>
+        <h2>¿Tienes una flota de taxis?</h2>
+        <p>Lo dejamos funcionando en una semana y tu primer cierre de cuentas llega el lunes. Agenda tu cita, virtual o presencial.</p>
+        <p class="tel">WhatsApp de citas: <b>+51 926 711 682</b></p>
+      </div>
+      <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20vi%20Control%20de%20Flota%20y%20quiero%20agendar%20una%20cita" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2c0 1.2.9 2.4 1 2.5.1.2 1.7 2.7 4.2 3.8 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>
+        Agenda tu cita
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="in">
+    <img src="/img/logo.png" alt="SolutionIA" width="871" height="263" loading="lazy">
+    <span><a href="/portafolio/">← Volver al portafolio</a></span>
+    <span>© 2026 SolutionIA</span>
+  </div>
+</footer>
+</body>
+</html>
