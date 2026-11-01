@@ -136,6 +136,20 @@ figcaption b{color:var(--texto);font-weight:700}
 .dia em{font-style:normal;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:var(--menta)}
 .dia span{font-size:13px;line-height:1.35}
 
+/* Video y reseñas */
+.vr{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:20px;align-items:start}
+@media (max-width:900px){.vr{grid-template-columns:minmax(0,1fr)}}
+.vid-card{display:grid;gap:14px;justify-items:center}
+.vid{width:min(100%,300px);border-radius:30px;padding:7px;background:linear-gradient(160deg,#16314f,#071a2e);border:1px solid rgba(120,190,255,.22);box-shadow:0 30px 60px -25px rgba(0,0,0,.8)}
+.vid video{display:block;width:100%;height:auto;aspect-ratio:464/848;border-radius:24px;background:#000}
+.vid-card p{margin:0;font-size:14px;color:var(--texto-2);text-align:center;max-width:34ch}
+.res-card{display:grid;gap:16px}
+.res-card img{border-radius:18px;border:1px solid rgba(217,179,106,.4)}
+.res-card h3{font-family:var(--f-display);font-weight:600;font-size:22px;margin:0}
+.res-card p{margin:0;color:var(--texto-2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--linea);color:var(--texto-2);background:rgba(2,14,28,.5)}
+
 /* Asistente */
 .asis{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,5vw,56px);align-items:center}
 @media (max-width:900px){.asis{grid-template-columns:minmax(0,1fr)}}
@@ -197,7 +211,7 @@ footer img{height:32px;width:auto}
       <div>
         <div class="tags"><span class="tag vivo">En funcionamiento</span><span class="tag">Hospedaje</span><span class="tag">La Merced · Chanchamayo</span></div>
         <h1>Hotel D' Confort: <span class="oro">antes y ahora</span></h1>
-        <p class="lead">En pocas semanas el hotel pasó de no tener una imagen propia a tener marca, redes activas, catálogos con QR, un asistente con IA que atiende las 24 horas y reservas que se ordenan solas.</p>
+        <p class="lead">En pocas semanas el hotel pasó de no tener una imagen propia a tener marca, redes activas, video promocional, reseñas convertidas en contenido, catálogos con QR, un asistente con IA que atiende las 24 horas y reservas que se ordenan solas.</p>
         <div class="acts">
           <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20vi%20el%20caso%20del%20Hotel%20D%27%20Confort%20y%20quiero%20algo%20as%C3%AD%20para%20mi%20negocio" target="_blank" rel="noopener">Quiero esto para mi negocio</a>
           <a class="btn btn-sec" href="/dconfort/" target="_blank" rel="noopener">Ver el catálogo en vivo</a>
@@ -326,6 +340,35 @@ footer img{height:32px;width:auto}
             <div class="dia"><time>Sáb 14</time><em>REEL</em><span>3 razones para quedarte</span></div>
             <div class="dia"><time>Dom 15</time><em>ESTADO</em><span>La habitación más pedida</span></div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="in sep"></div></div>
+
+  <section class="bloque wrap" id="video-resenas">
+    <div class="in">
+      <div class="cab">
+        <p class="ceja">Video y reseñas</p>
+        <h2>Contenido que muestra el hotel real y genera confianza</h2>
+        <p>Grabamos un video recorriendo cómo llegar, la cochera, las habitaciones y la recepción, y convertimos las reseñas reales de Google en publicaciones con la marca del hotel.</p>
+      </div>
+      <div class="vr">
+        <div class="card vid-card">
+          <div class="vid">
+            <video controls playsinline preload="none" poster="img/video-promo-poster.webp" aria-label="Video promocional del Hotel D' Confort">
+              <source src="img/video-promo.mp4" type="video/mp4">
+              Tu navegador no puede reproducir este video.
+            </video>
+          </div>
+          <p>Video vertical de 1 minuto para TikTok, Reels y estados de WhatsApp. Dale play con sonido.</p>
+        </div>
+        <div class="card res-card">
+          <img src="img/resena-google.webp" alt="Publicación del Hotel D' Confort con una reseña de cinco estrellas en Google: Excelente servicio y mejor atención" width="900" height="900" loading="lazy">
+          <h3>Reseñas de Google convertidas en publicaciones</h3>
+          <p>Lo que dicen los huéspedes vende más que cualquier anuncio. Tomamos reseñas reales de cinco estrellas y las presentamos con el logo, los colores y los beneficios del hotel.</p>
+          <div class="chips"><span>Reseña real de Google</span><span>Diseño con la marca</span><span>Listo para Facebook, Instagram y WhatsApp</span></div>
         </div>
       </div>
     </div>
