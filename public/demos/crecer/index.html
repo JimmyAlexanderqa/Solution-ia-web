@@ -233,6 +233,66 @@ footer .legal{display:grid;gap:2px}
 footer .por{font-size:13px;color:var(--celeste-2)}
 footer .por a{color:#fff;font-weight:800}
 
+/* Asistente Crecer (burbuja) */
+.bot-fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:10px;border:0;background:none;padding:0;cursor:pointer;font:inherit}
+.bot-fab .globo{background:#fff;color:var(--azul);font-weight:800;font-size:14px;padding:10px 14px;border-radius:16px 16px 4px 16px;box-shadow:0 12px 30px -10px rgba(4,42,79,.45);border:1px solid var(--linea);transition:opacity .3s,transform .3s}
+.bot-fab .cara{position:relative;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--azul-2),var(--azul));display:grid;place-items:center;box-shadow:0 12px 26px -8px rgba(4,42,79,.7),0 0 0 6px rgba(21,153,211,.18);transition:transform .2s}
+.bot-fab .cara img{width:42px;height:auto}
+.bot-fab .punto{position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:50%;background:#1FAF5A;border:2px solid #fff}
+.bot-fab:hover .cara{transform:scale(1.06)}
+.bot-fab[aria-expanded="true"] .globo{opacity:0;transform:translateX(10px);pointer-events:none}
+@media (max-width:520px){.bot-fab .globo{display:none}}
+.bot{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:61;width:min(400px,calc(100vw - 36px));height:min(620px,calc(100vh - 150px));background:#fff;border-radius:24px;box-shadow:0 30px 70px -20px rgba(4,42,79,.55);border:1px solid var(--linea);display:flex;flex-direction:column;overflow:hidden;transform-origin:bottom right;animation:abrir .25s ease-out}
+@keyframes abrir{from{opacity:0;transform:scale(.92) translateY(10px)}}
+@media (max-width:520px){.bot{right:0;left:0;bottom:0;width:100%;height:calc(100% - 72px);border-radius:22px 22px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}}
+.bot-cab{background:linear-gradient(135deg,var(--azul),var(--azul-2));color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.bot-cab .av{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.15);display:grid;place-items:center;flex:none}
+.bot-cab .av img{width:30px}
+.bot-cab b{display:block;font-family:var(--f-display);font-size:16px}
+.bot-cab small{font-size:12px;color:var(--celeste-2)}
+.bot-cab small::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#3BE38A;margin-right:6px}
+.bot-cerrar{margin-left:auto;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;display:grid;place-items:center}
+.bot-cerrar svg{width:18px;height:18px}
+.bot-prog{height:4px;background:#E2ECF5}
+.bot-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--celeste),var(--oro));transition:width .4s}
+.bot-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#F4F8FC}
+.m{max-width:86%;padding:10px 13px;border-radius:16px;font-size:15px;line-height:1.45;animation:entra .25s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(6px)}}
+.m.b{align-self:flex-start;background:#fff;border:1px solid var(--linea);border-bottom-left-radius:4px}
+.m.u{align-self:flex-end;background:var(--azul);color:#fff;border-bottom-right-radius:4px}
+.m.tip{align-self:stretch;max-width:100%;background:#FFF8E8;border:1px dashed #F2C873;color:#6B4700;font-size:14px}
+.escr{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;background:#fff;border:1px solid var(--linea);border-radius:16px}
+.escr i{width:7px;height:7px;border-radius:50%;background:var(--celeste);opacity:.4;animation:pp 1s infinite}
+.escr i:nth-child(2){animation-delay:.15s}.escr i:nth-child(3){animation-delay:.3s}
+@keyframes pp{50%{opacity:1;transform:translateY(-3px)}}
+.ops{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px;border-top:1px solid var(--linea);background:#fff}
+.ops button{font:inherit;font-weight:800;font-size:14px;color:var(--azul);background:#EAF4FB;border:2px solid #CFE6F5;border-radius:999px;padding:9px 14px;cursor:pointer;text-align:left;min-height:42px}
+.ops button:hover{border-color:var(--celeste);background:#fff}
+.ops button.pri{background:var(--oro);border-color:var(--oro);color:#2B1C00}
+.ops form{display:flex;gap:8px;width:100%}
+.ops input{flex:1;min-width:0;font:inherit;font-size:16px;border:2px solid var(--linea);border-radius:999px;padding:10px 14px}
+.ops input:focus{outline:none;border-color:var(--celeste)}
+.ops form button{background:var(--azul);color:#fff;border-color:var(--azul)}
+.res-bot{align-self:stretch;max-width:100%;background:#fff;border:2px solid var(--celeste);border-radius:18px;padding:14px;display:grid;gap:10px;animation:entra .3s ease-out}
+.res-bot .tit{font-size:12px;font-weight:800;color:var(--tinta-2);text-transform:uppercase;letter-spacing:.06em}
+.res-bot .prod-r{font-family:var(--f-display);font-size:22px;font-weight:800;color:var(--azul);line-height:1.1}
+.res-bot .estado{justify-self:start;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}
+.estado.alta{background:#DDF6EA;color:#0B7A4B}.estado.media{background:#FFF1D6;color:#8A5A00}.estado.rev{background:#FDE4E1;color:#A3271B}
+.res-bot ul{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:14px}
+.res-bot li{display:grid;grid-template-columns:20px 1fr;gap:6px}
+.res-bot li svg{width:18px;height:18px;color:var(--exito);margin-top:1px}
+.res-bot .cuota-r{background:#F4F8FC;border-radius:12px;padding:10px 12px;font-size:14px}
+.res-bot .cuota-r b{font-family:var(--f-display);font-size:20px;color:var(--azul)}
+.ficha{align-self:stretch;background:#0C2440;color:#E6F0FA;border-radius:16px;padding:14px;font-size:13px;display:grid;gap:6px;animation:entra .3s ease-out}
+.ficha .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800;color:#fff}
+.ficha .ft span{font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--celeste-2)}
+.ficha dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px}
+.ficha dt{color:#8FB0CC}
+.ficha dd{margin:0;font-weight:700}
+.ficha .ahorro{margin-top:4px;padding-top:8px;border-top:1px dashed rgba(255,255,255,.2);color:var(--oro-2);font-weight:700}
+.bot-pie{font-size:11px;color:var(--tinta-2);text-align:center;padding:6px 10px;background:#fff}
+.bot-cta{display:inline-flex;align-items:center;gap:8px;margin-top:4px}
+
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -261,8 +321,8 @@ footer .por a{color:#fff;font-weight:800}
         <h1>Impulsamos el crecimiento <em>diario</em> de los emprendedores del Perú</h1>
         <p>Créditos fáciles y rápidos para tu bodega, tu puesto en el mercado, tu mototaxi o tu taxi. Pagas un poquito cada día y sigues creciendo.</p>
         <div class="acciones">
-          <a class="btn btn-oro" href="#simulador">Calcula tu cuota diaria</a>
-          <a class="btn btn-blanco" href="#creditos">Ver créditos</a>
+          <button class="btn btn-oro" type="button" data-abrir-bot>Pre-evalúate en 1 minuto</button>
+          <a class="btn btn-blanco" href="#simulador">Calcula tu cuota</a>
         </div>
         <div class="hechos">
           <div class="hecho"><b>27</b><span>cuotas diarias</span></div>
@@ -446,6 +506,23 @@ footer .por a{color:#fff;font-weight:800}
   </section>
 </main>
 
+<button class="bot-fab" id="botFab" type="button" aria-controls="bot" aria-expanded="false">
+  <span class="globo">¿Qué crédito me conviene?</span>
+  <span class="cara"><img src="img/icono.png" alt=""><span class="punto"></span></span>
+  <span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Abrir asistente de Crecer</span>
+</button>
+<section class="bot" id="bot" role="dialog" aria-modal="false" aria-labelledby="botTit" hidden>
+  <div class="bot-cab">
+    <span class="av"><img src="img/icono.png" alt=""></span>
+    <div><b id="botTit">Asistente Crecer</b><small>En línea · responde al instante</small></div>
+    <button class="bot-cerrar" type="button" id="botCerrar" aria-label="Cerrar asistente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="bot-prog" aria-hidden="true"><i id="botProg"></i></div>
+  <div class="bot-msgs" id="botMsgs" aria-live="polite"></div>
+  <div class="ops" id="botOps"></div>
+  <div class="bot-pie">Demo · respuestas y montos referenciales · no guarda datos</div>
+</section>
+
 <footer class="wrap">
   <div class="in">
     <img src="img/logo-crecer.png" alt="Crecer" width="746" height="224" loading="lazy">
@@ -565,6 +642,161 @@ footer .por a{color:#fff;font-weight:800}
   $('sTasa').addEventListener('input', calcular);
   $('simForm').addEventListener('submit', function(e){ e.preventDefault(); });
   ajustarFreq(); calcular();
+
+  /* ---------- Asistente Crecer: pre-evaluación en burbuja ---------- */
+  (function asistente(){
+    var fab = $('botFab'), panel = $('bot'), msgs = $('botMsgs'), ops = $('botOps'), prog = $('botProg');
+    var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+    var d = {}, iniciado = false, pasoN = 0, TOTAL = 8;
+    function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    function scroll(){ msgs.scrollTop = msgs.scrollHeight; }
+    function avance(n){ pasoN = n; prog.style.width = Math.min(100, n/TOTAL*100) + '%'; }
+    function yo(t){ var e = document.createElement('div'); e.className = 'm u'; e.textContent = t; msgs.appendChild(e); scroll(); }
+    function dice(html, cls){
+      return new Promise(function(ok){
+        var t = document.createElement('div'); t.className = 'escr'; t.innerHTML = '<i></i><i></i><i></i>'; msgs.appendChild(t); scroll();
+        setTimeout(function(){ t.remove(); var e = document.createElement('div'); e.className = cls || 'm b'; e.innerHTML = html; msgs.appendChild(e); scroll(); ok(); }, reduce ? 0 : 650);
+      });
+    }
+    function botones(lista){
+      ops.innerHTML = '';
+      lista.forEach(function(o){
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = o.t; if(o.pri) b.className = 'pri';
+        b.addEventListener('click', function(){ ops.innerHTML = ''; if(!o.silencio) yo(o.t); o.f(); });
+        ops.appendChild(b);
+      });
+      var p = ops.querySelector('button'); if(p && !panel.hidden) p.focus({preventScroll:true});
+    }
+    function texto(ph, f){
+      ops.innerHTML = '<form><input type="text" maxlength="40" placeholder="' + ph + '" aria-label="' + ph + '" autocomplete="off"><button type="submit">Enviar</button></form>';
+      var form = ops.querySelector('form'), inp = form.querySelector('input');
+      form.addEventListener('submit', function(e){ e.preventDefault(); var v = inp.value.trim(); if(!v) { inp.focus(); return; } ops.innerHTML = ''; yo(v); f(v); });
+      if(!panel.hidden) inp.focus({preventScroll:true});
+    }
+
+    var ACT = [
+      {t:'Tengo un negocio (comercio, producción o servicios)', p:'comercio'},
+      {t:'Hago transporte con mi vehículo', p:'transporte'},
+      {t:'Soy chofer, el vehículo no es mío', p:'chofer'},
+      {t:'Trabajo para una empresa', p:'facilito'},
+      {t:'Estuve reportado y quiero empezar de nuevo', p:'creo'}
+    ];
+    function inicio(){
+      d = {cumple:[], falta:[]}; msgs.innerHTML = ''; avance(0);
+      dice('¡Hola! Soy el asistente de <b>Crecer</b>. En 1 minuto te digo qué crédito te conviene y qué documentos necesitas.').then(function(){
+        botones([{t:'Empezar', pri:true, f:actividad}, {t:'Solo quiero calcular mi cuota', f:function(){ cerrar(); location.hash = '#simulador'; }}]);
+      });
+    }
+    function actividad(){
+      avance(1);
+      dice('¿A qué te dedicas?').then(function(){ botones(ACT.map(function(a){ return {t:a.t, f:function(){ d.prod = a.p; edad(); }}; })); });
+    }
+    function edad(){
+      avance(2);
+      dice('¿Tienes entre 22 y 65 años?').then(function(){ botones([
+        {t:'Sí', f:function(){ d.cumple.push('Edad entre 22 y 65 años'); antiguedad(); }},
+        {t:'No', f:function(){ d.falta.push('Edad fuera del rango de 22 a 65 años'); antiguedad(); }}
+      ]); });
+    }
+    function antiguedad(){
+      avance(3);
+      if(d.prod === 'facilito'){
+        dice('¿Ya tuviste créditos antes, por más de un año?').then(function(){ botones([
+          {t:'Sí, más de un año', f:function(){ d.cumple.push('Experiencia crediticia mayor a 1 año'); vivienda(); }},
+          {t:'Menos de un año o nunca', f:function(){ d.falta.push('Experiencia crediticia menor a 1 año'); vivienda(); }}
+        ]); });
+        return;
+      }
+      if(d.prod === 'creo'){ d.cumple.push('Busca una nueva oportunidad (Creo en Ti)'); vivienda(); return; }
+      var q = d.prod === 'comercio' ? '¿Cuánto tiempo tiene tu negocio?' : '¿Cuánto tiempo llevas trabajando en transporte?';
+      dice(q).then(function(){ botones([
+        {t:'Menos de 6 meses', f:function(){ d.falta.push('Actividad con menos de 6 meses'); docs(); }},
+        {t:'De 6 meses a 1 año', f:function(){ d.cumple.push('Actividad de 6 meses a 1 año'); docs(); }},
+        {t:'Más de 1 año', f:function(){ d.cumple.push('Actividad de más de 1 año'); docs(); }}
+      ]); });
+    }
+    function docs(){
+      avance(4);
+      if(d.prod === 'transporte'){
+        dice('¿Tienes vigentes la tarjeta de propiedad, el SOAT y tu licencia de conducir?').then(function(){ botones([
+          {t:'Sí, todo vigente', f:function(){ d.cumple.push('Documentos del vehículo vigentes'); vivienda(); }},
+          {t:'Me falta alguno', f:function(){ d.falta.push('Algún documento del vehículo no vigente'); vivienda(); }}
+        ]); });
+      } else if(d.prod === 'chofer'){
+        dice('¿Tu licencia de conducir está vigente?').then(function(){ botones([
+          {t:'Sí', f:function(){ d.cumple.push('Licencia de conducir vigente'); vivienda(); }},
+          {t:'No', f:function(){ d.falta.push('Licencia de conducir no vigente'); vivienda(); }}
+        ]); });
+      } else { vivienda(); }
+    }
+    function vivienda(){
+      avance(5);
+      var q = d.prod === 'chofer' || d.prod === 'creo' ? '¿Tienes casa propia o alguien que pueda ser tu aval?' : '¿La casa donde vives es propia o alquilada?';
+      var o = d.prod === 'chofer' || d.prod === 'creo'
+        ? [{t:'Casa propia', f:function(){ d.vivienda = 'Casa propia'; d.cumple.push('Casa propia'); monto(); }}, {t:'Tengo un aval', f:function(){ d.vivienda = 'Con aval'; d.cumple.push('Cuenta con aval'); monto(); }}, {t:'Ninguno', f:function(){ d.vivienda = 'Sin casa propia ni aval'; d.falta.push('Sin casa propia ni aval'); monto(); }}]
+        : [{t:'Propia', f:function(){ d.vivienda = 'Propia'; d.cumple.push('Vivienda propia'); monto(); }}, {t:'Alquilada', f:function(){ d.vivienda = 'Alquilada'; dice('¿Tienes contrato de alquiler de al menos 6 meses?').then(function(){ botones([{t:'Sí', f:function(){ d.cumple.push('Contrato de alquiler vigente'); monto(); }}, {t:'No', f:function(){ d.falta.push('Sin contrato de alquiler'); monto(); }}]); }); }}];
+      dice(q).then(function(){ botones(o); });
+    }
+    var RANGOS = [{t:'Hasta S/ 1,000', v:1000}, {t:'S/ 1,000 a 3,000', v:2000}, {t:'S/ 3,000 a 5,000', v:4000}, {t:'Más de S/ 5,000', v:6000}];
+    function monto(){
+      avance(6);
+      dice('¿Cuánto necesitas, más o menos?').then(function(){ botones(RANGOS.map(function(r){ return {t:r.t, f:function(){ d.rango = r.t; d.monto = r.v; zona(); }}; })); });
+    }
+    function zona(){
+      avance(7);
+      dice('¿En qué distrito o zona está tu negocio o tu casa? Así te asignamos la agencia más cercana.').then(function(){ texto('Ej.: Amarilis, Pillco Marca…', function(v){ d.zona = v; nombre(); }); });
+    }
+    function nombre(){
+      dice('¿Cómo te llamas?').then(function(){ texto('Tu nombre', function(v){ d.nombre = v; permiso(); }); });
+    }
+    function permiso(){
+      dice('Gracias, ' + esc(d.nombre.split(' ')[0]) + '. Para pasar tu solicitud a un asesor, ¿aceptas que usemos estos datos solo para evaluar tu crédito?').then(function(){ botones([
+        {t:'Acepto', pri:true, f:resultado},
+        {t:'No, gracias', f:function(){ dice('Entendido, no compartimos nada. Puedes calcular tu cuota en el simulador cuando quieras.').then(function(){ botones([{t:'Volver a empezar', f:inicio, silencio:true}]); }); }}
+      ]); });
+    }
+    function resultado(){
+      avance(8);
+      var p = PRODUCTOS.filter(function(x){ return x.id === d.prod; })[0];
+      var nFalta = d.falta.length, est = nFalta === 0 ? ['alta','Cumples los requisitos básicos'] : nFalta === 1 ? ['media','Te falta 1 requisito'] : ['rev','Un asesor revisará tu caso'];
+      var prioridad = nFalta === 0 ? 'ALTA' : nFalta === 1 ? 'MEDIA' : 'REVISAR';
+      var tasa = 0.10, total = d.monto*(1+tasa), cuota = Math.ceil(total/27*10)/10;
+      var html = '<span class="tit">Tu resultado</span><span class="prod-r">' + p.nombre + '</span><span class="estado ' + est[0] + '">' + est[1] + '</span>' +
+        '<div class="cuota-r">Con ' + money.format(d.monto) + ', tu cuota diaria sería de aprox. <b class="num">' + money.format(cuota) + '</b> <small>(27 cuotas, tasa referencial)</small></div>' +
+        '<span class="tit">Lleva estos documentos</span><ul>' + p.req.map(function(r){ return '<li>' + CHECK + '<span>' + r + '</span></li>'; }).join('') + '</ul>';
+      dice(html, 'res-bot').then(function(){
+        var hoy = new Date();
+        var ficha = '<div class="ft">Así le llega al asesor<span>' + hoy.toLocaleDateString('es-PE') + ' · ' + hoy.toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'}) + '</span></div>' +
+          '<dl><dt>Cliente</dt><dd>' + esc(d.nombre) + '</dd><dt>Producto</dt><dd>' + p.nombre + '</dd><dt>Monto</dt><dd>' + d.rango + '</dd><dt>Zona</dt><dd>' + esc(d.zona) + '</dd>' +
+          '<dt>Cumple</dt><dd>' + (d.cumple.length ? d.cumple.join(' · ') : '—') + '</dd><dt>Revisar</dt><dd>' + (d.falta.length ? d.falta.join(' · ') : 'Nada') + '</dd><dt>Prioridad</dt><dd>' + prioridad + '</dd></dl>' +
+          '<div class="ahorro">El asesor ya sabe qué producto ofrecer y qué falta antes de visitar al cliente.</div>';
+        return dice(ficha, 'ficha');
+      }).then(function(){
+        var msg = 'Hola Crecer, soy ' + d.nombre + '. Hice mi pre-evaluación:\n• Crédito: ' + p.nombre + '\n• Monto: ' + d.rango + '\n• Zona: ' + d.zona + '\n• Cumplo: ' + (d.cumple.join(', ') || '—') + (d.falta.length ? '\n• Por revisar: ' + d.falta.join(', ') : '') + '\nQuiero que un asesor me contacte.';
+        botones([
+          {t:'Enviar a un asesor por WhatsApp', pri:true, silencio:true, f:function(){ window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank', 'noopener'); dice('¡Listo! Tu asesor te escribirá pronto. Mientras tanto, puedes ver tu cronograma en el simulador.').then(fin); }},
+          {t:'Ver mi cuota en el simulador', silencio:true, f:function(){ irSim(p.id, d.monto); }},
+          {t:'Volver a empezar', silencio:true, f:inicio}
+        ]);
+      });
+    }
+    function fin(){ botones([{t:'Ver mi cuota en el simulador', silencio:true, f:function(){ irSim(d.prod, d.monto); }}, {t:'Volver a empezar', silencio:true, f:inicio}]); }
+    function irSim(prod, m){
+      sel.value = prod; ajustarFreq(); $('fD').checked = true;
+      montoR.value = m; montoN.value = m; calcular(); cerrar();
+      document.getElementById('simulador').scrollIntoView({behavior: reduce ? 'auto' : 'smooth'});
+    }
+    function abrir(){
+      panel.hidden = false; fab.setAttribute('aria-expanded','true');
+      if(!iniciado){ iniciado = true; inicio(); }
+      else { var b = ops.querySelector('button, input'); if(b) b.focus({preventScroll:true}); }
+    }
+    function cerrar(){ panel.hidden = true; fab.setAttribute('aria-expanded','false'); fab.focus({preventScroll:true}); }
+    fab.addEventListener('click', function(){ panel.hidden ? abrir() : cerrar(); });
+    $('botCerrar').addEventListener('click', cerrar);
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !panel.hidden) cerrar(); });
+    document.querySelectorAll('[data-abrir-bot]').forEach(function(b){ b.addEventListener('click', abrir); });
+  })();
 
   /* ---------- 3D ---------- */
   if(typeof THREE === 'undefined') return;
