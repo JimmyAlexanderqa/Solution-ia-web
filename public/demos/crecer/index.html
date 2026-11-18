@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Crecer Más · Demo de propuesta SolutionIA</title>
+<meta name="description" content="Demo de propuesta de web preparada por SolutionIA para Crecer Más. No es la web oficial.">
+<link rel="icon" href="img/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: banda azul profundo de la marca para el hero 3D; cuerpo claro con tarjetas; el simulador es la pieza central con pila de monedas 3D */
+:root{
+  --azul:#073F73;
+  --azul-2:#0A5196;
+  --azul-osc:#042A4F;
+  --celeste:#1599D3;
+  --celeste-2:#7FD0F2;
+  --oro:#F2B33D;
+  --oro-2:#FFD27A;
+  --fondo:#F3F7FB;
+  --blanco:#FFFFFF;
+  --tinta:#0C2440;
+  --tinta-2:#4D6580;
+  --linea:#DCE6F0;
+  --exito:#13A06F;
+  --f-display:"Archivo","Arial Black",system-ui,sans-serif;
+  --f-body:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;background:var(--fondo)}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block;height:auto}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--celeste);outline-offset:3px;border-radius:8px}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:1180px;margin-inline:auto}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Franja de demo */
+.demo{position:sticky;top:0;z-index:50;background:var(--oro);color:#3B2600;font-size:13px;font-weight:700;text-align:center;padding:7px max(16px,env(safe-area-inset-right,0px)) 7px max(16px,env(safe-area-inset-left,0px));padding-top:calc(7px + env(safe-area-inset-top,0px))}
+.demo b{font-weight:800}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--f-body);font-weight:800;font-size:15px;text-decoration:none;border-radius:14px;padding:13px 22px;border:2px solid transparent;cursor:pointer;min-height:48px;transition:transform .15s,box-shadow .2s,background .2s}
+.btn svg{width:19px;height:19px;flex:none}
+.btn-oro{background:var(--oro);color:#2B1C00;box-shadow:0 6px 0 #C98A16}
+.btn-oro:hover{transform:translateY(-2px);box-shadow:0 8px 0 #C98A16}
+.btn-oro:active{transform:translateY(3px);box-shadow:0 3px 0 #C98A16}
+.btn-blanco{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.5)}
+.btn-blanco:hover{background:rgba(255,255,255,.2)}
+.btn-azul{background:var(--azul);color:#fff;box-shadow:0 6px 0 var(--azul-osc)}
+.btn-azul:hover{transform:translateY(-2px)}
+.btn-linea{background:#fff;color:var(--azul);border-color:var(--linea)}
+.btn-linea:hover{border-color:var(--celeste)}
+.btn-wa{background:#1FAF5A;color:#fff;box-shadow:0 6px 0 #138643}
+.btn-wa:hover{transform:translateY(-2px)}
+
+/* Navegación */
+.nav{background:var(--azul);color:#fff}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.nav-logo img{height:48px;width:auto}
+.menu{display:flex;gap:4px;font-weight:700;font-size:15px}
+.menu a{text-decoration:none;padding:8px 12px;border-radius:10px;color:rgba(255,255,255,.85)}
+.menu a:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav .btn{padding:9px 16px;min-height:42px;font-size:14px}
+@media (max-width:920px){.menu{display:none}}
+@media (max-width:420px){.nav-logo img{height:38px}.nav .btn{padding:8px 12px}}
+
+/* Hero */
+.hero{background:radial-gradient(900px 500px at 80% 30%,rgba(21,153,211,.45),transparent 65%),linear-gradient(180deg,var(--azul) 0%,var(--azul-osc) 100%);color:#fff;position:relative;overflow:hidden}
+.hero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;padding-block:40px 64px}
+@media (max-width:900px){.hero .in{grid-template-columns:minmax(0,1fr);padding-block:28px 40px}}
+.hero-txt{display:grid;gap:20px}
+.chip{justify-self:start;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--celeste-2);background:rgba(127,208,242,.12);border:1px solid rgba(127,208,242,.35);padding:6px 14px;border-radius:999px}
+h1{font-family:var(--f-display);font-weight:900;font-size:clamp(2.1rem,4.6vw,3.6rem);line-height:1.04;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 em{font-style:normal;color:var(--oro)}
+.hero-txt p{margin:0;font-size:clamp(1.02rem,1.5vw,1.18rem);color:rgba(255,255,255,.85);max-width:46ch}
+.acciones{display:flex;flex-wrap:wrap;gap:14px}
+.hechos{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:6px}
+.hecho{display:grid}
+.hecho b{font-family:var(--f-display);font-size:26px;line-height:1.1;color:#fff}
+.hecho span{font-size:13px;color:rgba(255,255,255,.75)}
+.escena{position:relative;min-height:440px}
+@media (max-width:900px){.escena{min-height:380px}}
+#monedas3d{position:absolute;inset:0;width:100%;height:100%;display:block}
+.foto-hero{position:absolute;right:2%;bottom:6%;width:min(260px,52%);border-radius:20px;overflow:hidden;border:4px solid #fff;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);transform:rotate(3deg);background:var(--azul-2)}
+.foto-hero img{aspect-ratio:4/3;object-fit:cover;width:100%}
+.foto-hero figcaption{position:absolute;left:8px;bottom:8px;font-size:11px;font-weight:700;background:rgba(4,42,79,.8);color:#fff;padding:3px 8px;border-radius:999px}
+.ola{display:block;width:100%;height:46px;margin-top:-46px;position:relative}
+
+/* Secciones */
+section.bloque{padding-block:clamp(56px,8vw,96px)}
+.cab{max-width:62ch;margin-bottom:32px}
+.cab.centro{text-align:center;margin-inline:auto}
+.ceja{display:inline-block;font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--celeste);margin:0 0 10px}
+h2{font-family:var(--f-display);font-weight:800;font-size:clamp(1.7rem,3.4vw,2.6rem);line-height:1.1;letter-spacing:-.015em;margin:0 0 12px;text-wrap:balance;color:var(--azul)}
+.cab p{margin:0;color:var(--tinta-2);font-size:17px}
+
+/* Pasos */
+.pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:p}
+@media (max-width:900px){.pasos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.pasos{grid-template-columns:minmax(0,1fr)}}
+.paso{counter-increment:p;background:#fff;border:1px solid var(--linea);border-radius:20px;padding:22px;display:grid;gap:8px;align-content:start;position:relative;box-shadow:0 10px 30px -22px rgba(7,63,115,.5)}
+.paso .ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,var(--celeste),var(--azul-2));color:#fff;transform:rotate(-4deg);box-shadow:0 8px 0 rgba(7,63,115,.15)}
+.paso .ic svg{width:28px;height:28px}
+.paso::after{content:counter(p);position:absolute;top:16px;right:18px;font-family:var(--f-display);font-weight:900;font-size:40px;line-height:1;color:var(--linea)}
+.paso h3{font-family:var(--f-display);font-weight:800;font-size:19px;margin:6px 0 0;color:var(--azul)}
+.paso p{margin:0;color:var(--tinta-2);font-size:15px}
+
+/* Productos */
+.productos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:980px){.productos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.productos{grid-template-columns:minmax(0,1fr)}}
+.prod{background:#fff;border:1px solid var(--linea);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 14px 34px -26px rgba(7,63,115,.6);transition:transform .2s}
+.prod:hover{transform:translateY(-4px)}
+.prod-img{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,var(--azul-2),var(--celeste));overflow:hidden}
+.prod-img img{width:100%;height:100%;object-fit:cover}
+.prod-img .ref{position:absolute;left:10px;bottom:10px;font-size:11px;font-weight:700;background:rgba(4,42,79,.78);color:#fff;padding:3px 8px;border-radius:999px}
+.prod-img .freq{position:absolute;right:10px;top:10px;font-size:12px;font-weight:800;background:var(--oro);color:#2B1C00;padding:4px 10px;border-radius:999px}
+.prod-body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.prod h3{font-family:var(--f-display);font-weight:800;font-size:22px;margin:0;color:var(--azul)}
+.prod .para{margin:0;color:var(--tinta-2);font-size:15px}
+.prod details{border-top:1px dashed var(--linea);padding-top:10px}
+.prod summary{cursor:pointer;font-weight:800;color:var(--azul-2);font-size:14px}
+.prod ul{margin:10px 0 0;padding-left:20px;color:var(--tinta-2);font-size:14px;display:grid;gap:4px}
+.prod .btn{margin-top:auto;align-self:flex-start}
+.prod-nota{margin:18px 0 0;font-size:13px;color:var(--tinta-2)}
+
+/* Simulador */
+.sim-sec{background:linear-gradient(180deg,#E8F2FB,var(--fondo))}
+.sim{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px;align-items:start}
+@media (max-width:940px){.sim{grid-template-columns:minmax(0,1fr)}}
+.panel{background:#fff;border:1px solid var(--linea);border-radius:24px;padding:24px;box-shadow:0 20px 40px -30px rgba(7,63,115,.6);min-width:0}
+.form{display:grid;gap:18px}
+.campo{display:grid;gap:8px}
+.campo label,.campo .lbl{font-weight:800;font-size:15px;color:var(--azul)}
+.campo .ayuda{font-size:13px;color:var(--tinta-2)}
+select,input[type=date]{width:100%;font:inherit;font-size:16px;color:var(--tinta);background:var(--fondo);border:2px solid var(--linea);border-radius:12px;padding:10px 12px;min-height:48px}
+select:focus,input:focus{outline:none;border-color:var(--celeste)}
+.monto-fila{display:flex;align-items:center;gap:10px}
+.monto-fila .pref{font-family:var(--f-display);font-weight:800;color:var(--azul);font-size:22px}
+.monto-fila input[type=number]{flex:1;min-width:0;font-family:var(--f-display);font-weight:800;font-size:26px;color:var(--azul);background:var(--fondo);border:2px solid var(--linea);border-radius:12px;padding:6px 12px;min-height:52px}
+input[type=range]{width:100%;accent-color:var(--celeste);height:28px}
+.rango-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--tinta-2);font-family:var(--f-mono)}
+.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;background:var(--fondo);border:2px solid var(--linea);border-radius:14px;padding:4px}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg label{display:grid;place-items:center;text-align:center;padding:9px 6px;border-radius:10px;font-weight:800;font-size:14px;color:var(--tinta-2);cursor:pointer;line-height:1.2}
+.seg label small{display:block;font-weight:600;font-size:11px}
+.seg input:checked+label{background:var(--azul);color:#fff}
+.seg input:focus-visible+label{outline:3px solid var(--celeste)}
+.seg input:disabled+label{opacity:.35;cursor:not-allowed}
+.check{display:flex;gap:10px;align-items:center;font-size:14px;font-weight:700;color:var(--tinta-2)}
+.check input{width:20px;height:20px;accent-color:var(--azul)}
+
+.res{display:grid;gap:16px}
+.cuota-box{background:linear-gradient(135deg,var(--azul),var(--azul-2));color:#fff;border-radius:22px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 16px;align-items:center;position:relative;overflow:hidden}
+@media (max-width:560px){.cuota-box{grid-template-columns:minmax(0,1fr)}}
+.cuota-box .k{font-size:14px;font-weight:700;color:rgba(255,255,255,.8)}
+.cuota-box .v{font-family:var(--f-display);font-weight:900;font-size:clamp(2.4rem,5vw,3.4rem);line-height:1;color:var(--oro)}
+.cuota-box .s{font-size:14px;color:rgba(255,255,255,.85)}
+#pila3d{width:100%;height:220px;display:block}
+.cuota-pila{position:relative}
+.leyenda{display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;color:rgba(255,255,255,.9)}
+.leyenda i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.tres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.tres{grid-template-columns:minmax(0,1fr)}}
+.mini{background:#fff;border:1px solid var(--linea);border-radius:16px;padding:14px}
+.mini span{display:block;font-size:12px;font-weight:700;color:var(--tinta-2)}
+.mini b{font-family:var(--f-display);font-weight:800;font-size:20px;color:var(--azul)}
+.formula{background:#FFF8E8;border:2px dashed #F2C873;border-radius:18px;padding:16px 18px;display:grid;gap:8px}
+.formula h3{margin:0;font-family:var(--f-display);font-size:16px;color:#8A5A00}
+.formula .linea-f{font-family:var(--f-mono);font-size:14px;color:#5C3D00;overflow-x:auto;white-space:nowrap;padding-bottom:2px}
+.formula .linea-f b{color:var(--azul)}
+.formula p{margin:0;font-size:13px;color:#7A5410}
+.cron{background:#fff;border:1px solid var(--linea);border-radius:18px;overflow:hidden}
+.cron summary{cursor:pointer;padding:14px 18px;font-weight:800;color:var(--azul)}
+.tabla{max-height:300px;overflow:auto;border-top:1px solid var(--linea)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{position:sticky;top:0;background:var(--fondo);text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-2);padding:9px 14px}
+td{padding:8px 14px;border-top:1px solid var(--linea);font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+td:last-child,th:last-child{text-align:right}
+.aviso{font-size:13px;color:var(--tinta-2);margin:0}
+
+/* Agencias */
+.agencias{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:18px;align-items:stretch}
+@media (max-width:900px){.agencias{grid-template-columns:minmax(0,1fr)}}
+.mapa{border-radius:24px;overflow:hidden;border:1px solid var(--linea);min-height:360px;background:#DDE8F2;position:relative}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ag-lista{display:grid;gap:14px;align-content:start}
+.ag{background:#fff;border:1px solid var(--linea);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:120px minmax(0,1fr)}
+@media (max-width:420px){.ag{grid-template-columns:minmax(0,1fr)}}
+.ag img{width:100%;height:100%;object-fit:cover;min-height:120px}
+.ag-txt{padding:14px 16px;display:grid;gap:4px;align-content:start}
+.ag-txt b{font-family:var(--f-display);font-size:17px;color:var(--azul)}
+.ag-txt span{font-size:14px;color:var(--tinta-2)}
+.ag-txt a{font-weight:800;font-size:14px;color:var(--azul-2)}
+.ag.pend{border-style:dashed;background:transparent;grid-template-columns:minmax(0,1fr)}
+
+/* Testimonios y trabaja */
+.dos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:860px){.dos{grid-template-columns:minmax(0,1fr)}}
+.vacio{border:2px dashed #B9CDE0;border-radius:24px;padding:28px;display:grid;gap:10px;align-content:center;text-align:center;color:var(--tinta-2);background:#fff}
+.vacio b{font-family:var(--f-display);color:var(--azul);font-size:20px}
+.trabaja{border-radius:24px;overflow:hidden;background:var(--azul);color:#fff;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media (max-width:560px){.trabaja{grid-template-columns:minmax(0,1fr)}}
+.trabaja img{width:100%;height:100%;object-fit:cover;min-height:220px}
+.trabaja div{padding:24px;display:grid;gap:10px;align-content:center}
+.trabaja h3{margin:0;font-family:var(--f-display);font-size:24px}
+.trabaja p{margin:0;color:rgba(255,255,255,.85)}
+
+/* Atención */
+.atencion{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.atencion{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.atencion{grid-template-columns:minmax(0,1fr)}}
+.at{background:#fff;border:1px solid var(--linea);border-radius:20px;padding:20px;display:grid;gap:6px;align-content:start}
+.at .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#E5F3FB;color:var(--azul-2)}
+.at .ic svg{width:24px;height:24px}
+.at b{font-family:var(--f-display);color:var(--azul)}
+.at span{color:var(--tinta-2);font-size:14px;overflow-wrap:anywhere}
+.at a{font-weight:800;color:var(--azul-2);font-size:14px}
+.reclamo{border-color:#F2C873;background:#FFF8E8}
+
+footer{background:var(--azul-osc);color:rgba(255,255,255,.8);font-size:14px}
+footer .in{padding-block:30px 40px;display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:center}
+footer img{height:40px;width:auto}
+footer .legal{display:grid;gap:2px}
+footer .por{font-size:13px;color:var(--celeste-2)}
+footer .por a{color:#fff;font-weight:800}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="demo" role="note"><b>Demo de propuesta</b> preparada por SolutionIA para Crecer Más · No es la web oficial · Imágenes, tasas y montos referenciales</div>
+
+<header class="nav wrap">
+  <div class="in">
+    <a class="nav-logo" href="#inicio"><img src="img/logo-crecer.png" alt="Crecer, líderes en credidiarios" width="746" height="224"></a>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#como">¿Cómo funciona?</a>
+      <a href="#creditos">Créditos</a>
+      <a href="#simulador">Simulador</a>
+      <a href="#agencias">Agencias</a>
+      <a href="#atencion">Atención</a>
+    </nav>
+    <a class="btn btn-oro" href="#simulador">Simula tu crédito</a>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero wrap">
+    <div class="in">
+      <div class="hero-txt">
+        <span class="chip">Credidiarios para emprendedores</span>
+        <h1>Impulsamos el crecimiento <em>diario</em> de los emprendedores del Perú</h1>
+        <p>Créditos fáciles y rápidos para tu bodega, tu puesto en el mercado, tu mototaxi o tu taxi. Pagas un poquito cada día y sigues creciendo.</p>
+        <div class="acciones">
+          <a class="btn btn-oro" href="#simulador">Calcula tu cuota diaria</a>
+          <a class="btn btn-blanco" href="#creditos">Ver créditos</a>
+        </div>
+        <div class="hechos">
+          <div class="hecho"><b>27</b><span>cuotas diarias</span></div>
+          <div class="hecho"><b>5</b><span>tipos de crédito</span></div>
+          <div class="hecho"><b>22–65</b><span>años para solicitar</span></div>
+        </div>
+      </div>
+      <div class="escena" aria-hidden="true">
+        <canvas id="monedas3d"></canvas>
+        <figure class="foto-hero"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KzFESyxHg4GfDzJJQhb1HcH2VN/hf_20261118_030016_8200156f-f52f-41f7-b226-5e96f6fd7731.png" alt="" width="1024" height="768"><figcaption>Imagen referencial</figcaption></figure>
+      </div>
+    </div>
+  </section>
+  <svg class="ola" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46V20C240 0 480 0 720 18S1200 40 1440 14V46Z" fill="#F3F7FB"/></svg>
+
+  <section class="bloque wrap" id="como">
+    <div class="in">
+      <div class="cab centro">
+        <span class="ceja">¿Cómo funciona?</span>
+        <h2>Tu crédito en 4 pasos</h2>
+        <p>Sin complicaciones. Te acompaña un asesor desde el primer día.</p>
+      </div>
+      <ol class="pasos">
+        <li class="paso"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6v10H3z"/><path d="M9 20v-6h6v6"/></svg></span><h3>Elige tu crédito</h3><p>Según tu actividad: comercio, transporte, chofer o una necesidad urgente.</p></li>
+        <li class="paso"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h3>Reúne tus requisitos</h3><p>DNI, recibo de luz y los documentos de tu negocio o vehículo.</p></li>
+        <li class="paso"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 11l2 2 4-4"/></svg></span><h3>Evaluación con tu asesor</h3><p>Te visita, conoce tu negocio y te propone el monto adecuado.</p></li>
+        <li class="paso"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span><h3>Paga a diario</h3><p>Cuotas pequeñas todos los días, al ritmo de tus ventas.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="creditos" style="padding-top:0">
+    <div class="in">
+      <div class="cab">
+        <span class="ceja">Nuestros créditos</span>
+        <h2>Un crédito para cada emprendedor</h2>
+        <p>Requisitos tomados de la web actual de Crecer Más.</p>
+      </div>
+      <div class="productos" id="productos"></div>
+      <p class="prod-nota">Los requisitos pueden variar según el monto. Todo crédito está sujeto a evaluación.</p>
+    </div>
+  </section>
+
+  <section class="bloque wrap sim-sec" id="simulador">
+    <div class="in">
+      <div class="cab centro">
+        <span class="ceja">Simulador</span>
+        <h2>Calcula tu cuota en segundos</h2>
+        <p>Mueve los valores y mira cómo cambia tu cuota. Te explicamos cada número.</p>
+      </div>
+      <div class="sim">
+        <form class="panel form" id="simForm" novalidate>
+          <div class="campo">
+            <label for="sProd">¿Qué crédito necesitas?</label>
+            <select id="sProd"></select>
+          </div>
+          <div class="campo">
+            <label for="sMontoN">¿Cuánto necesitas?</label>
+            <div class="monto-fila"><span class="pref">S/</span><input id="sMontoN" type="number" inputmode="numeric" min="300" max="10000" step="50" value="1500" aria-describedby="montoAyuda"></div>
+            <input id="sMonto" type="range" min="300" max="10000" step="50" value="1500" aria-label="Monto del crédito">
+            <div class="rango-lbl"><span>S/ 300</span><span>S/ 10,000</span></div>
+            <span class="ayuda" id="montoAyuda">Montos referenciales para el demo.</span>
+          </div>
+          <div class="campo">
+            <span class="lbl" id="lblFreq">¿Cómo quieres pagar?</span>
+            <div class="seg" role="radiogroup" aria-labelledby="lblFreq">
+              <input type="radio" name="freq" id="fD" value="D" checked><label for="fD">Diario<small>27 cuotas</small></label>
+              <input type="radio" name="freq" id="fS" value="S"><label for="fS">Semanal<small>4 cuotas</small></label>
+              <input type="radio" name="freq" id="fC" value="C"><label for="fC">Catorcenal<small>2 cuotas</small></label>
+            </div>
+            <span class="ayuda" id="freqAyuda"></span>
+          </div>
+          <div class="campo">
+            <label for="sTasa">Tasa de interés mensual: <span id="tasaTxt" class="num">10%</span></label>
+            <input id="sTasa" type="range" min="3" max="20" step="0.5" value="10">
+            <span class="ayuda">Tasa referencial de ejemplo. La tasa real la define Crecer Más tras la evaluación.</span>
+          </div>
+          <div class="campo">
+            <label for="sFecha">Fecha de desembolso</label>
+            <input id="sFecha" type="date">
+            <label class="check" for="sDom"><input type="checkbox" id="sDom" checked> No se cobra los domingos</label>
+          </div>
+        </form>
+
+        <div class="res" aria-live="polite">
+          <div class="cuota-box">
+            <div>
+              <span class="k" id="kCuota">Tu cuota diaria</span>
+              <div class="v num" id="vCuota">—</div>
+              <span class="s" id="sCuota"></span>
+            </div>
+            <div class="cuota-pila">
+              <canvas id="pila3d" aria-hidden="true"></canvas>
+              <div class="leyenda"><span><i style="background:#F2B33D"></i>Lo que recibes</span><span><i style="background:#7FD0F2"></i>Interés</span></div>
+            </div>
+          </div>
+          <div class="tres">
+            <div class="mini"><span>Recibes</span><b class="num" id="vMonto">—</b></div>
+            <div class="mini"><span>Interés total</span><b class="num" id="vInt">—</b></div>
+            <div class="mini"><span>Pagas en total</span><b class="num" id="vTot">—</b></div>
+          </div>
+          <div class="formula">
+            <h3>¿De dónde sale tu cuota? (interés simple)</h3>
+            <div class="linea-f" id="f1"></div>
+            <div class="linea-f" id="f2"></div>
+            <div class="linea-f" id="f3"></div>
+            <p>Con interés simple, el interés se calcula una sola vez sobre lo que recibes. No crece con el tiempo.</p>
+          </div>
+          <details class="cron">
+            <summary>Ver mi cronograma de pagos</summary>
+            <div class="tabla"><table><thead><tr><th>N.°</th><th>Fecha</th><th>Cuota</th><th>Te falta</th></tr></thead><tbody id="tbody"></tbody></table></div>
+          </details>
+          <a class="btn btn-wa" id="btnWa" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2c0 1.2.9 2.4 1 2.5.1.2 1.7 2.7 4.2 3.8 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>
+            Quiero este crédito
+          </a>
+          <p class="aviso">Simulación referencial. Montos, tasas y condiciones finales sujetos a evaluación crediticia de Crecer Más.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="agencias">
+    <div class="in">
+      <div class="cab">
+        <span class="ceja">Agencias</span>
+        <h2>Encuéntranos</h2>
+        <p>Con el mapa, el cliente llega sin perderse. Aquí van todas sus agencias con su ubicación.</p>
+      </div>
+      <div class="agencias">
+        <div class="mapa">
+          <iframe title="Mapa de la oficina principal en Pillco Marca, Huánuco" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Jr.%20Los%20Pinos%20118%2C%20Pillco%20Marca%2C%20Hu%C3%A1nuco%2C%20Per%C3%BA&output=embed"></iframe>
+        </div>
+        <div class="ag-lista">
+          <article class="ag">
+            <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KzFESyxHg4GfDzJJQhb1HcH2VN/hf_20261118_030015_ac7da83a-7bdd-4199-8e8a-b9e7712e0b36.png" alt="Fachada referencial de una agencia" width="1024" height="768" loading="lazy">
+            <div class="ag-txt"><b>Oficina principal</b><span>Jr. Los Pinos N.º 118, Pillco Marca, Huánuco</span><span>Lun. a sáb. · horario referencial</span><a href="https://www.google.com/maps/search/?api=1&query=Jr.%20Los%20Pinos%20118%2C%20Pillco%20Marca%2C%20Hu%C3%A1nuco" target="_blank" rel="noopener">Cómo llegar →</a></div>
+          </article>
+          <article class="ag">
+            <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KzFESyxHg4GfDzJJQhb1HcH2VN/hf_20261118_030016_c1159980-ecce-42f6-8d07-f21456aa0a1e.png" alt="Asesora atendiendo a una clienta en una agencia, imagen referencial" width="1024" height="768" loading="lazy">
+            <div class="ag-txt"><b>Agencia (ejemplo)</b><span>Aquí irá la dirección de cada agencia</span><span>Con foto real y botón de “Cómo llegar”</span></div>
+          </article>
+          <article class="ag pend">
+            <div class="ag-txt"><b>+ Más agencias</b><span>Cada agencia se agrega con su dirección, horario y ubicación en Google Maps.</span></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" style="padding-top:0">
+    <div class="in dos">
+      <div class="vacio">
+        <b>Opiniones de nuestros clientes</b>
+        <span>Aquí irán testimonios reales de emprendedores que crecieron con Crecer Más: su foto, su negocio y lo que lograron.</span>
+      </div>
+      <div class="trabaja">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3KzFESyxHg4GfDzJJQhb1HcH2VN/hf_20261118_030016_c1159980-ecce-42f6-8d07-f21456aa0a1e.png" alt="" width="1024" height="768" loading="lazy">
+        <div>
+          <h3>Trabaja con nosotros</h3>
+          <p>¿Te gusta el trato con emprendedores? Únete como asesor de créditos.</p>
+          <a class="btn btn-oro" href="https://financieracrecermas.com/trabaja-con-nosotros/" target="_blank" rel="noopener">Postula aquí</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque wrap" id="atencion" style="padding-top:0">
+    <div class="in">
+      <div class="cab">
+        <span class="ceja">Atención al cliente</span>
+        <h2>Estamos para ayudarte</h2>
+      </div>
+      <div class="atencion">
+        <div class="at"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg></span><b>WhatsApp</b><span class="num">+51 934 564 823</span><a href="https://wa.me/51934564823?text=Hola%20Crecer%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20cr%C3%A9dito" target="_blank" rel="noopener">Escribir →</a></div>
+        <div class="at"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><b>Teléfono</b><span class="num">(062) 469 247</span></div>
+        <div class="at"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><b>Correo</b><span>info@financieracrecermas.com</span></div>
+        <div class="at reclamo" id="reclamaciones"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a2 2 0 0 1 2 2v14l-4-3H4z"/><path d="M8 9h6M8 13h4"/></svg></span><b>Libro de Reclamaciones</b><span>En la web final, este botón abre el formulario oficial, como exige Indecopi.</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="in">
+    <img src="img/logo-crecer.png" alt="Crecer" width="746" height="224" loading="lazy">
+    <div class="legal"><span>CRECER MÁS S.R.L. · RUC 20613483919</span><span>Jr. Los Pinos N.º 118, Pillco Marca, Huánuco</span></div>
+    <span class="por">Demo de propuesta preparada por <a href="/" target="_blank" rel="noopener">SolutionIA</a></span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(id){ return document.getElementById(id); };
+  var IMG = 'https://d8j0ntlcm91z4.cloudfront.net/user_3KzFESyxHg4GfDzJJQhb1HcH2VN/';
+  var WA = '51934564823';
+
+  /* ---------- Productos (requisitos de financieracrecermas.com) ---------- */
+  var PRODUCTOS = [
+    {id:'comercio', nombre:'Crédito Comercio', img:'hf_20261118_030017_9e621b4b-6cc9-4e24-8b2c-a41b3caa0cc2.png',
+     para:'Para quienes tienen un negocio de comercio, producción o servicios con al menos 6 meses de antigüedad.',
+     freqs:['D','S'], nota:'Pago diario. Semanal solo en casos excepcionales.',
+     req:['Tener entre 22 y 65 años y DNI vigente','Copia del DNI del titular y del cónyuge (según el monto)','Copia de un recibo de luz','Contrato de alquiler vigente (mín. 6 meses) si no tienes casa propia','Calificación NORMAL en centrales de riesgo','Vivir en la localidad al menos 12 meses']},
+    {id:'transporte', nombre:'Creditransporte', img:'hf_20261118_030016_4c7e9617-7aa7-4cdd-92b1-0e41bbd4b57f.png',
+     para:'Para quienes brindan servicio de transporte (mototaxi, taxi, auto, custer o camión) con más de 6 meses.',
+     freqs:['D','S'], nota:'Pago diario. Semanal solo en casos excepcionales.',
+     req:['Tener entre 22 y 65 años y DNI vigente','Copia del DNI del titular y del cónyuge (según el monto)','Recibo de luz','Tarjeta de propiedad, SOAT y tarjeta de circulación vigentes','Licencia de conducir vigente','Calificación normal en centrales de riesgo','Vivir en la localidad al menos 12 meses']},
+    {id:'chofer', nombre:'Credichofer', img:'hf_20261118_030016_87fd7d9b-1584-4081-8d7d-ddf5b96dd25d.png',
+     para:'Para choferes de auto, combi o mototaxi que viven del transporte aunque el vehículo no sea suyo.',
+     freqs:['D','S'], nota:'Pago diario. Semanal solo en casos excepcionales.',
+     req:['Tener entre 22 y 65 años y DNI vigente','Licencia de conducir vigente','Casa propia o, si no la tienes, firmar con un aval','Calificación NORMAL en centrales de riesgo']},
+    {id:'creo', nombre:'Crédito Creo en Ti', img:'hf_20261118_030015_68818b4f-9f34-4a09-8033-9755d7b04bb5.png',
+     para:'Una nueva oportunidad para quienes estuvieron reportados en centrales de riesgo y quieren volver a empezar.',
+     freqs:['D','S'], nota:'Pago diario. Semanal solo en casos excepcionales.',
+     req:['Copia del DNI del titular y del cónyuge','Recibo de servicios básicos del titular','Copia del DNI del aval y su cónyuge','Recibo de servicios básicos del aval','Documento de propiedad']},
+    {id:'facilito', nombre:'Crédito Facilito', img:'hf_20261118_030016_27c29012-a519-47e1-9bc0-8443b115f544.png',
+     para:'Para trabajadores con más de un año de experiencia crediticia que necesitan dinero rápido para una urgencia.',
+     freqs:['D','S','C'], nota:'27 cuotas diarias, 4 semanales o 2 catorcenales.',
+     req:['Copia del DNI del titular y/o cónyuge','Recibo de servicios básicos (máx. 3 meses de antigüedad)','Últimas 3 boletas de pago, contrato o constancia de trabajo']}
+  ];
+  var FREQ = {D:{n:27, nombre:'diaria', plural:'diarias', cada:'cada día'}, S:{n:4, nombre:'semanal', plural:'semanales', cada:'cada semana'}, C:{n:2, nombre:'catorcenal', plural:'catorcenales', cada:'cada 14 días'}};
+  var FTXT = {D:'Diario', S:'Semanal', C:'Catorcenal'};
+
+  var cont = $('productos'), sel = $('sProd');
+  PRODUCTOS.forEach(function(p){
+    var art = document.createElement('article'); art.className = 'prod';
+    art.innerHTML = '<div class="prod-img"><img src="' + IMG + p.img + '" alt="" width="1024" height="768" loading="lazy"><span class="ref">Imagen referencial</span><span class="freq">' + p.freqs.map(function(f){ return FTXT[f]; }).join(' · ') + '</span></div>' +
+      '<div class="prod-body"><h3>' + p.nombre + '</h3><p class="para">' + p.para + '</p>' +
+      '<details><summary>Ver requisitos</summary><ul>' + p.req.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul></details>' +
+      '<a class="btn btn-azul" href="#simulador" data-prod="' + p.id + '">Simular este crédito</a></div>';
+    cont.appendChild(art);
+    var o = document.createElement('option'); o.value = p.id; o.textContent = p.nombre; sel.appendChild(o);
+  });
+  cont.addEventListener('click', function(e){
+    var a = e.target.closest('[data-prod]'); if(!a) return;
+    sel.value = a.getAttribute('data-prod'); ajustarFreq(); calcular();
+  });
+
+  /* ---------- Simulador (interés simple referencial) ---------- */
+  var money = new Intl.NumberFormat('es-PE',{style:'currency',currency:'PEN',minimumFractionDigits:2,maximumFractionDigits:2});
+  var DAY = 86400000;
+  function hoyISO(){ var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  $('sFecha').value = hoyISO();
+  function prodActual(){ return PRODUCTOS.filter(function(p){ return p.id === sel.value; })[0]; }
+  function ajustarFreq(){
+    var p = prodActual();
+    ['D','S','C'].forEach(function(f){ var r = document.querySelector('input[name=freq][value=' + f + ']'); r.disabled = p.freqs.indexOf(f) < 0; });
+    var c = document.querySelector('input[name=freq]:checked');
+    if(!c || c.disabled) $('fD').checked = true;
+    $('freqAyuda').textContent = p.nota;
+  }
+  function fmtFecha(t){ var d = new Date(t); return d.toLocaleDateString('es-PE',{weekday:'short', day:'2-digit', month:'short'}); }
+  function fechas(n, freq, inicio, sinDom){
+    var out = [], t = inicio;
+    while(out.length < n){
+      t += (freq === 'D' ? 1 : freq === 'S' ? 7 : 14)*DAY;
+      if(freq === 'D' && sinDom && new Date(t).getUTCDay() === 0) continue;
+      out.push(t);
+    }
+    return out;
+  }
+  var ultimo = {monto:0, interes:0};
+  function calcular(){
+    var p = prodActual(), monto = Math.min(10000, Math.max(300, +$('sMonto').value || 300));
+    var tasa = +$('sTasa').value/100, f = document.querySelector('input[name=freq]:checked').value, F = FREQ[f];
+    var meses = 1; /* 27 cuotas diarias, 4 semanales o 2 catorcenales: aprox. 1 mes */
+    var interes = Math.round(monto*tasa*meses*100)/100, total = Math.round((monto + interes)*100)/100;
+    var cuota = Math.ceil(total/F.n*10)/10; /* redondeo a 10 céntimos hacia arriba */
+    var ultima = Math.round((total - cuota*(F.n-1))*100)/100;
+    $('tasaTxt').textContent = (tasa*100).toLocaleString('es-PE') + '%';
+    $('kCuota').textContent = 'Tu cuota ' + F.nombre;
+    $('vCuota').textContent = money.format(cuota);
+    var p0 = $('sFecha').value.split('-').map(Number), ini = Date.UTC(p0[0] || 2026, (p0[1] || 1)-1, p0[2] || 1);
+    var fs = fechas(F.n, f, ini, $('sDom').checked);
+    $('sCuota').textContent = F.n + ' cuotas ' + F.plural + ' · terminas de pagar el ' + new Date(fs[fs.length-1]).toLocaleDateString('es-PE',{day:'numeric', month:'long', timeZone:'UTC'});
+    $('vMonto').textContent = money.format(monto);
+    $('vInt').textContent = money.format(interes);
+    $('vTot').textContent = money.format(total);
+    $('f1').innerHTML = '1. Interés = Monto × Tasa × Plazo = ' + money.format(monto) + ' × ' + (tasa*100).toLocaleString('es-PE') + '% × 1 mes = <b>' + money.format(interes) + '</b>';
+    $('f2').innerHTML = '2. Total a pagar = Monto + Interés = ' + money.format(monto) + ' + ' + money.format(interes) + ' = <b>' + money.format(total) + '</b>';
+    $('f3').innerHTML = '3. Cuota = Total ÷ N.° de cuotas = ' + money.format(total) + ' ÷ ' + F.n + ' = <b>' + money.format(cuota) + '</b>';
+    var html = '', saldo = total;
+    fs.forEach(function(t, i){
+      var c = i === F.n-1 ? ultima : cuota; saldo = Math.round((saldo - c)*100)/100;
+      html += '<tr><td>' + (i+1) + '</td><td>' + new Date(t).toLocaleDateString('es-PE',{weekday:'short', day:'2-digit', month:'short', timeZone:'UTC'}) + '</td><td>' + money.format(c) + '</td><td>' + money.format(Math.max(0, saldo)) + '</td></tr>';
+    });
+    $('tbody').innerHTML = html;
+    var msg = 'Hola Crecer, simulé un ' + p.nombre + ' de ' + money.format(monto) + ' con pago ' + F.nombre + ' (' + F.n + ' cuotas de ' + money.format(cuota) + '). Quiero más información.';
+    $('btnWa').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
+    ultimo = {monto:monto, interes:interes};
+    if(window.__pila) window.__pila(monto, interes);
+  }
+  var montoR = $('sMonto'), montoN = $('sMontoN');
+  montoR.addEventListener('input', function(){ montoN.value = montoR.value; calcular(); });
+  montoN.addEventListener('change', function(){ var v = Math.min(10000, Math.max(300, Math.round((+montoN.value || 300)/50)*50)); montoN.value = v; montoR.value = v; calcular(); });
+  $('simForm').addEventListener('change', function(e){ if(e.target === sel) ajustarFreq(); if(e.target !== montoN) calcular(); });
+  $('sTasa').addEventListener('input', calcular);
+  $('simForm').addEventListener('submit', function(e){ e.preventDefault(); });
+  ajustarFreq(); calcular();
+
+  /* ---------- 3D ---------- */
+  if(typeof THREE === 'undefined') return;
+  var gl = false;
+  try { var tc = document.createElement('canvas'); gl = !!(tc.getContext('webgl') || tc.getContext('experimental-webgl')); } catch(e){}
+  if(!gl){ $('monedas3d').hidden = true; $('pila3d').hidden = true; return; }
+
+  function texMoneda(c1, c2, simbolo){
+    var c = document.createElement('canvas'); c.width = c.height = 256; var g = c.getContext('2d');
+    var gr = g.createRadialGradient(100,90,20,128,128,128); gr.addColorStop(0,c1); gr.addColorStop(1,c2);
+    g.fillStyle = gr; g.beginPath(); g.arc(128,128,128,0,Math.PI*2); g.fill();
+    g.strokeStyle = 'rgba(0,0,0,.18)'; g.lineWidth = 10; g.beginPath(); g.arc(128,128,104,0,Math.PI*2); g.stroke();
+    g.fillStyle = 'rgba(0,0,0,.28)'; g.font = '900 110px Archivo, Arial Black, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(simbolo,128,136);
+    var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; return t;
+  }
+  function moneda(radio, alto, c1, c2, canto, simbolo){
+    var tapa = new THREE.MeshStandardMaterial({map: texMoneda(c1, c2, simbolo), metalness:.55, roughness:.35});
+    var borde = new THREE.MeshStandardMaterial({color: canto, metalness:.6, roughness:.4});
+    return new THREE.Mesh(new THREE.CylinderGeometry(radio, radio, alto, 48), [borde, tapa, tapa]);
+  }
+  function luces(scene){
+    scene.add(new THREE.AmbientLight(0xffffff, .65));
+    var d = new THREE.DirectionalLight(0xffffff, 1.1); d.position.set(4,8,6); scene.add(d);
+    var c = new THREE.PointLight(0x7FD0F2, 1.2, 30); c.position.set(-5,2,4); scene.add(c);
+  }
+
+  /* Escena del hero: escalera de monedas que crece hacia la casa */
+  (function hero(){
+    var canvas = $('monedas3d'), box = canvas.parentElement;
+    var r = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
+    r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); r.outputEncoding = THREE.sRGBEncoding;
+    var scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(36, 1, .1, 100);
+    luces(scene);
+    var grupo = new THREE.Group(); scene.add(grupo);
+    var pilas = [], N = 5, altoM = .16;
+    for(var i=0;i<N;i++){
+      var p = new THREE.Group(); p.position.set(-3 + i*1.35, -2.2, -i*.25); grupo.add(p);
+      var cant = 3 + i*3;
+      for(var k=0;k<cant;k++){
+        var m = moneda(.55, altoM, '#FFE29A', '#E59A12', 0xC98A16, 'S/');
+        m.position.y = k*altoM*1.02; m.rotation.y = Math.random()*Math.PI; m.userData.y0 = m.position.y; m.visible = false;
+        p.add(m);
+      }
+      pilas.push(p);
+    }
+    /* Casa (como el ícono de la marca) sobre la última pila */
+    var casa = new THREE.Group();
+    var techoMat = new THREE.MeshStandardMaterial({color:0x1599D3, metalness:.2, roughness:.35, emissive:0x0a3b5c});
+    var t1 = new THREE.Mesh(new THREE.BoxGeometry(1.5,.18,.3), techoMat); t1.position.set(-.5,0,0); t1.rotation.z = .6;
+    var t2 = t1.clone(); t2.position.x = .5; t2.rotation.z = -.6;
+    casa.add(t1, t2);
+    casa.position.set(-3 + (N-1)*1.35, -2.2 + (3 + (N-1)*3)*altoM*1.02 + .75, -(N-1)*.25);
+    grupo.add(casa);
+    /* Monedas flotantes */
+    var flot = [];
+    for(var j=0;j<7;j++){
+      var f = moneda(.32, .07, j%3 ? '#FFE29A' : '#CFF0FF', j%3 ? '#E59A12' : '#3AA9DA', j%3 ? 0xC98A16 : 0x1A7FB0, 'S/');
+      f.position.set((Math.random()-.5)*7, (Math.random()-.2)*4, -1 - Math.random()*2); f.rotation.x = Math.PI/2;
+      f.userData = {v: .4 + Math.random()*.6, fase: Math.random()*6, y0: f.position.y};
+      scene.add(f); flot.push(f);
+    }
+    var mx = 0, my = 0, cx = 0, cy = 0, t0 = performance.now(), corre = false, vis = true;
+    box.addEventListener('pointermove', function(e){ var b = box.getBoundingClientRect(); mx = (e.clientX - b.left)/b.width - .5; my = (e.clientY - b.top)/b.height - .5; });
+    box.addEventListener('pointerleave', function(){ mx = 0; my = 0; });
+    function tam(){ var w = box.clientWidth, h = box.clientHeight; if(!w || !h) return; r.setSize(w, h, false); cam.aspect = w/h; var d = (w < 600 ? 13 : 11); cam.position.set(0, 1.4, d); cam.lookAt(0, 0, 0); cam.updateProjectionMatrix(); if(!corre) pinta(performance.now() + 9e3); }
+    function pinta(now){
+      var t = (now - t0)/1000;
+      /* aparición escalonada de monedas */
+      pilas.forEach(function(p, i){ p.children.forEach(function(m, k){ var inicio = i*.25 + k*.05; var e = Math.min(1, Math.max(0, (t - inicio)/.35)); m.visible = e > 0; m.position.y = m.userData.y0 + (1 - e)*1.2; }); });
+      casa.scale.setScalar(Math.min(1, Math.max(.001, (t - 1.9)/.5)));
+      casa.position.y += 0;
+      cx += (mx - cx)*.05; cy += (my - cy)*.05;
+      grupo.rotation.y = -.35 + cx*.5 + (reduce ? 0 : Math.sin(t*.4)*.06);
+      grupo.rotation.x = .08 + cy*.15;
+      flot.forEach(function(f){ f.rotation.z += reduce ? 0 : .02*f.userData.v; f.rotation.x = Math.PI/2 + Math.sin(t*f.userData.v + f.userData.fase)*.6; f.position.y = f.userData.y0 + (reduce ? 0 : Math.sin(t*.8*f.userData.v + f.userData.fase)*.25); });
+      r.render(scene, cam);
+    }
+    function bucle(now){ if(!corre) return; pinta(now); requestAnimationFrame(bucle); }
+    function on(){ if(reduce){ pinta(performance.now() + 9e3); return; } if(vis && !corre){ corre = true; requestAnimationFrame(bucle); } }
+    window.addEventListener('resize', tam);
+    if('IntersectionObserver' in window) new IntersectionObserver(function(en){ vis = en[0].isIntersecting; if(vis) on(); else corre = false; }).observe(box);
+    tam(); on();
+  })();
+
+  /* Pila del simulador: lo que recibes (oro) + interés (celeste) */
+  (function pila(){
+    var canvas = $('pila3d');
+    var r = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
+    r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); r.outputEncoding = THREE.sRGBEncoding;
+    var scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(32, 1, .1, 100);
+    luces(scene);
+    var g = new THREE.Group(); scene.add(g);
+    var MAX = 26, alto = .14, monedas = [];
+    for(var i=0;i<MAX;i++){
+      var oro = moneda(.7, alto, '#FFE29A', '#E59A12', 0xC98A16, 'S/');
+      var cel = moneda(.7, alto, '#E4F6FF', '#3AA9DA', 0x1A7FB0, '%');
+      oro.position.y = cel.position.y = i*alto*1.03; oro.rotation.y = cel.rotation.y = i*.7;
+      g.add(oro, cel); monedas.push({oro:oro, cel:cel});
+    }
+    g.position.y = -1.9;
+    var objOro = 0, objCel = 0, curOro = 0, curCel = 0, corre = false;
+    function tam(){ var w = canvas.clientWidth, h = canvas.clientHeight; if(!w || !h) return; r.setSize(w, h, false); cam.aspect = w/h; cam.position.set(0, 1.6, 9.5); cam.lookAt(0, 0, 0); cam.updateProjectionMatrix(); dibuja(); }
+    function dibuja(){
+      monedas.forEach(function(m, i){ m.oro.visible = i < Math.round(curOro); m.cel.visible = !m.oro.visible && i < Math.round(curOro + curCel); });
+      r.render(scene, cam);
+    }
+    function anima(){
+      curOro += (objOro - curOro)*.18; curCel += (objCel - curCel)*.18;
+      if(!reduce) g.rotation.y += .01;
+      dibuja();
+      if(Math.abs(objOro - curOro) > .05 || Math.abs(objCel - curCel) > .05 || !reduce){ requestAnimationFrame(anima); } else { corre = false; }
+    }
+    window.__pila = function(monto, interes){
+      var total = monto + interes, n = Math.max(4, Math.round(6 + 20*(total/12000)));
+      n = Math.min(MAX, n);
+      objCel = Math.max(1, Math.round(n*interes/total)); objOro = n - objCel;
+      if(reduce){ curOro = objOro; curCel = objCel; dibuja(); return; }
+      if(!corre){ corre = true; requestAnimationFrame(anima); }
+    };
+    window.addEventListener('resize', tam);
+    tam(); window.__pila(ultimo.monto, ultimo.interes);
+  })();
+})();
+</script>
+</body>
+</html>
