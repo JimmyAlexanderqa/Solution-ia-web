@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel del dueño · Crecer (ejemplo)</title>
+<link rel="icon" href="../img/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: tablero que se lee de arriba abajo: resumen del día, lo urgente (solicitudes nuevas y por renovar), luego tendencias y equipo */
+:root{
+  --azul:#073F73; --azul-2:#0A5196; --azul-osc:#042A4F; --celeste:#1599D3; --celeste-2:#7FD0F2; --oro:#F2B33D;
+  --fondo:#EEF3F8; --blanco:#FFFFFF; --tinta:#0C2440; --tinta-2:#4D6580; --tenue:#8197AE; --linea:#DCE6F0;
+  --bien:#13A06F; --bien-bg:#DDF6EA; --aviso:#B7791F; --aviso-bg:#FFF1D6; --mal:#C2362B; --mal-bg:#FDE4E1;
+  --barra:#1599D3; --barra-2:#A9DCF2;
+  --f-display:"Archivo","Arial Black",system-ui,sans-serif;
+  --f-body:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--celeste);outline-offset:2px;border-radius:6px}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:1240px;margin-inline:auto}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+.demo{background:var(--oro);color:#3B2600;font-size:13px;font-weight:700;text-align:center;padding:7px 16px;padding-top:calc(7px + env(safe-area-inset-top,0px))}
+.demo a{font-weight:800}
+
+.top{background:var(--azul);color:#fff;position:sticky;top:0;z-index:20}
+.top .in{display:flex;align-items:center;gap:14px;padding-block:12px;flex-wrap:wrap}
+.top img{height:38px;width:auto}
+.top h1{font-family:var(--f-display);font-size:18px;margin:0;font-weight:800}
+.top .fecha{font-size:13px;color:var(--celeste-2)}
+.top .der{margin-left:auto;display:flex;gap:10px;align-items:center}
+.top select{font:inherit;font-weight:700;font-size:14px;color:var(--azul);background:#fff;border:0;border-radius:10px;padding:8px 10px;min-height:40px}
+.av{width:38px;height:38px;border-radius:50%;background:var(--celeste);display:grid;place-items:center;font-weight:800}
+@media (max-width:620px){.top .titulos{order:3;width:100%}.top .der{margin-left:auto}}
+
+main{padding-block:20px 48px}
+.grid{display:grid;gap:16px}
+.kpis{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:#fff;border:1px solid var(--linea);border-radius:18px;padding:16px;display:grid;gap:4px;align-content:start;min-width:0}
+.kpi .k{font-size:13px;font-weight:700;color:var(--tinta-2)}
+.kpi .v{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,3vw,32px);line-height:1.1;color:var(--azul)}
+.kpi .d{font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px}
+.kpi .d.up{color:var(--bien)}.kpi .d.down{color:var(--mal)}.kpi .d.neu{color:var(--tinta-2)}
+.kpi .d svg{width:14px;height:14px}
+.kpi.dest{background:linear-gradient(135deg,var(--azul),var(--azul-2));border-color:transparent;color:#fff}
+.kpi.dest .k{color:var(--celeste-2)}.kpi.dest .v{color:var(--oro)}.kpi.dest .d{color:#BFF0D9}
+.meter{height:8px;border-radius:99px;background:#E2ECF5;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;border-radius:99px;background:var(--bien)}
+
+.dos{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);margin-top:16px}
+.tres{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:16px}
+@media (max-width:1000px){.dos,.tres{grid-template-columns:minmax(0,1fr)}}
+.card{background:#fff;border:1px solid var(--linea);border-radius:20px;padding:18px;min-width:0}
+.card-cab{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.card h2{font-family:var(--f-display);font-weight:800;font-size:17px;margin:0;color:var(--azul)}
+.card .sub{font-size:13px;color:var(--tinta-2)}
+.pill{font-size:12px;font-weight:800;border-radius:99px;padding:3px 9px;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.pill svg{width:12px;height:12px}
+.p-alta{background:var(--bien-bg);color:var(--bien)}.p-media{background:var(--aviso-bg);color:var(--aviso)}.p-rev{background:var(--mal-bg);color:var(--mal)}
+.p-nuevo{background:#E1F1FB;color:var(--azul-2)}.p-visita{background:#EEE8FB;color:#5B3FA8}
+
+/* Solicitudes */
+.lista{list-style:none;margin:0;padding:0;display:grid}
+.sol{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:10px 0;border-top:1px solid var(--linea)}
+.sol:first-child{border-top:0}
+.ini{width:40px;height:40px;border-radius:50%;background:#E1F1FB;color:var(--azul);display:grid;place-items:center;font-weight:800;font-size:14px;grid-row:span 2}
+.sol b{font-size:15px}
+.sol .meta{font-size:13px;color:var(--tinta-2);grid-column:2}
+.sol .der{grid-row:span 2;display:grid;gap:4px;justify-items:end;text-align:right}
+.sol .hora{font-size:12px;color:var(--tenue);font-family:var(--f-mono)}
+
+/* Gráficos */
+.chart{position:relative}
+.barras{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));align-items:end;gap:6px;height:180px;padding-top:18px;border-bottom:1px solid var(--linea);position:relative}
+.barras .g{position:absolute;left:0;right:0;border-top:1px dashed #E4ECF4;font-size:11px;color:var(--tenue)}
+.barras .g span{position:absolute;right:100%;transform:translateY(-50%);padding-right:6px;font-family:var(--f-mono)}
+.col{position:relative;height:100%;display:flex;align-items:flex-end;justify-content:center;cursor:pointer;background:none;border:0;padding:0;font:inherit}
+.col i{display:block;width:70%;min-width:8px;max-width:26px;background:var(--barra);border-radius:4px 4px 0 0;transition:filter .15s}
+.col.hoy i{background:var(--azul)}
+.col:hover i,.col:focus-visible i{filter:brightness(1.12)}
+.ejes{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:6px;font-size:11px;color:var(--tenue);text-align:center;margin-top:6px;font-family:var(--f-mono)}
+.tip{position:absolute;z-index:5;pointer-events:none;background:var(--tinta);color:#fff;font-size:12px;padding:6px 9px;border-radius:8px;white-space:nowrap;transform:translate(-50%,-110%)}
+.tip b{font-family:var(--f-mono)}
+.chart-box{padding-left:28px}
+.hbar{display:grid;gap:10px}
+.hb{display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:14px}
+.hb .lbl{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb .pista{height:14px;background:#EEF3F8;border-radius:0 4px 4px 0;overflow:hidden}
+.hb .pista i{display:block;height:100%;background:var(--barra);border-radius:0 4px 4px 0}
+.hb .val{font-family:var(--f-mono);font-size:13px;color:var(--tinta-2);min-width:64px;text-align:right}
+
+/* Embudo */
+.embudo{display:grid;gap:8px}
+.et{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+.et .barra-e{grid-column:1/-1;height:28px;border-radius:6px;background:var(--barra-2);position:relative;overflow:hidden}
+.et .barra-e i{position:absolute;inset:0 auto 0 0;background:var(--barra);border-radius:6px}
+.et b{font-size:14px}
+.et span{font-family:var(--f-mono);font-size:13px;color:var(--tinta-2)}
+
+/* Cobranza */
+.ag{display:grid;gap:6px;padding:10px 0;border-top:1px solid var(--linea)}
+.ag:first-child{border-top:0}
+.ag .fila{display:flex;justify-content:space-between;gap:8px;font-size:14px;align-items:center}
+.ag .fila b{font-weight:800}
+.prog{height:10px;border-radius:99px;background:#E2ECF5;overflow:hidden}
+.prog i{display:block;height:100%;border-radius:99px}
+
+/* Tabla asesores */
+.tabla{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:460px}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--tinta-2);padding:8px 10px;border-bottom:1px solid var(--linea);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--linea)}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.medalla{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-size:12px;font-weight:800;background:#EEF3F8;color:var(--tinta-2);margin-right:6px}
+tr:first-child .medalla{background:var(--oro);color:#3B2600}
+
+/* Renovar */
+.ren{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--linea)}
+.ren:first-child{border-top:0}
+.ren .meta{font-size:13px;color:var(--tinta-2)}
+.ren button{font:inherit;font-weight:800;font-size:13px;color:#fff;background:#1FAF5A;border:0;border-radius:10px;padding:8px 12px;cursor:pointer;min-height:38px;grid-row:span 2}
+.ren button[disabled]{background:#CFE9DA;color:#0B7A4B;cursor:default}
+.ren .mini{grid-column:1;height:6px;border-radius:99px;background:#E2ECF5;overflow:hidden}
+.ren .mini i{display:block;height:100%;background:var(--bien)}
+
+/* WhatsApp resumen */
+.wa{background:#E7DDD3;border-radius:18px;padding:14px}
+.wa .burb{background:#fff;border-radius:12px 12px 12px 4px;padding:10px 12px;font-size:14px;line-height:1.5;box-shadow:0 1px 1px rgba(0,0,0,.08);white-space:pre-line}
+.wa .burb b{font-weight:800}
+.wa .h{display:block;text-align:right;font-size:11px;color:#8A8A8A;margin-top:4px}
+.nota{font-size:12px;color:var(--tinta-2);margin:20px 0 0;text-align:center}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tinta);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;font-weight:700;z-index:30}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="demo" role="note">Panel de ejemplo con <b>datos ficticios</b> · Propuesta de SolutionIA para Crecer Más · <a href="../">Volver al demo de la web</a></div>
+
+<header class="top wrap">
+  <div class="in">
+    <img src="../img/logo-crecer.png" alt="Crecer" width="746" height="224">
+    <div class="titulos"><h1>Panel del dueño</h1><span class="fecha" id="fecha"></span></div>
+    <div class="der">
+      <label class="sr" for="agencia" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Agencia</label>
+      <select id="agencia"><option value="todas">Todas las agencias</option></select>
+      <span class="av" aria-label="Usuario: dueño">D</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="in">
+    <section class="grid kpis" aria-label="Resumen del día" id="kpis"></section>
+
+    <div class="grid dos">
+      <section class="card" aria-labelledby="t-sol">
+        <div class="card-cab"><h2 id="t-sol">Solicitudes nuevas del asistente</h2><span class="sub" id="solSub"></span></div>
+        <ul class="lista" id="solicitudes"></ul>
+      </section>
+      <section class="card" aria-labelledby="t-wa">
+        <div class="card-cab"><h2 id="t-wa">Tu resumen de las 7:00 a. m.</h2><span class="sub">Llega solo a tu WhatsApp</span></div>
+        <div class="wa"><div class="burb" id="resumenWa"></div><span class="h">7:00 a. m.</span></div>
+      </section>
+    </div>
+
+    <div class="grid dos">
+      <section class="card" aria-labelledby="t-dias">
+        <div class="card-cab"><h2 id="t-dias">Solicitudes por día</h2><span class="sub">Últimos 14 días · todas llegan por el asistente y WhatsApp</span></div>
+        <div class="chart chart-box" id="chartDias"></div>
+      </section>
+      <section class="card" aria-labelledby="t-emb">
+        <div class="card-cab"><h2 id="t-emb">Del interés al desembolso</h2><span class="sub">Este mes</span></div>
+        <div class="embudo" id="embudo"></div>
+      </section>
+    </div>
+
+    <div class="grid tres">
+      <section class="card" aria-labelledby="t-cob">
+        <div class="card-cab"><h2 id="t-cob">Cobranza de hoy por agencia</h2></div>
+        <div id="cobranza"></div>
+      </section>
+      <section class="card" aria-labelledby="t-ren">
+        <div class="card-cab"><h2 id="t-ren">Listos para renovar</h2><span class="sub">Clientes puntuales con 80% o más pagado</span></div>
+        <div id="renovar"></div>
+      </section>
+      <section class="card" aria-labelledby="t-prod">
+        <div class="card-cab"><h2 id="t-prod">Desembolsos por producto</h2><span class="sub">Este mes</span></div>
+        <div class="hbar" id="productos"></div>
+      </section>
+    </div>
+
+    <section class="card" style="margin-top:16px" aria-labelledby="t-ase">
+      <div class="card-cab"><h2 id="t-ase">Ranking de asesores</h2><span class="sub">Este mes</span></div>
+      <div class="tabla"><table><thead><tr><th>Asesor</th><th>Agencia</th><th class="n">Solicitudes</th><th class="n">Desembolsos</th><th class="n">Monto</th><th class="n">Cobranza</th></tr></thead><tbody id="asesores"></tbody></table></div>
+    </section>
+
+    <p class="nota">Todos los nombres, montos y agencias de este panel son de ejemplo. En la versión real se conecta a las solicitudes del asistente y a los pagos que registra Crecer.</p>
+  </div>
+</main>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+  'use strict';
+  var $ = function(id){ return document.getElementById(id); };
+  var soles = new Intl.NumberFormat('es-PE',{style:'currency',currency:'PEN',maximumFractionDigits:0});
+  var ICON = {
+    up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>',
+    down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>',
+    ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+    alerta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/></svg>'
+  };
+  var hoy = new Date();
+  $('fecha').textContent = hoy.toLocaleDateString('es-PE',{weekday:'long', day:'numeric', month:'long'});
+
+  /* ---------- Datos de ejemplo ---------- */
+  var AGENCIAS = [
+    {id:'pillco', n:'Pillco Marca', meta:6200, cobrado:5580, mora:3},
+    {id:'amarilis', n:'Amarilis', meta:4800, cobrado:3940, mora:6},
+    {id:'tingo', n:'Tingo María', meta:3900, cobrado:3510, mora:2}
+  ];
+  AGENCIAS.forEach(function(a){ var o = document.createElement('option'); o.value = a.id; o.textContent = 'Agencia ' + a.n; $('agencia').appendChild(o); });
+  var SOL = [
+    {n:'Rosa Huamán', p:'Creditransporte', m:'S/ 1,000 a 3,000', z:'Amarilis', ag:'amarilis', pr:'media', as:'Luis P.', est:'Nuevo', h:'7:42'},
+    {n:'Carlos Ríos', p:'Crédito Comercio', m:'S/ 3,000 a 5,000', z:'Pillco Marca', ag:'pillco', pr:'alta', as:'Ana T.', est:'Visita 11:00', h:'7:15'},
+    {n:'Marina Soto', p:'Crédito Comercio', m:'Hasta S/ 1,000', z:'Mercado Modelo', ag:'pillco', pr:'alta', as:'Ana T.', est:'Nuevo', h:'6:58'},
+    {n:'Julio Vela', p:'Credichofer', m:'S/ 1,000 a 3,000', z:'Tingo María', ag:'tingo', pr:'alta', as:'Pedro C.', est:'Visita 10:30', h:'6:31'},
+    {n:'Elsa Quispe', p:'Crédito Facilito', m:'Hasta S/ 1,000', z:'Amarilis', ag:'amarilis', pr:'rev', as:'Luis P.', est:'Nuevo', h:'23:10'},
+    {n:'Teodoro Ramos', p:'Creditransporte', m:'S/ 3,000 a 5,000', z:'Castillo Grande', ag:'tingo', pr:'alta', as:'Pedro C.', est:'Nuevo', h:'22:47'}
+  ];
+  var DIAS = [8,11,9,13,7,4,12,14,10,15,12,6,13,14];
+  var REN = [
+    {n:'Gloria Paucar', p:'Crédito Comercio', c:24, ag:'pillco', m:2500},
+    {n:'Wilmer Ayala', p:'Creditransporte', c:23, ag:'tingo', m:3000},
+    {n:'Nancy Ibarra', p:'Crédito Comercio', c:22, ag:'amarilis', m:1500},
+    {n:'Hugo Vargas', p:'Credichofer', c:22, ag:'pillco', m:2000}
+  ];
+  var PROD = [{n:'Comercio', v:64500},{n:'Creditransporte', v:41200},{n:'Credichofer', v:23800},{n:'Facilito', v:12600},{n:'Creo en Ti', v:7400}];
+  var ASE = [
+    {n:'Ana T.', ag:'Pillco Marca', s:38, d:21, m:48300, c:92},
+    {n:'Pedro C.', ag:'Tingo María', s:31, d:17, m:37900, c:90},
+    {n:'Luis P.', ag:'Amarilis', s:29, d:13, m:28600, c:82},
+    {n:'Karen M.', ag:'Pillco Marca', s:22, d:12, m:26200, c:88},
+    {n:'Diego S.', ag:'Amarilis', s:18, d:8, m:8500, c:79}
+  ];
+
+  function filtrar(lista){ var a = $('agencia').value; return a === 'todas' ? lista : lista.filter(function(x){ return x.ag === a; }); }
+  function iniciales(n){ return n.split(' ').map(function(p){ return p[0]; }).slice(0,2).join(''); }
+  var PRI = {alta:['p-alta','Alta',ICON.ok], media:['p-media','Media',ICON.alerta], rev:['p-rev','Revisar',ICON.alerta]};
+
+  function pintar(){
+    var a = $('agencia').value, ags = a === 'todas' ? AGENCIAS : AGENCIAS.filter(function(x){ return x.id === a; });
+    var sol = filtrar(SOL), altas = sol.filter(function(s){ return s.pr === 'alta'; }).length;
+    var meta = ags.reduce(function(t,x){ return t + x.meta; }, 0), cob = ags.reduce(function(t,x){ return t + x.cobrado; }, 0);
+    var pct = Math.round(cob/meta*100), mora = ags.reduce(function(t,x){ return t + x.mora; }, 0), ren = filtrar(REN).length;
+    var factor = a === 'todas' ? 1 : (a === 'pillco' ? .45 : a === 'amarilis' ? .3 : .25);
+    $('kpis').innerHTML =
+      '<div class="kpi dest"><span class="k">Solicitudes nuevas hoy</span><span class="v num">' + sol.length + '</span><span class="d up">' + ICON.up + altas + ' con prioridad alta</span></div>' +
+      '<div class="kpi"><span class="k">Desembolsado hoy</span><span class="v num">' + soles.format(Math.round(18500*factor/100)*100) + '</span><span class="d up">' + ICON.up + '12% vs. ayer</span></div>' +
+      '<div class="kpi"><span class="k">Cobranza de hoy</span><span class="v num">' + pct + '%</span><span class="d neu">' + soles.format(cob) + ' de ' + soles.format(meta) + '</span><div class="meter"><i style="width:' + pct + '%"></i></div></div>' +
+      '<div class="kpi"><span class="k">Clientes con atraso</span><span class="v num">' + mora + '</span><span class="d down">' + ICON.alerta + 'más de 3 días sin pagar</span></div>' +
+      '<div class="kpi"><span class="k">Listos para renovar</span><span class="v num">' + ren + '</span><span class="d neu">avísales hoy por WhatsApp</span></div>';
+
+    $('solSub').textContent = sol.length + (sol.length === 1 ? ' solicitud' : ' solicitudes') + ' · ordenadas por llegada';
+    $('solicitudes').innerHTML = sol.map(function(s){
+      var p = PRI[s.pr];
+      return '<li class="sol"><span class="ini">' + iniciales(s.n) + '</span><b>' + s.n + '</b><div class="der"><span class="pill ' + p[0] + '">' + p[2] + p[1] + '</span><span class="pill ' + (s.est === 'Nuevo' ? 'p-nuevo' : 'p-visita') + '">' + s.est + '</span></div>' +
+        '<span class="meta">' + s.p + ' · ' + s.m + ' · ' + s.z + ' · Asesor: ' + s.as + ' · <span class="hora">' + s.h + '</span></span></li>';
+    }).join('') || '<li class="sol"><span class="meta">Sin solicitudes nuevas en esta agencia.</span></li>';
+
+    $('resumenWa').innerHTML = '<b>Buenos días. Así va Crecer hoy:</b>\n' +
+      '• ' + sol.length + ' solicitudes nuevas del asistente (' + altas + ' con prioridad alta)\n' +
+      '• Cobranza de ayer: ' + pct + '% de la meta\n' +
+      '• ' + mora + ' clientes con más de 3 días de atraso\n' +
+      '• ' + ren + ' clientes listos para renovar\n' +
+      'La agencia con mejor cobranza: <b>' + AGENCIAS.slice().sort(function(x,y){ return y.cobrado/y.meta - x.cobrado/x.meta; })[0].n + '</b>';
+
+    $('cobranza').innerHTML = ags.map(function(g){
+      var p = Math.round(g.cobrado/g.meta*100), col = p >= 90 ? 'var(--bien)' : p >= 80 ? 'var(--aviso)' : 'var(--mal)', est = p >= 90 ? 'Al día' : p >= 80 ? 'Atención' : 'Baja';
+      return '<div class="ag"><div class="fila"><b>' + g.n + '</b><span class="num">' + p + '%</span></div><div class="prog" role="img" aria-label="Cobranza ' + p + ' por ciento"><i style="width:' + p + '%;background:' + col + '"></i></div>' +
+        '<div class="fila"><span class="sub num" style="font-size:13px;color:var(--tinta-2)">' + soles.format(g.cobrado) + ' de ' + soles.format(g.meta) + '</span><span class="pill ' + (p >= 90 ? 'p-alta' : p >= 80 ? 'p-media' : 'p-rev') + '">' + (p >= 90 ? ICON.ok : ICON.alerta) + est + ' · ' + g.mora + ' con atraso</span></div></div>';
+    }).join('');
+
+    var rn = filtrar(REN);
+    $('renovar').innerHTML = rn.map(function(r, i){
+      var p = Math.round(r.c/27*100);
+      return '<div class="ren"><div><b>' + r.n + '</b><div class="meta">' + r.p + ' · ' + soles.format(r.m) + ' · ' + r.c + ' de 27 cuotas</div></div><button type="button" data-i="' + i + '">Avisar por WhatsApp</button><div class="mini"><i style="width:' + p + '%"></i></div></div>';
+    }).join('') || '<p class="sub">Nadie por renovar en esta agencia hoy.</p>';
+  }
+
+  /* Gráfico: solicitudes por día (una serie, con tooltip) */
+  function chartDias(){
+    var box = $('chartDias'), max = 16, html = '<div class="barras">';
+    [0,5,10,15].forEach(function(g){ html += '<div class="g" style="bottom:' + (g/max*100) + '%"><span>' + g + '</span></div>'; });
+    var labels = [];
+    DIAS.forEach(function(v, i){
+      var d = new Date(hoy.getTime() - (13 - i)*86400000), lbl = d.toLocaleDateString('es-PE',{day:'2-digit', month:'short'});
+      labels.push(i % 2 === 1 ? String(d.getDate()) : '');
+      html += '<button type="button" class="col' + (i === 13 ? ' hoy' : '') + '" data-v="' + v + '" data-l="' + (i === 13 ? 'Hoy' : lbl) + '" aria-label="' + (i === 13 ? 'Hoy' : lbl) + ': ' + v + ' solicitudes"><i style="height:' + (v/max*100) + '%"></i></button>';
+    });
+    html += '</div><div class="ejes">' + labels.map(function(l){ return '<span>' + l + '</span>'; }).join('') + '</div>';
+    box.innerHTML = html;
+    var tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true; box.appendChild(tip);
+    function mostrar(el){
+      var r = el.getBoundingClientRect(), b = box.getBoundingClientRect(), barra = el.querySelector('i').getBoundingClientRect();
+      tip.innerHTML = el.getAttribute('data-l') + ': <b>' + el.getAttribute('data-v') + '</b> solicitudes';
+      tip.style.left = (r.left - b.left + r.width/2) + 'px'; tip.style.top = (barra.top - b.top - 4) + 'px'; tip.hidden = false;
+    }
+    box.querySelectorAll('.col').forEach(function(c){
+      c.addEventListener('pointerenter', function(){ mostrar(c); });
+      c.addEventListener('focus', function(){ mostrar(c); });
+      c.addEventListener('pointerleave', function(){ tip.hidden = true; });
+      c.addEventListener('blur', function(){ tip.hidden = true; });
+    });
+  }
+
+  function embudo(){
+    var E = [{n:'Pre-evaluados por el asistente', v:168},{n:'Visitados por un asesor', v:104},{n:'Aprobados', v:79},{n:'Desembolsados', v:71}];
+    $('embudo').innerHTML = E.map(function(e, i){
+      var p = Math.round(e.v/E[0].v*100);
+      return '<div class="et"><b>' + e.n + '</b><span>' + e.v + (i ? ' · ' + p + '%' : '') + '</span><div class="barra-e" role="img" aria-label="' + e.n + ': ' + e.v + '"><i style="width:' + p + '%"></i></div></div>';
+    }).join('') + '<p class="sub" style="margin:6px 0 0;font-size:13px;color:var(--tinta-2)">De cada 10 pre-evaluados, 4 terminan en desembolso.</p>';
+  }
+
+  function productos(){
+    var max = PROD[0].v;
+    $('productos').innerHTML = PROD.map(function(p){
+      return '<div class="hb"><span class="lbl">' + p.n + '</span><div class="pista" role="img" aria-label="' + p.n + ': ' + soles.format(p.v) + '"><i style="width:' + (p.v/max*100) + '%"></i></div><span class="val">' + soles.format(p.v) + '</span></div>';
+    }).join('');
+  }
+
+  function asesores(){
+    $('asesores').innerHTML = ASE.map(function(a, i){
+      return '<tr><td><span class="medalla">' + (i+1) + '</span>' + a.n + '</td><td>' + a.ag + '</td><td class="n">' + a.s + '</td><td class="n">' + a.d + '</td><td class="n">' + soles.format(a.m) + '</td><td class="n">' + a.c + '%</td></tr>';
+    }).join('');
+  }
+
+  var toast = $('toast'), tt;
+  $('renovar').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-i]'); if(!b) return;
+    b.disabled = true; b.textContent = 'Aviso enviado';
+    toast.textContent = 'Ejemplo: se enviaría un aviso de renovación por WhatsApp.'; toast.hidden = false;
+    clearTimeout(tt); tt = setTimeout(function(){ toast.hidden = true; }, 2600);
+  });
+  $('agencia').addEventListener('change', pintar);
+  pintar(); chartDias(); embudo(); productos(); asesores();
+})();
+</script>
+</body>
+</html>
