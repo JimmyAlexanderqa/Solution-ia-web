@@ -136,6 +136,20 @@ tr:first-child .medalla{background:var(--oro);color:#3B2600}
 .ren .mini{grid-column:1;height:6px;border-radius:99px;background:#E2ECF5;overflow:hidden}
 .ren .mini i{display:block;height:100%;background:var(--bien)}
 
+/* Distritos */
+.ideas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+@media (max-width:820px){.ideas{grid-template-columns:minmax(0,1fr)}}
+.idea{border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.45;border:1px solid var(--linea);background:#F7FAFD}
+.idea b{display:block;font-family:var(--f-display);font-size:15px;color:var(--azul);margin-bottom:2px}
+.idea.op{background:#FFF8E8;border-color:#F6DDA5}
+.t-dis{min-width:640px}
+.t-dis .cart{display:flex;align-items:center;gap:8px;min-width:150px}
+.t-dis .cart .pista{flex:1;height:10px;background:#EEF3F8;border-radius:0 4px 4px 0;overflow:hidden}
+.t-dis .cart .pista i{display:block;height:100%;background:var(--barra);border-radius:0 4px 4px 0}
+.t-dis .cart span{font-family:var(--f-mono);font-size:13px;color:var(--tinta-2);min-width:70px;text-align:right}
+.t-dis tr.sin td{background:#FFFBF1}
+.t-dis td .pill{margin-left:4px}
+
 /* WhatsApp resumen */
 .wa{background:#E7DDD3;border-radius:18px;padding:14px}
 .wa .burb{background:#fff;border-radius:12px 12px 12px 4px;padding:10px 12px;font-size:14px;line-height:1.5;box-shadow:0 1px 1px rgba(0,0,0,.08);white-space:pre-line}
@@ -202,6 +216,12 @@ tr:first-child .medalla{background:var(--oro);color:#3B2600}
       </section>
     </div>
 
+    <section class="card" style="margin-top:16px" aria-labelledby="t-dis">
+      <div class="card-cab"><h2 id="t-dis">Tus clientes por distrito</h2><span class="sub" id="disSub">Dónde viven y trabajan tus clientes · este mes</span></div>
+      <div class="ideas" id="disIdeas"></div>
+      <div class="tabla"><table class="t-dis"><thead><tr><th>Distrito</th><th>Lo atiende</th><th class="n">Clientes</th><th>Cartera</th><th class="n">Con atraso</th><th class="n">Pidieron por el asistente</th></tr></thead><tbody id="distritos"></tbody></table></div>
+    </section>
+
     <section class="card" style="margin-top:16px" aria-labelledby="t-ase">
       <div class="card-cab"><h2 id="t-ase">Ranking de asesores</h2><span class="sub">Este mes</span></div>
       <div class="tabla"><table><thead><tr><th>Asesor</th><th>Agencia</th><th class="n">Solicitudes</th><th class="n">Desembolsos</th><th class="n">Monto</th><th class="n">Cobranza</th></tr></thead><tbody id="asesores"></tbody></table></div>
@@ -257,6 +277,39 @@ tr:first-child .medalla{background:var(--oro);color:#3B2600}
     {n:'Diego S.', ag:'Amarilis', s:18, d:8, m:8500, c:79}
   ];
 
+  /* Distritos: ag = agencia que lo atiende; sin:true = no tiene agencia propia */
+  var DIS = [
+    {n:'Pillco Marca', ag:'pillco', cl:412, cart:486000, mo:2.8, sol:61},
+    {n:'Huánuco (Cercado)', ag:'pillco', cl:238, cart:291000, mo:4.1, sol:38},
+    {n:'Amarilis', ag:'amarilis', cl:356, cart:402000, mo:5.6, sol:44},
+    {n:'Santa María del Valle', ag:'amarilis', cl:74, cart:68000, mo:7.9, sol:9},
+    {n:'Rupa-Rupa (Tingo María)', ag:'tingo', cl:301, cart:352000, mo:2.2, sol:29},
+    {n:'Castillo Grande', ag:'tingo', cl:96, cart:104000, mo:3.4, sol:11},
+    {n:'José Crespo y Castillo (Aucayacu)', ag:'tingo', cl:41, cart:49000, mo:2.9, sol:17, sin:true}
+  ];
+  function nomAg(id){ for(var i=0;i<AGENCIAS.length;i++){ if(AGENCIAS[i].id === id) return AGENCIAS[i].n; } return ''; }
+  function distritos(){
+    var ds = filtrar(DIS), max = Math.max.apply(null, DIS.map(function(d){ return d.cart; }));
+    $('distritos').innerHTML = ds.map(function(d){
+      var cls = d.mo >= 6 ? 'p-rev' : d.mo >= 4 ? 'p-media' : 'p-alta', ic = d.mo >= 4 ? ICON.alerta : ICON.ok;
+      return '<tr' + (d.sin ? ' class="sin"' : '') + '><td><b>' + d.n + '</b>' + (d.sin ? '<span class="pill p-media">Sin agencia</span>' : '') + '</td>' +
+        '<td>' + (d.sin ? 'Desde ' : 'Agencia ') + nomAg(d.ag) + '</td>' +
+        '<td class="n">' + d.cl + '</td>' +
+        '<td><div class="cart"><div class="pista" role="img" aria-label="Cartera ' + soles.format(d.cart) + '"><i style="width:' + (d.cart/max*100) + '%"></i></div><span>' + soles.format(d.cart) + '</span></div></td>' +
+        '<td class="n"><span class="pill ' + cls + '">' + ic + d.mo.toFixed(1) + '%</span></td>' +
+        '<td class="n">' + d.sol + '</td></tr>';
+    }).join('');
+    var top = ds.slice().sort(function(x,y){ return y.sol - x.sol; })[0];
+    var peor = ds.slice().sort(function(x,y){ return y.mo - x.mo; })[0];
+    var op = ds.filter(function(d){ return d.sin; })[0];
+    $('disIdeas').innerHTML =
+      '<div class="idea"><b>Donde más te buscan</b>' + top.n + ': ' + top.sol + ' personas pidieron crédito por el asistente este mes.</div>' +
+      '<div class="idea"><b>Donde más cuesta cobrar</b>' + peor.n + ': ' + peor.mo.toFixed(1) + '% de la cartera con atraso. Conviene reforzar la cobranza ahí.</div>' +
+      (op ? '<div class="idea op"><b>Oportunidad para crecer</b>' + op.n + ' no tiene agencia, pero ' + op.sol + ' personas pidieron crédito desde ahí. Un asesor fijo o un punto de atención ahí se pagaría solo.</div>'
+          : '<div class="idea"><b>Cobertura</b>Todos los distritos de esta agencia tienen asesor asignado.</div>');
+    return peor;
+  }
+
   function filtrar(lista){ var a = $('agencia').value; return a === 'todas' ? lista : lista.filter(function(x){ return x.ag === a; }); }
   function iniciales(n){ return n.split(' ').map(function(p){ return p[0]; }).slice(0,2).join(''); }
   var PRI = {alta:['p-alta','Alta',ICON.ok], media:['p-media','Media',ICON.alerta], rev:['p-rev','Revisar',ICON.alerta]};
@@ -281,10 +334,11 @@ tr:first-child .medalla{background:var(--oro);color:#3B2600}
         '<span class="meta">' + s.p + ' · ' + s.m + ' · ' + s.z + ' · Asesor: ' + s.as + ' · <span class="hora">' + s.h + '</span></span></li>';
     }).join('') || '<li class="sol"><span class="meta">Sin solicitudes nuevas en esta agencia.</span></li>';
 
+    var peor = distritos();
     $('resumenWa').innerHTML = '<b>Buenos días. Así va Crecer hoy:</b>\n' +
       '• ' + sol.length + ' solicitudes nuevas del asistente (' + altas + ' con prioridad alta)\n' +
       '• Cobranza de ayer: ' + pct + '% de la meta\n' +
-      '• ' + mora + ' clientes con más de 3 días de atraso\n' +
+      '• ' + mora + ' clientes con más de 3 días de atraso (más en ' + peor.n + ')\n' +
       '• ' + ren + ' clientes listos para renovar\n' +
       'La agencia con mejor cobranza: <b>' + AGENCIAS.slice().sort(function(x,y){ return y.cobrado/y.meta - x.cobrado/x.meta; })[0].n + '</b>';
 
