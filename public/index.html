@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('js-mo')}catch(e){}</script>
 <style>
 /* Layout: escenario 3D a sangre con el robot al centro; texto a la izquierda y beneficios a la derecha; luego bento de beneficios, servicios, caso real, campañas y contacto */
 :root{
@@ -340,12 +341,89 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
 .flota:hover .cara{transform:scale(1.07) rotate(-4deg)}
 @media (max-width:560px){.flota .globo{display:none}}
 
+/* ===== Motion graphics ===== */
+/* Barra de progreso de lectura */
+.progreso{position:fixed;left:0;right:0;top:0;height:3px;z-index:60;background:var(--grad);transform:scaleX(0);transform-origin:left;pointer-events:none}
+
+/* Portada: entrada escalonada y palabra que rota */
+@keyframes entra{from{opacity:0;transform:translateY(22px)}}
+@keyframes entraDer{from{opacity:0;transform:translateX(32px)}}
+.js-mo .hero-texto>*{animation:entra .8s cubic-bezier(.2,.7,.2,1) backwards}
+.js-mo .hero-texto>:nth-child(1){animation-delay:.1s}
+.js-mo .hero-texto>:nth-child(2){animation-delay:.2s}
+.js-mo .hero-texto>:nth-child(3){animation-delay:.32s}
+.js-mo .hero-texto>:nth-child(4){animation-delay:.44s}
+.js-mo .hero-texto>:nth-child(5){animation-delay:.56s}
+.js-mo .vcard{animation:entraDer .8s cubic-bezier(.2,.7,.2,1) backwards}
+.js-mo .vcard:nth-child(1){animation-delay:.5s}
+.js-mo .vcard:nth-child(2){animation-delay:.62s}
+.js-mo .vcard:nth-child(3){animation-delay:.74s}
+.rota{display:inline-grid}
+.rota>span{grid-area:1/1;white-space:nowrap;transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1)}
+.rota>span:not(.on){opacity:0;transform:translateY(.4em)}
+.rota>span.sale{opacity:0;transform:translateY(-.4em)}
+
+/* Entradas al hacer scroll (solo si el script corre) */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+.js-mo .ceja::before{transform:scaleX(0);transform-origin:left;transition:transform .7s cubic-bezier(.2,.7,.2,1) .25s}
+.js-mo .cab.centro .ceja::before{transform-origin:center}
+.js-mo .ceja.on::before{transform:none}
+
+/* Resultados: cifras vivas */
+.stat strong{font-variant-numeric:tabular-nums}
+
+/* Línea "Un día con IA" que se dibuja sola */
+.js-mo .dia ol::before{transform:scaleY(0);transform-origin:top;transition:transform 1.6s cubic-bezier(.2,.7,.2,1) .2s}
+.js-mo .dia li{opacity:0;transform:translateX(-14px);transition:opacity .6s ease-out,transform .6s cubic-bezier(.2,.7,.2,1)}
+.js-mo .dia li::after{opacity:0;transform:scale(.4);transition:opacity .4s ease-out,transform .4s cubic-bezier(.3,1.6,.5,1)}
+.js-mo .dia.on ol::before{transform:none}
+.js-mo .dia.on li,.js-mo .dia.on li::after{opacity:1;transform:none}
+.js-mo .dia.on li:nth-child(1),.js-mo .dia.on li:nth-child(1)::after{transition-delay:.3s}
+.js-mo .dia.on li:nth-child(2),.js-mo .dia.on li:nth-child(2)::after{transition-delay:.6s}
+.js-mo .dia.on li:nth-child(3),.js-mo .dia.on li:nth-child(3)::after{transition-delay:.9s}
+.js-mo .dia.on li:nth-child(4),.js-mo .dia.on li:nth-child(4)::after{transition-delay:1.2s}
+.js-mo .dia.on li:nth-child(5),.js-mo .dia.on li:nth-child(5)::after{transition-delay:1.5s}
+
+/* Cómo trabajamos: la línea avanza paso a paso */
+.js-mo .pasos::before{transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.2,.7,.2,1) .15s}
+.js-mo .pasos.on::before{transform:none}
+@media (max-width:860px){.js-mo .pasos::before{transform:scaleY(0);transform-origin:top}.js-mo .pasos.on::before{transform:none}}
+
+/* Cinta de servicios en movimiento */
+.cinta{overflow:hidden;padding-block:18px 6px;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.cinta-pista{display:flex;width:max-content;animation:cinta 42s linear infinite}
+.cinta:hover .cinta-pista{animation-play-state:paused}
+.cinta ul{display:flex;align-items:center;margin:0;padding:0;list-style:none}
+.cinta li{display:flex;align-items:center;gap:18px;padding-right:18px;font-family:var(--f-display);font-weight:600;font-size:clamp(17px,2vw,22px);color:var(--texto-2);white-space:nowrap}
+.cinta li::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--menta);box-shadow:0 0 12px var(--menta)}
+.cinta li:nth-child(odd){color:var(--texto)}
+@keyframes cinta{to{transform:translateX(-50%)}}
+
+/* Micro-efectos */
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn:active{transform:scale(.97)}
+.btn-pri::before{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;z-index:-1;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg) translateX(0);opacity:0;pointer-events:none}
+@media (hover:hover){.btn-pri:hover::before{opacity:1;animation:brillo .8s ease-out}}
+@keyframes brillo{to{transform:skewX(-20deg) translateX(420%)}}
+.spot{position:relative}
+.spot::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s ease-out;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(59,227,176,.13),transparent 60%)}
+@media (hover:hover){.spot:hover::after{opacity:1}.spot{transition:border-color .3s}.spot:hover{border-color:rgba(59,227,176,.4)}}
+.flota .cara{animation:onda 3s ease-out infinite}
+@keyframes onda{0%{box-shadow:0 0 0 0 rgba(59,227,176,.5),0 14px 30px -10px rgba(0,0,0,.7)}60%,100%{box-shadow:0 0 0 18px rgba(59,227,176,0),0 14px 30px -10px rgba(0,0,0,.7)}}
+
+@media (prefers-reduced-motion:reduce){
+  .rota>span:not(.on){opacity:0}
+  .cinta{-webkit-mask:none;mask:none}.cinta-pista{flex-wrap:wrap;width:auto}.cinta ul+ul{display:none}.cinta ul{flex-wrap:wrap;justify-content:center;gap:8px 0}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
 </style>
 
+<div class="progreso" id="progreso" aria-hidden="true"></div>
 <canvas id="fondo3d" aria-hidden="true"></canvas>
 <div class="velo" aria-hidden="true"></div>
 
@@ -373,7 +451,7 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
       </div>
       <div class="hero-texto">
         <span class="pill"><i></i>Inteligencia artificial para negocios</span>
-        <h1 id="t-hero">Automatiza <span class="grad-txt">tu negocio</span> con IA</h1>
+        <h1 id="t-hero">Automatiza <span class="sr-only">tu negocio</span><span class="rota" id="rota" aria-hidden="true"><span class="grad-txt on">tu negocio</span><span class="grad-txt">tu hotel</span><span class="grad-txt">tu tienda</span><span class="grad-txt">tu flota</span></span> con IA</h1>
         <p class="bajada">Ponemos la inteligencia artificial a trabajar en tu negocio: automatiza tareas, ordena tus números, crea contenido y atiende a tus clientes, para que vendas más y trabajes menos.</p>
         <div class="acciones">
           <a class="btn btn-pri" href="https://wa.me/51926711682?text=Hola%20SolutionIA%2C%20quiero%20agendar%20una%20cita" target="_blank" rel="noopener">
@@ -415,6 +493,18 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
       <a class="cliente" href="portafolio/flota/"><span class="cli-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 16h14l-1.5-5.5A2 2 0 0 0 15.6 9H8.4a2 2 0 0 0-1.9 1.5z"/><path d="M4 16v3M20 16v3M9 9V6h6v3"/><circle cx="8" cy="16" r="1.5"/><circle cx="16" cy="16" r="1.5"/></svg></span><span><b>Flota de taxis</b><small>Huancayo · en implementación</small></span></a>
       <span class="prueba-n">Atención virtual en todo el Perú</span>
     </div></div>
+    <div class="cinta">
+      <div class="cinta-pista">
+        <ul>
+          <li>Asistentes con IA en WhatsApp</li><li>Páginas web</li><li>Contenido para redes</li><li>Videos para TikTok y Reels</li>
+          <li>Inventarios y caja en Google Sheets</li><li>Reportes claros</li><li>Apps a medida</li><li>Orientación para créditos</li>
+        </ul>
+        <ul aria-hidden="true">
+          <li>Asistentes con IA en WhatsApp</li><li>Páginas web</li><li>Contenido para redes</li><li>Videos para TikTok y Reels</li>
+          <li>Inventarios y caja en Google Sheets</li><li>Reportes claros</li><li>Apps a medida</li><li>Orientación para créditos</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <section class="bloque" id="resultados">
@@ -425,12 +515,12 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
         <p class="lead">Esto es lo que ya funciona en negocios que confiaron en nosotros.</p>
       </div>
       <div class="stats">
-        <div class="stat"><strong class="grad-txt">24/7</strong><b>atención en WhatsApp</b><span>De día, de noche y en feriados. Cada reserva se guarda sola en Google Sheets.</span><em>Hotel D' Confort</em></div>
-        <div class="stat"><strong class="grad-txt">127</strong><b>me gusta en TikTok en una semana</b><span>El mejor video de la cuenta anterior tenía 15.</span><em>Hotel D' Confort</em></div>
-        <div class="stat"><strong class="grad-txt">6</strong><b>habitaciones con catálogo</b><span>Fotos y precios dentro del WhatsApp del hotel, más un QR para pedir desde la habitación.</span><em>Hotel D' Confort</em></div>
-        <div class="stat"><strong class="grad-txt">30 · 15 · 7 · 1</strong><b>días de aviso antes de cada vencimiento</b><span>SOAT, revisión técnica y licencias, directo al WhatsApp del dueño.</span><em>Control de Flota</em></div>
-        <div class="stat"><strong class="grad-txt">Lunes</strong><b>cierre de cuentas automático</b><span>Quién pagó, quién debe y cuánto, sin hacer cuentas a mano.</span><em>Control de Flota</em></div>
-        <div class="stat"><strong class="grad-txt">1 hora</strong><b>para dejar lista la app</b><span>Cargamos la flota desde Excel e instalamos la app en el celular.</span><em>Control de Flota</em></div>
+        <div class="stat"><strong class="grad-txt" data-num="24" data-suf="/7">24/7</strong><b>atención en WhatsApp</b><span>De día, de noche y en feriados. Cada reserva se guarda sola en Google Sheets.</span><em>Hotel D' Confort</em></div>
+        <div class="stat"><strong class="grad-txt" data-num="127">127</strong><b>me gusta en TikTok en una semana</b><span>El mejor video de la cuenta anterior tenía 15.</span><em>Hotel D' Confort</em></div>
+        <div class="stat"><strong class="grad-txt" data-num="6">6</strong><b>habitaciones con catálogo</b><span>Fotos y precios dentro del WhatsApp del hotel, más un QR para pedir desde la habitación.</span><em>Hotel D' Confort</em></div>
+        <div class="stat"><strong class="grad-txt" data-seq>30 · 15 · 7 · 1</strong><b>días de aviso antes de cada vencimiento</b><span>SOAT, revisión técnica y licencias, directo al WhatsApp del dueño.</span><em>Control de Flota</em></div>
+        <div class="stat"><strong class="grad-txt" data-scr>Lunes</strong><b>cierre de cuentas automático</b><span>Quién pagó, quién debe y cuánto, sin hacer cuentas a mano.</span><em>Control de Flota</em></div>
+        <div class="stat"><strong class="grad-txt" data-scr>1 hora</strong><b>para dejar lista la app</b><span>Cargamos la flota desde Excel e instalamos la app en el celular.</span><em>Control de Flota</em></div>
       </div>
     </div></div>
   </section>
@@ -705,6 +795,95 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
   <span class="cara"><img src="img/robot-cabeza.webp" alt="" width="240" height="196"></span>
 </a>
 
+<script>
+/* ===== Motion graphics: entradas, contadores, palabra que rota, progreso y luz en tarjetas ===== */
+(function(){
+  'use strict';
+  var html = document.documentElement, mo = html.classList.contains('js-mo');
+
+  /* Barra de progreso de lectura */
+  var barra = document.getElementById('progreso'), pend = false;
+  function prog(){ pend = false; var max = Math.max(1, html.scrollHeight - innerHeight); barra.style.transform = 'scaleX(' + Math.min(1, scrollY/max).toFixed(4) + ')'; }
+  addEventListener('scroll', function(){ if(!pend){ pend = true; requestAnimationFrame(prog); } }, {passive:true});
+  addEventListener('resize', prog); prog();
+
+  /* Luz que sigue al cursor en tarjetas */
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('.stat,.bc,.sol,.caso-c,.numero').forEach(function(el){
+      el.classList.add('spot');
+      el.addEventListener('pointermove', function(e){ var r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+    });
+  }
+  if(!('IntersectionObserver' in window)){ html.classList.remove('js-mo'); return; }
+  if(!mo) return;
+
+  /* Palabra que rota en el título */
+  var rota = document.getElementById('rota');
+  if(rota){
+    var pal = [].slice.call(rota.children), ip = 0;
+    setInterval(function(){
+      if(document.hidden) return;
+      var a = pal[ip]; ip = (ip + 1) % pal.length; var b = pal[ip];
+      a.classList.remove('on'); a.classList.add('sale'); b.classList.add('on');
+      setTimeout(function(){ a.classList.remove('sale'); }, 520);
+    }, 2600);
+  }
+
+  /* Contadores y textos que se decodifican */
+  function ease(x){ return 1 - Math.pow(1 - x, 3); }
+  function contar(el){
+    var fin = +el.getAttribute('data-num'), suf = el.getAttribute('data-suf') || '', t0 = performance.now(), dur = fin > 50 ? 1600 : 1100;
+    (function paso(now){ var p = Math.min(1, (now - t0)/dur); el.textContent = Math.round(fin*ease(p)) + suf; if(p < 1) requestAnimationFrame(paso); })(t0);
+  }
+  function secuencia(el){
+    var partes = el.textContent.split(' · '), k = 0;
+    el.textContent = partes[0];
+    var id = setInterval(function(){ k++; if(k >= partes.length){ clearInterval(id); return; } el.textContent = partes.slice(0, k+1).join(' · '); }, 320);
+  }
+  function decodificar(el){
+    var fin = el.textContent, abc = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789', t0 = performance.now(), dur = 900;
+    (function paso(now){
+      var p = Math.min(1, (now - t0)/dur), fijas = Math.floor(fin.length*p), s = '';
+      for(var i=0;i<fin.length;i++){ s += (i < fijas || fin[i] === ' ') ? fin[i] : abc[Math.floor(Math.random()*abc.length)]; }
+      el.textContent = s; if(p < 1) requestAnimationFrame(paso); else el.textContent = fin;
+    })(t0);
+  }
+  function animarCifra(el){
+    var s = el.querySelector('strong'); if(!s) return;
+    if(s.hasAttribute('data-num')) contar(s); else if(s.hasAttribute('data-seq')) secuencia(s); else if(s.hasAttribute('data-scr')) decodificar(s);
+  }
+
+  /* Entradas escalonadas al hacer scroll */
+  var grupos = [
+    '.cab > *', '.prueba-in > *', '.stats > .stat', '.bento > .bc', '.soluciones > .sol', '.casos > .caso-c', '.mas-casos',
+    '.vid-card', '.contenido > div:last-child > *', '.flujo', '.afiche-cta', '.pasos > li', '.faq > details',
+    '.cta > div > *', '.numeros > .numero', '.robot-cta'
+  ];
+  var vistos = new Set();
+  grupos.forEach(function(sel){
+    document.querySelectorAll(sel).forEach(function(el){
+      if(vistos.has(el)) return; vistos.add(el);
+      var hermanos = [].filter.call(el.parentNode.children, function(h){ return h.matches(sel); });
+      var i = Math.min(hermanos.indexOf(el), 6);
+      el.classList.add('rv'); el.style.transitionDelay = (i*85) + 'ms';
+    });
+  });
+  var disparadores = document.querySelectorAll('.dia, .pasos');
+  var io = new IntersectionObserver(function(ents){
+    ents.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el = en.target; io.unobserve(el); el.classList.add('on');
+      if(el.classList.contains('stat')){ setTimeout(function(){ animarCifra(el); }, parseInt(el.style.transitionDelay, 10) || 0); }
+      if(el.classList.contains('rv')){
+        var limpiar = function(e){ if(e && e.target !== el) return; el.classList.remove('rv'); el.style.transitionDelay = ''; el.removeEventListener('transitionend', limpiar); };
+        el.addEventListener('transitionend', limpiar); setTimeout(limpiar, 1800);
+      }
+    });
+  }, {threshold: .12, rootMargin: '0px 0px -6% 0px'});
+  vistos.forEach(function(el){ io.observe(el); });
+  disparadores.forEach(function(el){ io.observe(el); });
+})();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
