@@ -328,6 +328,63 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.7
 @keyframes flotar2{50%{transform:translateY(-10px)}}
 @media (max-width:860px){.cta{grid-template-columns:minmax(0,1fr)}.robot-cta{order:-1;width:180px}}
 
+/* ===== Formulario de contacto ===== */
+.form-bloque{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,5vw,72px);align-items:start;margin-bottom:clamp(56px,8vw,110px)}
+@media (max-width:900px){.form-bloque{grid-template-columns:minmax(0,1fr)}}
+.form-intro{position:sticky;top:110px}
+@media (max-width:900px){.form-intro{position:static}}
+.form-pasos{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:18px;counter-reset:fp}
+.form-pasos li{display:grid;grid-template-columns:34px 1fr;gap:2px 14px;counter-increment:fp}
+.form-pasos li::before{content:counter(fp);grid-row:span 2;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--menta);background:rgba(59,227,176,.1);border:1px solid rgba(59,227,176,.3)}
+.form-pasos b{font-family:var(--f-display);font-weight:600;font-size:16px;line-height:1.3}
+.form-pasos span{color:var(--texto-2);font-size:15px;line-height:1.5}
+.formu{display:grid;gap:18px;padding:clamp(20px,3.4vw,34px);border-radius:24px;border:1px solid rgba(58,184,255,.28);background:linear-gradient(165deg,rgba(14,42,72,.82),rgba(6,24,45,.94));box-shadow:0 30px 70px -40px rgba(0,0,0,.8)}
+.formu .fila{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:560px){.formu .fila{grid-template-columns:minmax(0,1fr)}}
+.campo{display:grid;gap:8px;min-width:0;margin:0;padding:0;border:0}
+.campo label,.campo legend{font-weight:600;font-size:14px;color:var(--texto);padding:0}
+.campo legend{margin-bottom:10px}
+.campo i{font-style:normal;font-weight:500;color:var(--texto-2)}
+.formu input:not([type=checkbox]),.formu select,.formu textarea{width:100%;box-sizing:border-box;font:inherit;font-size:16px;color:var(--texto);background:rgba(2,14,28,.6);border:1px solid var(--linea);border-radius:14px;padding:13px 14px;min-height:50px;transition:border-color .2s,background .2s;-webkit-appearance:none;appearance:none}
+.formu textarea{resize:vertical;min-height:96px;line-height:1.5}
+.formu select{padding-right:42px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2393A8BA' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.formu select option{background:#0A2038;color:var(--texto)}
+.formu ::placeholder{color:#5F7A90}
+.formu input:hover,.formu select:hover,.formu textarea:hover{border-color:rgba(120,190,255,.3)}
+.formu input:focus,.formu select:focus,.formu textarea:focus{outline:none;border-color:var(--menta);background:rgba(2,14,28,.8);box-shadow:0 0 0 3px rgba(59,227,176,.16)}
+.formu [aria-invalid=true]{border-color:#FF8A8A!important}
+.tel{display:flex;align-items:stretch}
+.tel span{display:grid;place-items:center;padding:0 14px;font-weight:700;color:var(--texto-2);background:rgba(58,184,255,.08);border:1px solid var(--linea);border-right:0;border-radius:14px 0 0 14px}
+.tel input{border-radius:0 14px 14px 0!important;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.err{min-height:0;color:#FF9C9C;font-size:13px;font-weight:600}
+.err:empty{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;cursor:pointer}
+.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.chip span{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:9px 15px;border-radius:999px;font-size:14px;font-weight:600;color:var(--texto-2);background:rgba(2,14,28,.5);border:1px solid var(--linea);transition:color .2s,background .2s,border-color .2s,transform .15s}
+.chip span::before{content:"";width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;opacity:.55;transition:all .2s;flex:none}
+.chip input:checked+span{color:var(--texto);background:rgba(59,227,176,.13);border-color:var(--menta)}
+.chip input:checked+span::before{opacity:1;border-color:var(--menta);background:var(--menta) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23021526' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E") center/10px no-repeat}
+.chip input:focus-visible+span{outline:2px solid var(--menta);outline-offset:3px}
+.chip:active span{transform:scale(.97)}
+@media (hover:hover){.chip:hover span{border-color:rgba(59,227,176,.45);color:var(--texto)}}
+.trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.enviar{width:100%;min-height:54px;font-size:16px}
+.enviar[disabled]{opacity:.75;cursor:wait}
+.enviar .giro{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(2,21,38,.3);border-top-color:#021526;animation:gira .8s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.nota-priv{margin:-6px 0 0;text-align:center;font-size:13px;color:var(--texto-2)}
+.estado{margin:0;font-size:14px;color:#FF9C9C;text-align:center}
+.estado:empty{display:none}
+.form-ok{display:grid;gap:14px;justify-items:start;padding:clamp(24px,4vw,40px);border-radius:24px;border:1px solid var(--linea-2);background:linear-gradient(165deg,rgba(14,52,72,.85),rgba(6,24,45,.95));animation:entra .6s cubic-bezier(.2,.7,.2,1) both}
+.form-ok .check{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#021526}
+.form-ok .check svg{width:28px;height:28px;stroke-dasharray:30;stroke-dashoffset:30;animation:trazo .6s .25s ease-out forwards}
+@keyframes trazo{to{stroke-dashoffset:0}}
+.form-ok h3{font-family:var(--f-display);font-weight:700;font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.15;letter-spacing:-.02em;margin:0}
+.form-ok p{margin:0;color:var(--texto-2);font-size:16px;max-width:46ch}
+.form-ok p strong{color:var(--texto)}
+.form-ok .acciones{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+
 /* Pie */
 footer .in{padding-block:36px 44px;display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:space-between;align-items:center;border-top:1px solid var(--linea);color:var(--texto-2);font-size:14px}
 footer .marca img{height:36px}
@@ -415,6 +472,7 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
 
 @media (prefers-reduced-motion:reduce){
   .rota>span:not(.on){opacity:0}
+  .form-ok .check svg{stroke-dashoffset:0}
   .cinta{-webkit-mask:none;mask:none}.cinta-pista{flex-wrap:wrap;width:auto}.cinta ul+ul{display:none}.cinta ul{flex-wrap:wrap;justify-content:center;gap:8px 0}
 }
 @media (prefers-reduced-motion:reduce){
@@ -752,6 +810,65 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
 
   <section class="bloque" id="contacto">
     <div class="wrap"><div class="in">
+      <div class="form-bloque" id="formulario">
+        <div class="form-intro">
+          <p class="ceja">Te escribimos</p>
+          <h2 id="t-form">Déjanos tus datos y te escribimos</h2>
+          <p class="lead">Llénalo en un minuto. Te respondemos por WhatsApp en horario de atención, todos los días de 8:00 a 18:00.</p>
+          <ul class="form-pasos">
+            <li><b>Nos llega tu mensaje al instante</b><span>Sin correos ni esperas: lo vemos directo en el WhatsApp.</span></li>
+            <li><b>Conversamos sobre tu negocio</b><span>Vemos dónde pierdes tiempo o clientes.</span></li>
+            <li><b>Te proponemos algo a tu medida</b><span>Virtual o presencial, como te acomode.</span></li>
+          </ul>
+        </div>
+        <form class="formu" id="formu" action="/api/contacto" method="post" novalidate aria-labelledby="t-form">
+          <div class="campo">
+            <label for="f-nombre">Tu nombre</label>
+            <input id="f-nombre" name="nombre" type="text" autocomplete="name" required maxlength="80" placeholder="Ej. Rosa Quispe">
+            <small class="err" id="e-nombre" aria-live="polite"></small>
+          </div>
+          <div class="campo">
+            <label for="f-whatsapp">Tu WhatsApp</label>
+            <div class="tel"><span aria-hidden="true">+51</span><input id="f-whatsapp" name="whatsapp" type="tel" inputmode="numeric" autocomplete="tel-national" required maxlength="11" placeholder="9XX XXX XXX" aria-describedby="e-whatsapp"></div>
+            <small class="err" id="e-whatsapp" aria-live="polite"></small>
+          </div>
+          <div class="fila">
+            <div class="campo">
+              <label for="f-negocio">Tipo de negocio</label>
+              <select id="f-negocio" name="negocio">
+                <option value="">Elige uno</option>
+                <option>Hospedaje u hotel</option><option>Restaurante o cafetería</option><option>Tienda o bodega</option>
+                <option>Transporte o taxis</option><option>Servicios profesionales</option><option>Otro</option>
+              </select>
+              <small class="err" id="e-negocio" aria-live="polite"></small>
+            </div>
+            <div class="campo">
+              <label for="f-empresa">Nombre del negocio <i>(opcional)</i></label>
+              <input id="f-empresa" name="empresa" type="text" autocomplete="organization" maxlength="80" placeholder="Ej. Hostal Los Andes">
+            </div>
+          </div>
+          <fieldset class="campo">
+            <legend>¿Qué te interesa?</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="necesita" value="Asistente con IA en WhatsApp"><span>Asistente con IA en WhatsApp</span></label>
+              <label class="chip"><input type="checkbox" name="necesita" value="Página web"><span>Página web</span></label>
+              <label class="chip"><input type="checkbox" name="necesita" value="Redes y contenido"><span>Redes y contenido</span></label>
+              <label class="chip"><input type="checkbox" name="necesita" value="Inventario y caja"><span>Inventario y caja</span></label>
+              <label class="chip"><input type="checkbox" name="necesita" value="App a medida"><span>App a medida</span></label>
+              <label class="chip"><input type="checkbox" name="necesita" value="Asesoría financiera"><span>Asesoría financiera</span></label>
+            </div>
+          </fieldset>
+          <div class="campo">
+            <label for="f-mensaje">Cuéntanos un poco <i>(opcional)</i></label>
+            <textarea id="f-mensaje" name="mensaje" rows="3" maxlength="600" placeholder="Ej. Pierdo reservas porque no alcanzo a responder de noche."></textarea>
+          </div>
+          <div class="trampa" aria-hidden="true"><label for="f-sitio">No llenar</label><input id="f-sitio" name="sitio_web" type="text" tabindex="-1" autocomplete="off"></div>
+          <input type="hidden" name="t" id="f-t">
+          <button class="btn btn-pri enviar" type="submit"><span class="btn-label">Quiero que me escriban</span></button>
+          <p class="nota-priv">Solo usamos tus datos para responderte.</p>
+          <p class="estado" id="f-estado" role="status" aria-live="polite"></p>
+        </form>
+      </div>
       <div class="cta">
         <div>
           <p class="ceja">Contacto</p>
@@ -795,6 +912,106 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
   <span class="cara"><img src="img/robot-cabeza.webp" alt="" width="240" height="196"></span>
 </a>
 
+<script>
+/* ===== Formulario de contacto: valida, envía a /api/contacto y, si el aviso falla, pasa a WhatsApp ===== */
+(function(){
+  'use strict';
+  var f = document.getElementById('formu'); if(!f) return;
+  var NUM = '51926711682', btn = f.querySelector('.enviar'), etiqueta = btn.querySelector('.btn-label'), estado = document.getElementById('f-estado');
+  document.getElementById('f-t').value = Date.now();
+
+  var tel = f.elements.whatsapp;
+  tel.addEventListener('input', function(){
+    var d = tel.value.replace(/\D/g, '');
+    if(d.length > 9 && d.indexOf('51') === 0) d = d.slice(2);
+    d = d.slice(0, 9);
+    tel.value = d.replace(/^(\d{3})(\d{0,3})(\d{0,3}).*/, function(_, a, b, c){ return [a, b, c].filter(Boolean).join(' '); });
+  });
+
+  function datos(){
+    var nec = [].map.call(f.querySelectorAll('input[name=necesita]:checked'), function(c){ return c.value; });
+    return {
+      nombre: f.elements.nombre.value.trim(), whatsapp: tel.value.replace(/\D/g, ''), negocio: f.elements.negocio.value,
+      empresa: f.elements.empresa.value.trim(), necesita: nec, mensaje: f.elements.mensaje.value.trim(),
+      sitio_web: f.elements.sitio_web.value, t: Number(f.elements.t.value)
+    };
+  }
+  function validar(d){
+    var e = {};
+    if(d.nombre.length < 2) e.nombre = 'Escribe tu nombre.';
+    if(!/^9\d{8}$/.test(d.whatsapp)) e.whatsapp = 'Escribe un celular de 9 dígitos que empiece con 9.';
+    return e;
+  }
+  function marcar(campo, msg){
+    var el = f.elements[campo], caja = document.getElementById('e-' + campo);
+    if(el) el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    if(caja) caja.textContent = msg || '';
+  }
+  ['nombre', 'whatsapp', 'negocio'].forEach(function(c){ f.elements[c].addEventListener('input', function(){ marcar(c, ''); }); });
+
+  function cargando(si){
+    btn.disabled = si;
+    etiqueta.textContent = si ? 'Enviando…' : 'Quiero que me escriban';
+    var g = btn.querySelector('.giro');
+    if(si && !g){ g = document.createElement('span'); g.className = 'giro'; g.setAttribute('aria-hidden', 'true'); btn.insertBefore(g, etiqueta); }
+    if(!si && g) g.remove();
+  }
+  function celBonito(c){ return '+51 ' + c.slice(0,3) + ' ' + c.slice(3,6) + ' ' + c.slice(6); }
+  function textoWA(d){
+    var l = ['Hola SolutionIA, dejé mis datos en la web:', 'Nombre: ' + d.nombre, 'WhatsApp: ' + celBonito(d.whatsapp)];
+    if(d.negocio || d.empresa) l.push('Negocio: ' + [d.negocio, d.empresa].filter(Boolean).join(' - '));
+    if(d.necesita.length) l.push('Me interesa: ' + d.necesita.join(', '));
+    if(d.mensaje) l.push('Mensaje: ' + d.mensaje);
+    return 'https://wa.me/' + NUM + '?text=' + encodeURIComponent(l.join('\n'));
+  }
+  function el(tag, clase, texto){ var n = document.createElement(tag); if(clase) n.className = clase; if(texto) n.textContent = texto; return n; }
+  var ICO_WA = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="stroke-dasharray:none;stroke-dashoffset:0;animation:none"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 5-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2c0 1.2.9 2.4 1 2.5.1.2 1.7 2.7 4.2 3.8 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg>';
+  function panel(titulo, partes, botones, icono){
+    var p = el('div', 'form-ok'); p.setAttribute('role', 'status');
+    var chk = el('span', 'check'); chk.innerHTML = icono || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+    var h = el('h3', '', titulo); h.tabIndex = -1;
+    var tx = el('p'); partes.forEach(function(x){ tx.appendChild(typeof x === 'string' ? document.createTextNode(x) : x); });
+    var ac = el('div', 'acciones'); botones.forEach(function(b){ ac.appendChild(b); });
+    p.append(chk, h, tx, ac);
+    f.replaceWith(p); h.focus({preventScroll: true});
+    p.scrollIntoView({block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }
+  function boton(texto, href, clase){ var a = el('a', 'btn ' + clase, texto); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a; }
+  function exito(d){
+    var nom = d.nombre.split(' ')[0];
+    panel('¡Listo, ' + nom + '!', ['Ya recibimos tus datos. Te escribiremos al ', el('strong', '', celBonito(d.whatsapp)), ' en horario de atención, de 8:00 a 18:00.'],
+      [boton('¿Apurado? Escríbenos ahora', 'https://wa.me/' + NUM + '?text=' + encodeURIComponent('Hola SolutionIA, soy ' + d.nombre + ', acabo de dejar mis datos en la web.'), 'btn-sec')]);
+  }
+  function respaldo(d){
+    var nom = d.nombre.split(' ')[0];
+    panel('Falta un paso, ' + nom, ['Toca el botón para enviarnos tus datos por WhatsApp. Ya están escritos: solo presiona ', el('strong', '', 'Enviar'), '.'],
+      [boton('Enviar por WhatsApp', textoWA(d), 'btn-pri')], ICO_WA);
+  }
+
+  f.addEventListener('submit', function(ev){
+    ev.preventDefault(); estado.textContent = '';
+    var d = datos(), e = validar(d);
+    ['nombre', 'whatsapp', 'negocio'].forEach(function(c){ marcar(c, e[c]); });
+    var primero = Object.keys(e)[0];
+    if(primero){ f.elements[primero].focus(); return; }
+    cargando(true);
+    var ctrl = 'AbortController' in window ? new AbortController() : null, reloj = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 15000);
+    fetch(f.getAttribute('action'), {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(d), signal: ctrl ? ctrl.signal : undefined})
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {s: r.status, j: j}; }); })
+      .then(function(res){
+        clearTimeout(reloj);
+        if(res.j.ok) return exito(d);
+        if(res.s === 422 && res.j.errores){
+          cargando(false);
+          Object.keys(res.j.errores).forEach(function(c){ marcar(c, res.j.errores[c]); });
+          estado.textContent = 'Revisa los datos marcados.'; return;
+        }
+        respaldo(d);
+      })
+      .catch(function(){ clearTimeout(reloj); respaldo(d); });
+  });
+})();
+</script>
 <script>
 /* ===== Motion graphics: entradas, contadores, palabra que rota, progreso y luz en tarjetas ===== */
 (function(){
@@ -857,7 +1074,7 @@ footer .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
   var grupos = [
     '.cab > *', '.prueba-in > *', '.stats > .stat', '.bento > .bc', '.soluciones > .sol', '.casos > .caso-c', '.mas-casos',
     '.vid-card', '.contenido > div:last-child > *', '.flujo', '.afiche-cta', '.pasos > li', '.faq > details',
-    '.cta > div > *', '.numeros > .numero', '.robot-cta'
+    '.cta > div > *', '.numeros > .numero', '.robot-cta', '.form-intro > *', '.formu'
   ];
   var vistos = new Set();
   grupos.forEach(function(sel){
